@@ -25,6 +25,7 @@
 
 html, body {
     width: 100%;
+    scroll-behavior: smooth;
 }
 
 #nav {
@@ -60,6 +61,20 @@ a:hover {
 
 a.light_blue {
     color: #7FB5D3;
+}
+
+a.coral {
+    color: #EE7989;
+}
+
+a.arrow_down {
+    color: #7FB5D3;
+    margin-left: 50%;
+    margin-right: 50%;
+}
+
+a.arrow_down:hover {
+    color: #3E688F;
 }
 
 #landing {
@@ -164,15 +179,14 @@ a.light_blue {
     color: #EE7989;
 }
 
-#blog .posts {
+#blog .post {
     margin-top: 3%;
 }
 
 #blog .collapsible:after {
     content: '\02795';
-    font-size: 15px;
+    font-size: 12px;
     float: right;
-    color: #7FB5D3;
 }
 
 #blog .collapsible.active {
@@ -245,6 +259,10 @@ a.light_blue {
 
 #segment .space {
     height: 20px;
+}
+
+#segment .arrow_down_container {
+    padding-top: 20%;
 }
 
 #bluetext {
