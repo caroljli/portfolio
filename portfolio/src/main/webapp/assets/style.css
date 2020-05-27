@@ -34,6 +34,7 @@ html, body {
   padding-bottom: 15px;
   position: fixed;
   width: 100%;
+  background:#ffffff;
 }
 
 #nav p {
@@ -52,6 +53,16 @@ html, body {
 a {
   color: #3E688F;
   text-decoration: none;
+}
+
+body {
+    height: auto;
+    min-height: 100%;
+    position: relative;
+}
+
+a:hover {
+    color: #EE7989;
 }
 
 #landing {
@@ -79,8 +90,15 @@ a {
   line-height: 1.5;
 }
 
-#segment {
+#intro_segment {
   height: 100vh;
+}
+
+#skills_segment {
+    height: auto;
+    min-height: 100%;
+    position: relative;
+    margin-bottom: 10%;
 }
 
 #segment .segment_text {
@@ -93,10 +111,10 @@ a {
 #segment .segment_text .box {
   margin-top: 20px;
   background-color: #EEEEEE;
-  padding-right: 6%;
-  padding-left: 6%;
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-right: 3%;
+  padding-left: 3%;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
   border-radius: 10px;
 }
 
@@ -132,8 +150,12 @@ a {
 #segment .segment_text h3 {
   font-size: 16px;
   font-weight: 450;
-  margin-top: -2.5%;
+  margin-top: -15px;
   color: #B3B3B3;
+}
+
+#segment .space {
+    height: 20px;
 }
 
 #bluetext {
@@ -146,11 +168,11 @@ a {
     text-align: center;
     font-size: 15px;
     padding-bottom: 15px;
-    position:fixed;
-    left:0px;
-    bottom:0px;
-    height:30px;
-    width:100%;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
     background:#EEEEEE;
 }
 
