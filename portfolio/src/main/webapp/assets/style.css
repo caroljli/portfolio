@@ -34,7 +34,6 @@ html, body {
   padding-bottom: 15px;
   position: fixed;
   width: 100%;
-  background:#ffffff;
 }
 
 #nav p {
@@ -55,14 +54,12 @@ a {
   text-decoration: none;
 }
 
-body {
-    height: auto;
-    min-height: 100%;
-    position: relative;
-}
-
 a:hover {
     color: #EE7989;
+}
+
+a.light_blue {
+    color: #7FB5D3;
 }
 
 #landing {
@@ -94,11 +91,103 @@ a:hover {
   height: 100vh;
 }
 
-#skills_segment {
+#proj_segment {
     height: auto;
     min-height: 100%;
     position: relative;
     margin-bottom: 10%;
+}
+
+#blog {
+    height: auto;
+    min-height: 100%;
+    position: relative;
+    margin-bottom: 10%;
+}
+
+#blog h1 {
+  font-size: 36px;
+  font-weight: 600;
+  color: #3E688F;
+}
+
+#blog .segment_text {
+  /* position: absolute; */
+  padding-top: 130px;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+#blog .segment_text .box {
+  margin-top: 20px;
+  background-color: #EEEEEE;
+  padding-right: 3%;
+  padding-left: 3%;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  border-radius: 10px;
+}
+
+#blog .segment_text p {
+  font-size: 18px;
+  color: #383838; 
+  line-height: 1.5;
+}
+
+#blog .segment_text h2 {
+  padding-top: 1%;
+  font-size: 23px;
+  font-weight: 600;
+  color: #EE7989;
+}
+
+#blog .segment_text h3 {
+  font-size: 16px;
+  font-weight: 450;
+  color: #B3B3B3;
+}
+
+#blog .content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+#blog a.collapsible {
+    background: none;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+
+    font-size: 23px;
+    font-weight: 600;
+    color: #EE7989;
+}
+
+#blog .posts {
+    margin-top: 3%;
+}
+
+#blog .collapsible:after {
+    content: '\02795';
+    font-size: 15px;
+    float: right;
+    color: #7FB5D3;
+}
+
+#blog .collapsible.active {
+    color: #7FB5D3;
+}
+
+#blog .collapsible.active:after {
+    content: "\2796";
+}
+
+#blog .content p {
+  font-size: 15px;
+  color: #383838; 
+  line-height: 1.5;
+  font-weight: 400;
 }
 
 #segment .segment_text {
