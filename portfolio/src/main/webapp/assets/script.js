@@ -27,6 +27,10 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
+/**
+ * Collapses menus for blog page.
+ */
+
 function collapseMenu() {
     var i;
     var elements = document.getElementsByClassName("collapsible");
@@ -44,6 +48,10 @@ function collapseMenu() {
     }
 }
 
+/**
+ * Opens and closes the navigation bar.
+ */
+
 function openNav() {
     document.getElementById("nav").style.width = "200px";
     document.getElementById("nav-main").style.marginLeft = "200px";
@@ -53,6 +61,10 @@ function closeNav() {
     document.getElementById("nav").style.width = "0px";
     document.getElementById("nav-main").style.marginLeft = "0px";
 }
+
+/** 
+ * Buttons for photo slider transitions, indexers.
+ */
 
 var index = 1;
 
@@ -85,10 +97,40 @@ function show(n) {
         indices[i].className = indices[i].className.replace(" active", "");
     }
 
-    slides[index - 1].style.display = "block";
-    indices[index - 1].className += " active";
+    if (slides[index - 1] != null) {
+        slides[index - 1].style.display = "block";
+    }
+
+    if (indices[index - 1] != null) {
+        indices[index - 1].className += " active";
+    }
 }
+
+/** 
+ * Loads first indexed image for slideshow.
+ */
 
 window.onload = function() {
     show(1);
+}
+
+/**
+ * Scrolls to top of page, appears when user starts scrolling.
+ */
+
+window.onscroll = function() {
+    scrollUpHelper();
+}
+
+function scrollUp() {
+    document.documentElement.scrollTop = 0;
+}
+
+function scrollUpHelper() {
+    var top = document.getElementById("top-button");
+    if (document.documentElement.scrollTop > 20) {
+        top.style.display = "block";
+    } else {
+        top.style.display = "none";
+    }
 }

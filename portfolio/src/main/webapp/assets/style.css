@@ -39,7 +39,6 @@
   100% {opacity:1;}
 }
 
-
 * {
     font-family: "Cerebri Sans", sans-serif !important;
 }
@@ -319,11 +318,13 @@ a.arrow_down:hover {
 }
 
 #segment .space {
-    height: 20px;
+  height: 20px;
 }
 
 #segment .arrow_down_container {
-    padding-top: 20%;
+  animation: fadeIn ease 5s;
+  -webkit-animation: fadeIn ease 5s;
+  padding-top: 20%;
 }
 
 #bluetext {
@@ -406,6 +407,23 @@ a.arrow_down:hover {
 
 .slideshow-wrapper .active, .index:hover {
   background-color: #7FB5D3;
+}
+
+#top-button {
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  cursor: pointer;
+  padding: 10px;
+  display: none;
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  z-index: 11;
+  color: #3E688F;
+}
+
+#top-button:hover {
+  color:#7FB5D3;
 }
 
 #footer {
