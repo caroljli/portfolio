@@ -24,7 +24,6 @@
 }
 
 html, body {
-    width: 100%;
     scroll-behavior: smooth;
 }
 
@@ -35,19 +34,34 @@ html, body {
   padding-bottom: 15px;
   position: fixed;
   width: 100%;
+  text-align: right;
 }
 
-#nav p {
+#nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nav li {
+  display: inline;
+}
+
+#nav li.nav-name {
   float: left;
   font-weight: 600;
   font-size: 15px;
 }
 
-#nav .about_me_link {
-  float: right;
+#nav a {
   color: #3E688F;
   font-size: 15px;
-  padding-right: 5%;
+  font-weight: 600;
+  margin-left: 15px;
+}
+
+#nav a:hover {
+  color: #7FB5D3;
 }
 
 a {
@@ -56,15 +70,15 @@ a {
 }
 
 a:hover {
-    color: #EE7989;
+  color: #EE7989;
 }
 
 a.light_blue {
-    color: #7FB5D3;
+  color: #7FB5D3;
 }
 
 a.coral {
-    color: #EE7989;
+  color: #EE7989;
 }
 
 a.arrow_down {
