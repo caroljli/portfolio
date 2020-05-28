@@ -135,6 +135,10 @@ function scrollUpHelper() {
     }
 }
 
+/**
+ * Goes back to previous page.
+ */
+
 function back() {
     if (window.history) {
         window.history.back();
