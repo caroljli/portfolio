@@ -74,27 +74,12 @@ html, body {
 }
 
 #nav-main {
-  padding-top: 15px;
+  padding-top: 20px;
   padding-left: 30px;
   transition: margin-left .5s;
   position: fixed;
+  z-index: 10;
 }
-
-/* #nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-#nav li {
-  display: inline;
-}
-
-#nav li.nav-name {
-  float: left;
-  font-weight: 600;
-  font-size: 15px;
-} */
 
 a {
   color: #3E688F;
@@ -146,6 +131,10 @@ a.arrow_down:hover {
   font-weight: 450;
   color: #3E688F; 
   line-height: 1.5;
+}
+
+#segment {
+  z-index: 0;
 }
 
 #intro_segment {
