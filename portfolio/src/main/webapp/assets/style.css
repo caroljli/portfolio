@@ -28,16 +28,59 @@ html, body {
 }
 
 #nav {
+  width: 0;
+}
+
+.sidebar {
+  background: #3E688F;
   padding-top: 15px;
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-bottom: 15px;
+  transition: 0.5s;
+  height: 100%;
+  width: 0px;
   position: fixed;
-  width: 100%;
+  z-index: 10;
+  overflow-x: hidden;
+  top: 0;
+  left: 0;
   text-align: right;
 }
 
-#nav ul {
+.sidebar a {
+  color: #EEEEEE;
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 15px;
+  display: block;
+  margin-top: 10px;
+}
+
+.sidebar a:hover {
+  color: #7FB5D3;
+}
+
+.sidebar a.close {
+  position: absolute;
+  top: 0;
+  padding-left: 10px;
+}
+
+.open {
+  color: #3E688F;
+  cursor: pointer;
+}
+
+.open:hover {
+  color: #7FB5D3;
+}
+
+#nav-main {
+  padding-top: 15px;
+  padding-left: 30px;
+  transition: margin-left .5s;
+  position: fixed;
+}
+
+/* #nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -51,18 +94,7 @@ html, body {
   float: left;
   font-weight: 600;
   font-size: 15px;
-}
-
-#nav a {
-  color: #3E688F;
-  font-size: 15px;
-  font-weight: 600;
-  margin-left: 15px;
-}
-
-#nav a:hover {
-  color: #7FB5D3;
-}
+} */
 
 a {
   color: #3E688F;
@@ -117,17 +149,20 @@ a.arrow_down:hover {
 }
 
 #intro_segment {
+  z-index: 0;
   height: 100vh;
 }
 
 #proj_segment {
-    height: auto;
-    min-height: 100%;
-    position: relative;
-    margin-bottom: 10%;
+  z-index: 0;
+  height: auto;
+  min-height: 100%;
+  position: relative;
+  margin-bottom: 10%;
 }
 
 #blog {
+    z-index: 0;
     height: auto;
     min-height: 100%;
     position: relative;
@@ -179,7 +214,7 @@ a.arrow_down:hover {
 #blog .content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.2s ease-out;
+  transition: max-height 0.3s ease-out;
 }
 
 #blog a.collapsible {

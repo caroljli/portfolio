@@ -43,3 +43,13 @@ function collapseMenu() {
         });
     }
 }
+
+function openNav() {
+    document.getElementById("nav").style.width = "200px";
+    document.getElementById("nav-main").style.marginLeft = "200px";
+}
+
+function closeNav() {
+    document.getElementById("nav").style.width = "0px";
+    document.getElementById("nav-main").style.marginLeft = "0px";
+}

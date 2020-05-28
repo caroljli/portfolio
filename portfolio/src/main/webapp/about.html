@@ -7,9 +7,15 @@
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     </head>
     <body>
-        <div id="nav"> 
-            <p>CAROL LI</p>
-            <p class="about_me_link"><a href="index.html">HOME</a> &nbsp; &nbsp; &nbsp; <a href="posts.html">POSTS</a></p>
+        <div id="nav-main"> 
+            <a class="open" onClick="openNav()"><i class="fas fa-plus fa-2x"></i></a>
+        </div>
+
+        <div id="nav" class="sidebar">
+            <a href="javascript:void(0)" class="close" onClick="closeNav()"><i class="far fa-times-circle fa-2x"></i></a>
+            <a href="index.html">HOME</a>
+            <a href="about.html">ABOUT</a>
+            <a href="posts.html">POSTS</a>
         </div>
 
         <div id="segment">
