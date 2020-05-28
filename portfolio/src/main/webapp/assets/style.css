@@ -426,6 +426,22 @@ a.arrow_down:hover {
   color:#7FB5D3;
 }
 
+#back-button {
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  cursor: pointer;
+  padding: 10px;
+  position: fixed;
+  bottom: 50px;
+  left: 20px;
+  z-index: 11;
+  color: #3E688F;
+}
+
+#back-button:hover {
+  color:#7FB5D3;
+}
+
 #footer {
     font-weight: 600;
     text-align: center;

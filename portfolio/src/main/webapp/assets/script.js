@@ -134,3 +134,9 @@ function scrollUpHelper() {
         top.style.display = "none";
     }
 }
+
+function back() {
+    if (window.history) {
+        window.history.back();
+    }
+}
