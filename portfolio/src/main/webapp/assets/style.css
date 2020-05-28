@@ -1,0 +1,267 @@
+@font-face {
+    font-family: 'Cerebri Sans';
+    src: url('./fonts/cerebrisans-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cerebri Sans';
+    src: url('./fonts/cerebrisans-medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cerebri Sans';
+    src: url('./fonts/cerebrisans-bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+* {
+    font-family: "Cerebri Sans", sans-serif !important;
+}
+
+html, body {
+    width: 100%;
+}
+
+#nav {
+  padding-top: 15px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 15px;
+  position: fixed;
+  width: 100%;
+}
+
+#nav p {
+  float: left;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+#nav .about_me_link {
+  float: right;
+  color: #3E688F;
+  font-size: 15px;
+  padding-right: 5%;
+}
+
+a {
+  color: #3E688F;
+  text-decoration: none;
+}
+
+a:hover {
+    color: #EE7989;
+}
+
+a.light_blue {
+    color: #7FB5D3;
+}
+
+#landing {
+  height: 100vh;
+}
+
+#landing .landing_text {
+  /* width: 794px; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#landing .landing_text h1 {
+  font-size: 36px;
+  font-weight: 600;
+  color: #333333;
+}
+
+#landing .landing_text p {
+  font-size: 20px;
+  font-weight: 450;
+  color: #3E688F; 
+  line-height: 1.5;
+}
+
+#intro_segment {
+  height: 100vh;
+}
+
+#proj_segment {
+    height: auto;
+    min-height: 100%;
+    position: relative;
+    margin-bottom: 10%;
+}
+
+#blog {
+    height: auto;
+    min-height: 100%;
+    position: relative;
+    margin-bottom: 10%;
+}
+
+#blog h1 {
+  font-size: 36px;
+  font-weight: 600;
+  color: #3E688F;
+}
+
+#blog .segment_text {
+  /* position: absolute; */
+  padding-top: 130px;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+#blog .segment_text .box {
+  margin-top: 20px;
+  background-color: #EEEEEE;
+  padding-right: 3%;
+  padding-left: 3%;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  border-radius: 10px;
+}
+
+#blog .segment_text p {
+  font-size: 18px;
+  color: #383838; 
+  line-height: 1.5;
+}
+
+#blog .segment_text h2 {
+  padding-top: 1%;
+  font-size: 23px;
+  font-weight: 600;
+  color: #EE7989;
+}
+
+#blog .segment_text h3 {
+  font-size: 16px;
+  font-weight: 450;
+  color: #B3B3B3;
+}
+
+#blog .content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+#blog a.collapsible {
+    background: none;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+
+    font-size: 23px;
+    font-weight: 600;
+    color: #EE7989;
+}
+
+#blog .posts {
+    margin-top: 3%;
+}
+
+#blog .collapsible:after {
+    content: '\02795';
+    font-size: 15px;
+    float: right;
+    color: #7FB5D3;
+}
+
+#blog .collapsible.active {
+    color: #7FB5D3;
+}
+
+#blog .collapsible.active:after {
+    content: "\2796";
+}
+
+#blog .content p {
+  font-size: 15px;
+  color: #383838; 
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+#segment .segment_text {
+  /* position: absolute; */
+  padding-top: 130px;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+#segment .segment_text .box {
+  margin-top: 20px;
+  background-color: #EEEEEE;
+  padding-right: 3%;
+  padding-left: 3%;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  border-radius: 10px;
+}
+
+#segment .centered {
+    text-align: center;
+}
+
+#segment ul {
+    padding-left: 0;
+    list-style-type: none;
+    line-height: 1.5;
+}
+
+#segment .segment_text p {
+  font-size: 18px;
+  color: #383838; 
+  line-height: 1.5;
+}
+
+#segment .segment_text h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #3E688F;
+}
+
+#segment .segment_text h2 {
+  padding-top: 1%;
+  font-size: 23px;
+  font-weight: 600;
+  color: #EE7989;
+}
+
+#segment .segment_text h3 {
+  font-size: 16px;
+  font-weight: 450;
+  margin-top: -15px;
+  color: #B3B3B3;
+}
+
+#segment .space {
+    height: 20px;
+}
+
+#bluetext {
+  color: #3E688F;
+  font-weight: 600;
+}
+
+#footer {
+    font-weight: 600;
+    text-align: center;
+    font-size: 15px;
+    padding-bottom: 15px;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
+    background:#EEEEEE;
+}
+
