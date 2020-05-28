@@ -53,3 +53,42 @@ function closeNav() {
     document.getElementById("nav").style.width = "0px";
     document.getElementById("nav-main").style.marginLeft = "0px";
 }
+
+var index = 1;
+
+function move(n) {
+    show(index += n);
+}
+
+function current(n) {
+    show(index = n);
+}
+
+function show(n) {
+    var i;
+    var slides = document.getElementsByClassName("slides");
+    var indices = document.getElementsByClassName("index");
+
+    if (n > slides.length) {
+        index = 1;
+    }
+
+    if (n < 1) {
+        index = slides.length;
+    }
+
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+
+    for (i = 0; i < slides.length; i++) {
+        indices[i].className = indices[i].className.replace(" active", "");
+    }
+
+    slides[index - 1].style.display = "block";
+    indices[index - 1].className += " active";
+}
+
+window.onload = function() {
+    show(1);
+}

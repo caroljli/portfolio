@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="post">
-                    <a href="javascript:void(0)" class="collapsible" href="javascript:void(0)" onClick="collapseMenu()">MAKING TIME FOR FOOD</a>
+                    <a href="javascript:void(0)" class="collapsible" onClick="collapseMenu()">MAKING TIME FOR FOOD</a>
                     <div class="content">
                         <h3>Things I've Made This Quarantine &nbsp; • &nbsp;<a class="coral">May 26, 2020</a></h3>
                         <div class="box">
@@ -37,11 +37,61 @@
                                 One of the things I look forward to every day is making food! I've always enjoyed
                                 cooking, but never really made time for it during the semester. I'm glad, out of all things,
                                 I was able to experiment with cooking more.
-
-                                <br></br>
-
-                                TODO: import photos for slideshow, make slideshow
                             </p>
+                        </div>
+
+                        <div class="slideshow-wrapper">
+                            <div class="slideshow">
+                                <div class="slides trans">
+                                    <img src="/assets/images/img-porkrice.jpg"></img>
+                                    <div class="slideshow-caption">
+                                        Minced pork rice with soy sauce, sugar, and mirin served with
+                                        onions and mushrooms.
+                                    </div>
+                                </div>
+
+                                <div class="slides trans">
+                                    <img src="/assets/images/img-salmon.jpg"></img>
+                                    <div class="slideshow-caption">
+                                        Miso salmon with mushroom reduction served with a side of
+                                        sesame brocolli on rice.
+                                    </div>
+                                </div>
+
+                                <div class="slides trans">
+                                    <img src="/assets/images/img-spicyrice.jpg"></img>
+                                    <div class="slideshow-caption">
+                                        Chili oil fried rice with veggies.
+                                    </div>
+                                </div>
+
+                                <div class="slides trans">
+                                    <img src="/assets/images/img-tortellini.jpg"></img>
+                                    <div class="slideshow-caption">
+                                        Minced beef marinara with five-cheese tortellini.
+                                    </div>
+                                </div>
+
+                                <div class="slides trans">
+                                    <img src="/assets/images/img-udon.jpg"></img>
+                                    <div class="slideshow-caption">
+                                        Lap cheung (Chinese sweet sausage) with onions, mushrooms, and soy sauce reduction
+                                        served on hot udon noodles.
+                                    </div>
+                                </div>
+
+                                <a href="javascript:void(0)" class="next" onClick="move(1)"><i class="fas fa-caret-right fa-2x"></i></a>
+                                <a href="javascript:void(0)" class="previous" onClick="move(-1)"><i class="fas fa-caret-left fa-2x"></i></a>
+                            </div>
+
+                            <div class="slideshow-index">
+                                <span class="index" onClick="current(1)"></span>
+                                <span class="index" onClick="current(2)"></span>
+                                <span class="index" onClick="current(3)"></span>
+                                <span class="index" onClick="current(4)"></span>
+                                <span class="index" onClick="current(5)"></span>
+                            </div>
+
                         </div>
                         
                     </div>

@@ -19,6 +19,16 @@
     font-style: normal;
 }
 
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
 * {
     font-family: "Cerebri Sans", sans-serif !important;
 }
@@ -306,6 +316,83 @@ a.arrow_down:hover {
 #bluetext {
   color: #3E688F;
   font-weight: 600;
+}
+
+.slideshow-wrapper {
+    margin-top: 15px;
+}
+
+.slideshow {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+.slides {
+  display: none;
+}
+
+.slides img {
+  width: 100%;
+}
+
+.trans {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+.next, .previous {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  color: #EEEEEE;
+}
+
+.next:hover, .previous:hover {
+   color: #7FB5D3;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.slideshow-caption {
+  color: #EEEEEE;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+.slideshow-index {
+  text-align: center;
+}
+
+.slideshow-index .index {
+  cursor: pointer;
+  height: 8px;
+  width: 8px;
+  margin: 0 12px;
+  background-color: #3E688F;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.5s ease;
+}
+
+.slideshow-wrapper .active, .index:hover {
+  background-color: #7FB5D3;
 }
 
 #footer {
