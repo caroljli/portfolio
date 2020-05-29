@@ -39,6 +39,11 @@
   100% {opacity:1;}
 }
 
+@keyframes slideTop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
 * {
     font-family: "Cerebri Sans", sans-serif !important;
 }
@@ -76,6 +81,8 @@ html, body {
 
 .sidebar a:hover {
   color: #7FB5D3;
+  margin-right: 30px;
+  transition: 0.4s
 }
 
 .sidebar a.close {
@@ -436,9 +443,46 @@ a.arrow_down:hover {
   left: 20px;
   z-index: 11;
   color: #3E688F;
+  display: block;
 }
 
 #back-button:hover {
+  color:#7FB5D3;
+}
+
+#me-modal {
+  display: none;
+  position: fixed;
+  z-index: 12;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(127, 181, 211, 0.4);
+}
+
+#me-modal .modal-content {
+  background-color: #EEEEEE;
+  padding: 30px;
+  margin: 10% auto;
+  width: 50%;
+  border-radius: 10px;
+  animation-name: slideTop;
+  animation-duration: 1s;
+}
+
+#me-modal .modal-content img {
+  width: 100%;
+}
+
+#me-modal a.close-modal-button {
+  color: #3E688F;
+  float: right;
+  cursor: pointer;
+}
+
+a.close-modal-button:hover {
   color:#7FB5D3;
 }
 

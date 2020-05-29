@@ -12,9 +12,10 @@
         </div>
 
         <div id="nav" class="sidebar">
-            <a href="javascript:void(0)" class="close" onClick="closeNav()"><i class="far fa-times-circle fa-2x"></i></a>
+            <a href="javascript:void(0)" class="close" onClick="closeNav()"><i class="fas fa-minus fa-2x"></i></a>
             <a href="index.html">HOME</a>
             <a href="about.html">ABOUT</a>
+            <a href="about.html#proj_segment">PROJECTS</a>
             <a href="posts.html">POSTS</a>
         </div>
 
@@ -28,7 +29,7 @@
                     <h1>HEY! NICE TO MEET YOU!</h1>
                     <div class="box">
                         <p>
-                            Hey! I'm glad you're here!
+                            Hey! I'm glad you're <a href="javascript:void(0)" onClick="clickModal()" id="me-modal-link">here</a>!
                             <br></br>
                             I'm Carol, a rising junior (2022!) at the University of Pennsylvania. I'm from Vancouver, 
                             Canada, and—like most people from Vancouver—I'm fond of hiking, trees, eating (a lot), 
@@ -36,7 +37,7 @@
                             <br></br>
                             Although I haven't been able to go outside as much because of quarantine (cri), I'm
                             glad that I've been able to spend this time exploring more things to make, specifically
-                            of different Asian cuisines. You can check out some things I've cooked here (TODO: link).
+                            of different Asian cuisines. You can check out some things I've cooked <a href="posts.html#quarantine-food">here</a>.
                             <br></br>
                             Aside from that, I also like to watch shows! My taste is diverse, but some shows I really
                             enjoy include Hyouka (a mystery slice-of-life anime animated by Kyoani, which is one of my
@@ -132,4 +133,66 @@
         <div id="footer">
             <p>Made with 🍳 by Carol Li</p>
         </div>
+
+        <div id="me-modal">
+            <div class="modal-content">
+                <a class="close-modal-button" onClick="closeModal()"><i class="fas fa-minus fa-2x"></i></a>
+                <p>Hi! Here's a gallery that showcases more about me!</p>
+                    <div class="slideshow-wrapper">
+                        <div class="slideshow">
+                            <div class="slides trans">
+                                <img src="/assets/images/img-porkrice.jpg"></img>
+                                <div class="slideshow-caption">
+                                    Minced pork rice with soy sauce, sugar, and mirin served with
+                                    onions and mushrooms.
+                                </div>
+                            </div>
+
+                            <div class="slides trans">
+                                <img src="/assets/images/img-salmon.jpg"></img>
+                                <div class="slideshow-caption">
+                                    Miso salmon with mushroom reduction served with a side of
+                                    sesame brocolli on rice.
+                                </div>
+                            </div>
+
+                            <div class="slides trans">
+                                <img src="/assets/images/img-spicyrice.jpg"></img>
+                                <div class="slideshow-caption">
+                                    Chili oil fried rice with veggies.
+                                </div>
+                            </div>
+
+                            <div class="slides trans">
+                                <img src="/assets/images/img-tortellini.jpg"></img>
+                                <div class="slideshow-caption">
+                                    Minced beef marinara with five-cheese tortellini.
+                                </div>
+                            </div>
+
+                            <div class="slides trans">
+                                <img src="/assets/images/img-udon.jpg"></img>
+                                <div class="slideshow-caption">
+                                    Lap cheung (Chinese sweet sausage) with onions, mushrooms, and soy sauce reduction
+                                    served on hot udon noodles.
+                                </div>
+                            </div>
+
+                            <a href="javascript:void(0)" class="next" onClick="move(1)"><i class="fas fa-caret-right fa-2x"></i></a>
+                            <a href="javascript:void(0)" class="previous" onClick="move(-1)"><i class="fas fa-caret-left fa-2x"></i></a>
+                        </div>
+
+                        <div class="slideshow-index">
+                            <span class="index" onClick="current(1)"></span>
+                            <span class="index" onClick="current(2)"></span>
+                            <span class="index" onClick="current(3)"></span>
+                            <span class="index" onClick="current(4)"></span>
+                            <span class="index" onClick="current(5)"></span>
+                        </div>
+
+                    </div>
+            </div>
+        </div>
     </body>
+
+    
