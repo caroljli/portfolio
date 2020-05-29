@@ -387,14 +387,17 @@ a.arrow_down:hover {
 }
 
 .slideshow-caption {
-  color: #EEEEEE;
+  color: #333333;
   font-size: 15px;
   font-weight: 500;
   padding: 20px 20px;
+  bottom: 10px;
   position: absolute;
-  bottom: 8px;
-  width: 90%;
-  text-align: left;
+  text-align: center;
+  background-color: rgb(238, 238, 238, 0.7);
+  border-radius: 10px;
+  width: 80%;
+  margin-left: 7%;
 }
 
 .slideshow-index {
