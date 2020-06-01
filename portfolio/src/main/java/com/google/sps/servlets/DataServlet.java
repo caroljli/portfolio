@@ -22,28 +22,54 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<String> messages = new ArrayList<String>();
+  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("Comment").addSort("name", SortDirection.ASCENDING);
+
+    PreparedQuery results = datastore.prepare(query);
+
+    List<String> comments = new ArrayList<>();
+
+    for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();
+      String name = entity.getProperty("name").toString();
+      String comment = entity.getProperty("comment").toString();
+
+      String fullComment = "@" + id + " " + name + ": " + comment;
+      comments.add(fullComment);
+    }
+    
     Gson gson = new Gson();
-    String messagesJson = gson.toJson(messages);
+    String commentsJson = gson.toJson(comments);
     
     response.setContentType("application/json;");
-    response.getWriter().println(messagesJson);
+    response.getWriter().println(commentsJson);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String name = request.getParameter("name");
     String comment = request.getParameter("comment");
-    String fullComment = name + ": " + comment;
-    messages.add(fullComment);
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("comment", comment);
+
+    datastore.put(commentEntity);
+
     response.sendRedirect("/servlet.html");
   }
 }
