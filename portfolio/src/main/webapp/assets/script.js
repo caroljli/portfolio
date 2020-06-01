@@ -120,7 +120,7 @@ function scrollUpHelper() {
     var top = document.getElementById("top-button");
     if (document.documentElement.scrollTop > 20) {
         top.style.display = "block";
-    } else if (top) {
+    } else {
         top.style.display = "none";
     } 
 }
