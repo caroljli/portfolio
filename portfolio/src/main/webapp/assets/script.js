@@ -43,3 +43,14 @@ function collapseMenu() {
         });
     }
 }
+
+/**
+ * Fetches greeting from server and adds to servlet page.
+ */
+
+function getGreeting() {
+    console.log("greeting activated");
+    fetch('/data').then(response => response.text()).then((greeting) => {
+        document.getElementById('greeting-container').innerText = greeting;
+    });
+}
