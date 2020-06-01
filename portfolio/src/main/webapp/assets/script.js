@@ -60,6 +60,10 @@ function getMessages() {
   });
 }
 
+/**
+ * Creates a <li> element.
+ */
+
 function createListElement(text) {
   const listElem = document.createElement('li');
   listElem.innerText = text;
