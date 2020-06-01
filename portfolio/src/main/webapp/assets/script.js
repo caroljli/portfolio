@@ -45,12 +45,23 @@ function collapseMenu() {
 }
 
 /**
- * Fetches greeting from server and adds to servlet page.
+ * Fetches greetings from server and adds to servlet page.
  */
 
-function getGreeting() {
-    console.log("greeting activated");
-    fetch('/data').then(response => response.text()).then((greeting) => {
-        document.getElementById('greeting-container').innerText = greeting;
-    });
+function getMessages() {
+  fetch('/data').then(response => response.json()).then((messages) => {
+    const messagesContainer = document.getElementById('messages-container');
+    messagesContainer.innerHTML = '';
+    for (var i = 0; i < messages.length; i++) {
+      messagesContainer.appendChild(
+        createListElement(messages[i])
+      );
+    }
+  });
+}
+
+function createListElement(text) {
+  const listElem = document.createElement('li');
+  listElem.innerText = text;
+  return listElem;
 }
