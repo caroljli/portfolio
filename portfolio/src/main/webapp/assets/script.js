@@ -34,46 +34,65 @@ function closeNav() {
 }
 
 /** 
- * Buttons for photo slider transitions, indexers.
+ * Moves slider by n increments.
  */
 
-var index = 1;
+// initial index value
+var index = 0;
 
 function move(n) {
     show(index += n);
 }
 
+/** 
+ * Displays current image on slider.
+ */
+
 function current(n) {
     show(index = n);
 }
 
+/** 
+ * Shows the current slide by index n and hides all other slides,
+ * changes display of index indicator (dot) to active if current indexed 
+ * slide is showing, otherwise sets indicator as inactive.
+ */
+
 function show(n) {
     var i;
+
+    // all image slides
     var slides = document.getElementsByClassName("slides");
+
+    // indices for each of the scrolling dots (index indicator) for current image
     var indices = document.getElementsByClassName("index");
 
-    if (n > slides.length) {
-        index = 1;
+    // resets index if n doesn't point to an image in the slider
+    if (n > slides.length - 1) {
+        index = 0;
     }
 
-    if (n < 1) {
-        index = slides.length;
+    // sets index to max index if n is less than first index
+    if (n < 0) {
+        index = slides.length - 1;
     }
 
+    // set all image slides display to none
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
 
+    // sets all index indicator displays to none 
     for (i = 0; i < slides.length; i++) {
         indices[i].className = indices[i].className.replace(" active", "");
     }
 
-    if (slides[index - 1] != null) {
-        slides[index - 1].style.display = "block";
+    if (slides[index] != null) {
+        slides[index].style.display = "block";
     }
 
-    if (indices[index - 1] != null) {
-        indices[index - 1].className += " active";
+    if (indices[index] != null) {
+        indices[index].className += " active";
     }
 }
 
@@ -115,26 +134,12 @@ function back() {
 }
 
 /**
- * Opens, closes, and activates modal.
+ * Opens, closes, and activates modal on click.
  */
 
 function clickModal() {
     var modal = document.getElementById("me-modal");
     modal.style.display = "block";
-    checkModal();
-}
-
-function checkModal() {
-    var close = document.getElementById("close-modal-button")[0];
-    var modal = document.getElementById("me-modal");
-
-    close.onClick = function() {
-        modal.style.display = "none";
-    }
-
-    window.onClick = function() {
-        modal.style.display = "none";
-    }
 }
 
 function closeModal() {
