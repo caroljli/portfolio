@@ -126,13 +126,13 @@ a.coral {
 }
 
 a.arrow_down {
-    color: #7FB5D3;
-    margin-left: 50%;
-    margin-right: 50%;
+  color: #7FB5D3;
+  margin-left: 50%;
+  margin-right: 50%;
 }
 
 a.arrow_down:hover {
-    color: #3E688F;
+  color: #3E688F;
 }
 
 #landing {
@@ -142,7 +142,6 @@ a.arrow_down:hover {
 }
 
 #landing .landing_text {
-  /* width: 794px; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -273,16 +272,21 @@ a.arrow_down:hover {
   color: #EEA479;
 }
 
-#forum .view-replies {
-  /* padding-top: 20px; */
+#forum a.collapsible {
   font-weight: 600;
   font-size: 20px;
   color: #EEA479;
   cursor: pointer;
 }
 
-#forum .view-replies a:hover {
+#forum a.collapsible:hover {
   color: #EE7989;
+}
+
+#forum .replies {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
 }
 
 #blog {
@@ -487,12 +491,12 @@ a.arrow_down:hover {
 }
 
 .next:hover, .previous:hover {
-   color: #7FB5D3;
+  color: #7FB5D3;
 }
 
 .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
+  right: 0;
+  border-radius: 3px 0 0 3px;
 }
 
 .slideshow-caption {
@@ -599,15 +603,15 @@ a.close-modal-button:hover {
 }
 
 #footer {
-    font-weight: 600;
-    text-align: center;
-    font-size: 15px;
-    padding-bottom: 15px;
-    position: fixed;
-    left: 0px;
-    bottom: 0px;
-    height: 30px;
-    width: 100%;
-    background:#EEEEEE;
+  font-weight: 600;
+  text-align: center;
+  font-size: 15px;
+  padding-bottom: 15px;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 30px;
+  width: 100%;
+  background:#EEEEEE;
 }
 
