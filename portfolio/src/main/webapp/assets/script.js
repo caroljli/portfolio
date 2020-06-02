@@ -33,6 +33,7 @@ function getMessages() {
       );
     }
   });
+
 }
 
 /**
@@ -65,7 +66,7 @@ function closeNav() {
 var index = 0;
 
 function move(n) {
-    show(index += n);
+  show(index += n);
 }
 
 /** 
@@ -73,7 +74,7 @@ function move(n) {
  */
 
 function current(n) {
-    show(index = n);
+  show(index = n);
 }
 
 /** 
@@ -93,30 +94,26 @@ function show(n) {
 
   // resets index if n doesn't point to an image in the slider
   if (n > slides.length - 1) {
-      index = 0;
+    index = 0;
   }
 
   // sets index to max index if n is less than first index
   if (n < 0) {
-      index = slides.length - 1;
+    index = slides.length - 1;
   }
 
-  // set all image slides display to none
+  // set all image slides display to none and all index indicator displays to none 
   for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-  }
-
-  // sets all index indicator displays to none 
-  for (i = 0; i < slides.length; i++) {
-      indices[i].className = indices[i].className.replace(" active", "");
+    slides[i].style.display = "none";
+    indices[i].className = indices[i].className.replace(" active", "");
   }
 
   if (slides[index] != null) {
-      slides[index].style.display = "block";
+    slides[index].style.display = "block";
   }
 
   if (indices[index] != null) {
-      indices[index].className += " active";
+    indices[index].className += " active";
   }
 }
 
@@ -147,9 +144,9 @@ function scrollUp() {
 function scrollUpHelper() {
   var top = document.getElementById("top-button");
   if (document.documentElement.scrollTop > 20) {
-      top.style.display = "block";
+    top.style.display = "block";
   } else {
-      top.style.display = "none";
+    top.style.display = "none";
   } 
 }
 
