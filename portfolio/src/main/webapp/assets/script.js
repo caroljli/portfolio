@@ -11,15 +11,40 @@ function collapseMenu() {
       this.classList.toggle("active");
       var content = this.nextElementSibling;
       if (content.style.maxHeight) {
-        content.style.maxHeight = null;
+          content.style.maxHeight = null;
       } else {
-        content.style.maxHeight = content.scrollHeight + "px";
+          content.style.maxHeight = content.scrollHeight + "px";
       }
     });
   }
 }
 
 /**
+ * Fetches greetings from server and adds to servlet page.
+ */
+
+function getMessages() {
+  fetch('/data').then(response => response.json()).then((messages) => {
+    const messagesContainer = document.getElementById('messages-container');
+    messagesContainer.innerHTML = '';
+    for (var i = 0; i < messages.length; i++) {
+      messagesContainer.appendChild(
+        createListElement(messages[i])
+      );
+    }
+  });
+
+}
+
+/**
+ * Creates a <li> element.
+ */
+
+function createListElement(text) {
+  const listElem = document.createElement('li');
+  listElem.innerText = text;
+  return listElem;
+
  * Opens and closes the navigation bar.
  */
 
