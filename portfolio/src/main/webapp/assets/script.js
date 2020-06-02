@@ -11,9 +11,9 @@ function collapseMenu() {
       this.classList.toggle("active");
       var content = this.nextElementSibling;
       if (content.style.maxHeight) {
-          content.style.maxHeight = null;
+        content.style.maxHeight = null;
       } else {
-          content.style.maxHeight = content.scrollHeight + "px";
+        content.style.maxHeight = content.scrollHeight + "px";
       }
     });
   }
@@ -33,7 +33,6 @@ function getMessages() {
       );
     }
   });
-
 }
 
 /**
@@ -44,7 +43,9 @@ function createListElement(text) {
   const listElem = document.createElement('li');
   listElem.innerText = text;
   return listElem;
+}
 
+/**
  * Opens and closes the navigation bar.
  */
 
@@ -122,11 +123,7 @@ function show(n) {
  */
 
 window.onload = function() {
-<<<<<<< HEAD
-    show(0);
-=======
   show(0);
->>>>>>> cf1faf5dd87b1e45783e4b9f00da81dc064ebec7
 }
 
 /**
@@ -155,7 +152,7 @@ function scrollUpHelper() {
  */
 
 function back() {
-    window.history.back();
+  window.history.back();
 }
 
 /**
