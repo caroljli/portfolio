@@ -8,25 +8,29 @@
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
   <body>
-    <div id="nav"> 
-        <p>CAROL LI</p>
-        <p class="about_me_link"><a href="about.html">ABOUT</a> &nbsp; &nbsp; &nbsp; <a href="posts.html">POSTS</a></p>
+
+    <div id="nav-main"> 
+        <a class="open" onClick="openNav()"><i class="fas fa-plus fa-2x"></i></a>
     </div>
 
+    <div id="nav" class="sidebar">
+        <a href="javascript:void(0)" class="close" onClick="closeNav()"><i class="fas fa-minus fa-2x"></i></a>
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="about.html#proj_segment">PROJECTS</a>
+        <a href="posts.html">POSTS</a>
+    </div>
+
+    <a href="javascript:void(0)" id="back-button" onClick="back()"><i class="fas fa-long-arrow-alt-left fa-2x"></i></a>
+
     <div id="landing">
-        <div class="columns is-desktop">
-            <div class="column is-one-fifth"></div>
-            <div class="column">
-                <div class="landing_text">
-                <h1>Hi, I'm Carol!</h1>
-                <p>
-                    I'm Carol Li, a Canadian (🇨🇦) that likes to draw, design, and 
-                    develop. I'm currently an undergraduate student at the 
-                    University of Pennsylvania.
-                </p>
-                </div>
-            <div class="column is-one-fifth"></div>
-            </div>
+        <div class="landing_text">
+        <h1>Hi, I'm Carol!</h1>
+        <p>
+            I'm Carol Li, a Canadian (🇨🇦) that likes to draw, design, and 
+            develop. I'm currently an undergraduate student at the 
+            University of Pennsylvania.
+        </p>
         </div>
     </div>
 
