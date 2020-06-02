@@ -7,10 +7,21 @@
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     </head>
     <body>
-        <div id="nav"> 
-            <p>CAROL LI</p>
-            <p class="about_me_link"><a href="index.html">HOME</a> &nbsp; &nbsp; &nbsp; <a href="posts.html">POSTS</a></p>
+        <div id="nav-main"> 
+            <a class="open" onClick="openNav()"><i class="fas fa-plus fa-2x"></i></a>
         </div>
+
+        <div id="nav" class="sidebar">
+            <a href="javascript:void(0)" class="close" onClick="closeNav()"><i class="fas fa-minus fa-2x"></i></a>
+            <a href="index.html">HOME</a>
+            <a href="about.html">ABOUT</a>
+            <a href="about.html#proj_segment">PROJECTS</a>
+            <a href="posts.html">POSTS</a>
+        </div>
+
+        <a href="javascript:void(0)" id="top-button" onClick="scrollUp()"><i class="far fa-arrow-alt-circle-up fa-2x"></i></a>
+
+        <a href="javascript:void(0)" id="back-button" onClick="back()"><i class="fas fa-long-arrow-alt-left fa-2x"></i></a>
 
         <div id="segment">
             <div id="intro_segment">
@@ -18,7 +29,7 @@
                     <h1>HEY! NICE TO MEET YOU!</h1>
                     <div class="box">
                         <p>
-                            Hey! I'm glad you're here!
+                            Hey! I'm glad you're <a href="javascript:void(0)" onClick="clickModal()" id="me-modal-link">here</a>!
                             <br></br>
                             I'm Carol, a rising junior (2022!) at the University of Pennsylvania. I'm from Vancouver, 
                             Canada, and—like most people from Vancouver—I'm fond of hiking, trees, eating (a lot), 
@@ -26,12 +37,12 @@
                             <br></br>
                             Although I haven't been able to go outside as much because of quarantine (cri), I'm
                             glad that I've been able to spend this time exploring more things to make, specifically
-                            of different Asian cuisines. You can check out some things I've cooked here (TODO: link).
+                            of different Asian cuisines. You can check out some things I've cooked <a href="posts.html#quarantine-food">here</a>.
                             <br></br>
                             Aside from that, I also like to watch shows! My taste is diverse, but some shows I really
                             enjoy include Hyouka (a mystery slice-of-life anime animated by Kyoani, which is one of my
                             favourites !!), Money Heist (a Spanish thriller-drama about a heist on the Spanish Mint), 
-                            How I Met Your Mother (as you do), and Boku No Hero Academia (or My Hero Academia, another
+                            How I Met Your Mother (I also like Friends!), and Boku No Hero Academia (or My Hero Academia, another
                             anime that I really like).
                         </p>
                     </div>
@@ -47,6 +58,9 @@
                             <a href="mailto:caroldotli@gmail.com"><i class="far fa-envelope fa-2x"></i></a>
                         </p>
                     </div>
+                </div>
+                <div class="arrow_down_container">
+                    <a class="arrow_down" href="#proj_segment"><i class="fas fa-arrow-down fa-2x"></i></a>
                 </div>
             </div>
         </div>
@@ -90,7 +104,7 @@
                     <h3>for Passerine Cowbirds &nbsp; • &nbsp;<a class="light_blue">Pandas, Tensorflow, Sci-Kit Learn</a></h3>
                     <div class="box">
                         <p>
-                            Generative neural network autoencoder using MDS and variational models purposed to automatically visualize male passerine songbird songbird
+                            Generative neural network autoencoder using MDS and variational models purposed to automatically visualize male passerine songbird
                             in order to perform analysis between mating posture and birdsong. Worked on autoencoder implementation.
                         </p>
                     </div>
@@ -119,4 +133,79 @@
         <div id="footer">
             <p>Made with 🍳 by Carol Li</p>
         </div>
+
+        <div id="me-modal">
+            <div class="modal-content">
+                <a class="close-modal-button" onClick="closeModal()"><i class="fas fa-minus fa-2x"></i></a>
+                <p>
+                    Hi! Here's a gallery that showcases more about me!
+                    <br></br>
+                    I like looking back on old photos in my free time, as it makes me appreciate
+                    the moments I had that are easy to forget. One time, when I forgot to activate
+                    my phone plan in Canada, I didn't have service on the bus so I would look at
+                    old photos of memories I've had in the semester. It always made me happy.
+                </p>
+
+                <div class="slideshow-wrapper">
+                    <div class="slideshow">
+                        <div class="slides trans">
+                            <img src="/assets/images/img-catburrito.jpg"></img>
+                            <div class="slideshow-caption">
+                                me in a meme (unfortunately) ;;
+                            </div>
+                        </div>
+
+                        <div class="slides trans">
+                            <img src="/assets/images/img-selfie.jpg"></img>
+                            <div class="slideshow-caption">
+                                hello! (the lighting was good pls forgive me HAHA)
+                            </div>
+                        </div>
+
+                        <div class="slides trans">
+                            <img src="/assets/images/img-ryan.jpg"></img>
+                            <div class="slideshow-caption">
+                                my fav plush bopping to some 🎶🎶🎶 tunes 🎶🎶🎶
+                            </div>
+                        </div>
+
+                        <div class="slides trans">
+                            <img src="/assets/images/img-friends.jpg"></img>
+                            <div class="slideshow-caption">
+                                my friends and i RIGHT BEFORE everything went virtual :'(
+                            </div>
+                        </div>
+
+                        <div class="slides trans">
+                            <img src="/assets/images/img-lin.jpg"></img>
+                            <div class="slideshow-caption">
+                                my lin! fun fact: big and gbig are both rly cool dancers 
+                                and i am the potato in the family (🥔)
+                            </div>
+                        </div>
+
+                        <a href="javascript:void(0)" class="next" onClick="move(1)"><i class="fas fa-caret-right fa-2x"></i></a>
+                        <a href="javascript:void(0)" class="previous" onClick="move(-1)"><i class="fas fa-caret-left fa-2x"></i></a>
+                    </div>
+
+                    <div class="slideshow-index">
+                        <span class="index" onClick="current(0)"></span>
+                        <span class="index" onClick="current(1)"></span>
+                        <span class="index" onClick="current(2)"></span>
+                        <span class="index" onClick="current(3)"></span>
+                        <span class="index" onClick="current(4)"></span>
+                    </div>
+                </div>
+
+                <p>
+                    Some of my favourite things to do is to watch the sunset, look at funny
+                    memes in Subtle Asian Traits (which honestly isn't very Asian-specific; most
+                    of the content there is reposted from Reddit anyway), and eat snacks, as you 
+                    can probably tell from the pictures.
+                </p>
+                
+            </div>
+        </div>
     </body>
+
+    
