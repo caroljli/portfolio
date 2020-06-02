@@ -20,32 +20,6 @@ function collapseMenu() {
 }
 
 /**
- * Fetches greetings from server and adds to servlet page.
- */
-
-function getMessages() {
-  fetch('/data').then(response => response.json()).then((messages) => {
-    const messagesContainer = document.getElementById('messages-container');
-    messagesContainer.innerHTML = '';
-    for (var i = 0; i < messages.length; i++) {
-      messagesContainer.appendChild(
-        createListElement(messages[i])
-      );
-    }
-  });
-}
-
-/**
- * Creates a <li> element.
- */
-
-function createListElement(text) {
-  const listElem = document.createElement('li');
-  listElem.innerText = text;
-  return listElem;
-}
-
-/**
  * Opens and closes the navigation bar.
  */
 
@@ -167,4 +141,30 @@ function clickModal() {
 function closeModal() {
   var modal = document.getElementById("me-modal");
   modal.style.display = "none";
+}
+
+/**
+ * Fetches greetings from server and adds to servlet page.
+ */
+
+function getMessages() {
+  fetch('/data').then(response => response.json()).then((messages) => {
+    const messagesContainer = document.getElementById('messages-container');
+    messagesContainer.innerHTML = '';
+    for (var i = 0; i < messages.length; i++) {
+      messagesContainer.appendChild(
+        createListElement(messages[i])
+      );
+    }
+  });
+}
+
+/**
+ * Creates a <li> element.
+ */
+
+function createListElement(text) {
+  const listElem = document.createElement('li');
+  listElem.innerText = text;
+  return listElem;
 }
