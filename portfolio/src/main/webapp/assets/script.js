@@ -228,16 +228,29 @@ function createCommentElement(text) {
   commentContentElement.innerText = comment;
   innerBox.appendChild(commentContentElement);
 
+  commentElement.appendChild(createReplyElement());
+
+  return commentElement;
+}
+
+/**
+ * Creates reply element. Content is static for now.
+ */
+
+function createReplyElement() {
+  const replyWrapper = document.createElement('div');
+  replyWrapper.className = 'reply-container';
+
   const viewReplies = document.createElement('a');
   viewReplies.href = "javascript:void(0)";
   viewReplies.className = "collapsible";
   viewReplies.onclick = collapseMenu;
   viewReplies.innerHTML = "<i class='fas fa-chevron-right'></i> \xa0 VIEW REPLIES";
-  commentElement.appendChild(viewReplies);
+  replyWrapper.appendChild(viewReplies);
 
   const repliesElement = document.createElement('div');
   repliesElement.className = "replies";
-  commentElement.appendChild(repliesElement);
+  replyWrapper.appendChild(repliesElement);
 
   const repliesBox = document.createElement('div');
   repliesBox.className = 'reply-box';
@@ -269,13 +282,5 @@ function createCommentElement(text) {
   replyForm.innerText = 'TODO: unique reply boxes for each comment';
   repliesElement.appendChild(replyForm);
 
-  return commentElement;
-}
-
-/**
- * Creates reply element. Content is static for now.
- */
-
-function createReplyElement() {
-
+  return replyWrapper;
 }
