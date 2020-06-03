@@ -244,7 +244,7 @@ function createCommentElement(text) {
   repliesElement.appendChild(repliesBox);
 
   const replyHeading = document.createElement('h3');
-  replyHeading.innerText = 'caro + \xa0';
+  replyHeading.innerText = 'caro \xa0';
   repliesBox.appendChild(replyHeading);
 
   const replyUsernameLink = document.createElement('a');

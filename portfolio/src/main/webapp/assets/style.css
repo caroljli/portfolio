@@ -295,6 +295,7 @@ a.arrow_down:hover {
   background-color: #EEEEEE;
   border-radius: 10px;
   font-weight: 500;
+  height: 200px;
 }
 
 #forum .new-comment label {
@@ -318,7 +319,12 @@ a.arrow_down:hover {
   border: 1px solid #7FB5D3;
 }
 
+#forum .new-comment input[type=textarea] {
+  height: 50px;
+}
+
 #forum .new-comment input[type=submit] {
+  margin-top: 20px;
   width: 100%;
   background-color: #B3B3B3;
 }
