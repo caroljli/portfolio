@@ -1,22 +1,22 @@
 @font-face {
-    font-family: 'Cerebri Sans';
-    src: url('./fonts/cerebrisans-regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Cerebri Sans';
+  src: url('./fonts/cerebrisans-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Cerebri Sans';
-    src: url('./fonts/cerebrisans-medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
+  font-family: 'Cerebri Sans';
+  src: url('./fonts/cerebrisans-medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Cerebri Sans';
-    src: url('./fonts/cerebrisans-bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
+  font-family: 'Cerebri Sans';
+  src: url('./fonts/cerebrisans-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
 }
 
 @-webkit-keyframes fade {
@@ -184,15 +184,16 @@ a.arrow_down:hover {
 
 #forum .box p {
   font-size: 15px;
-  margin-top: -20px;
   color: #B3B3B3;
+  padding: 0 20px 20px;
+  margin-top: -15px;
 }
 
 #forum .box h3 {
   font-size: 18px;
-  margin-top: 10px;
   color: #383838;
   font-weight: 500;
+  padding: 20px 20px 0;
 }
 
 #forum .segment_text {
@@ -204,10 +205,6 @@ a.arrow_down:hover {
 #forum .segment_text .box {
   margin-top: 20px;
   background-color: #EEEEEE;
-  padding-right: 3%;
-  padding-left: 3%;
-  padding-top: 1.5%;
-  padding-bottom: 1.5%;
   border-radius: 10px;
   font-weight: 500;
 }
@@ -220,30 +217,27 @@ a.arrow_down:hover {
 
 #forum .segment_text h2 {
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 2px;
-  color: #B3B3B3;
+  color: #383838;
 }
 
 #forum .inner-box p, #forum .reply-box p {
   font-size: 15px;
-  color: #FFFFFF;
-  font-weight: 500;
+  color: #383838;
+  font-weight: 400;
 }
 
 #forum .inner-box {
-  margin: 10px;
-  padding-right: 3%;
-  padding-left: 3%;
+  padding-right: 2%;
+  padding-left: 2%;
   padding-top: 5%;
-  padding-bottom: 5%;
-  background-color: #B3B3B3;
-  border-radius: 10px;
+  background-color: rgb(255, 255, 255, 0.5);
+  /* border-radius: 10px; */
 }
 
 #forum .reply-box {
   margin-top: 20px;
-  margin-left: 50px;
   background-color: #EEEEEE;
   padding-right: 3%;
   padding-left: 3%;
@@ -253,6 +247,11 @@ a.arrow_down:hover {
   font-weight: 500;
 }
 
+#forum .reply-form {
+  max-height: 0;
+  overflow: hidden;
+}
+ 
 #forum .reply-box h3 {
   font-size: 18px;
   margin-top: 10px;
@@ -260,15 +259,11 @@ a.arrow_down:hover {
   font-weight: 500;
 }
 
-#forum .reply-box p {
-  color: #B3B3B3;
-}
-
-#forum .reply-box a {
+#forum .reply-box a, #forum .box a {
   color: #EE7989;
 }
 
-#forum .reply-box a:hover {
+#forum .reply-box a:hover, #forum .box a:hover {
   color: #EEA479;
 }
 
@@ -279,7 +274,7 @@ a.arrow_down:hover {
   cursor: pointer;
 }
 
-#forum a.collapsible:hover {
+#forum a.collapsible:hover, a#reply-toggle:hover {
   color: #EE7989;
 }
 
@@ -287,6 +282,49 @@ a.arrow_down:hover {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.5s ease-out;
+  margin-left: 50px;
+}
+
+#forum a#reply-toggle {
+  float: right;
+}
+
+#forum .new-comment {
+  margin-top: 30px;
+  padding: 3%;
+  background-color: #EEEEEE;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+#forum .new-comment label {
+  font-size: 15px;
+  color: #383838;
+  padding: 20px 0 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-right: 20%;
+}
+
+#forum .new-comment input {
+  border: 1px solid #B3B3B3;
+  border-radius: 4px;
+  padding: 6px;
+  float: right;
+  width: 60%;
+}
+
+#forum .new-comment input:focus {
+  border: 1px solid #7FB5D3;
+}
+
+#forum .new-comment input[type=submit] {
+  width: 100%;
+  background-color: #B3B3B3;
+}
+
+#forum .new-comment input[type=submit]:focus {
+  background-color: #7FB5D3;
 }
 
 #blog {

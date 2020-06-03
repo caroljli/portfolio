@@ -11,40 +11,15 @@ function collapseMenu() {
       this.classList.toggle("active");
       var content = this.nextElementSibling;
       if (content.style.maxHeight) {
-          content.style.maxHeight = null;
+        content.style.maxHeight = null;
       } else {
-          content.style.maxHeight = content.scrollHeight + "px";
+        content.style.maxHeight = content.scrollHeight + "px";
       }
     });
   }
 }
 
 /**
- * Fetches greetings from server and adds to servlet page.
- */
-
-function getMessages() {
-  fetch('/data').then(response => response.json()).then((messages) => {
-    const messagesContainer = document.getElementById('messages-container');
-    messagesContainer.innerHTML = '';
-    for (var i = 0; i < messages.length; i++) {
-      messagesContainer.appendChild(
-        createListElement(messages[i])
-      );
-    }
-  });
-
-}
-
-/**
- * Creates a <li> element.
- */
-
-function createListElement(text) {
-  const listElem = document.createElement('li');
-  listElem.innerText = text;
-  return listElem;
-
  * Opens and closes the navigation bar.
  */
 
@@ -123,6 +98,7 @@ function show(n) {
 
 window.onload = function() {
   show(0);
+  getComments();
 }
 
 /**
@@ -151,7 +127,7 @@ function scrollUpHelper() {
  */
 
 function back() {
-    window.history.back();
+  window.history.back();
 }
 
 /**
@@ -166,4 +142,140 @@ function clickModal() {
 function closeModal() {
   var modal = document.getElementById("me-modal");
   modal.style.display = "none";
+}
+
+/**
+ * Fetches comments from server and adds to servlet page.
+ */
+
+function getMessages() {
+  fetch('/data').then(response => response.json()).then((messages) => {
+    const messagesContainer = document.getElementById('messages-container');
+    messagesContainer.innerHTML = '';
+    for (var i = 0; i < messages.length; i++) {
+      messagesContainer.appendChild(
+        createListElement(messages[i])
+      );
+    }
+  });
+}
+
+/**
+ * Creates a <li> element.
+ */
+
+function createListElement(text) {
+  const listElem = document.createElement('li');
+  listElem.innerText = text;
+  return listElem;
+}
+
+/**
+ * Fetches comments from server and adds to forum page.
+ */
+
+function getComments() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentsContainer = document.getElementById('comments-container');
+    commentsContainer.innerHTML = '';
+    for (var i = 0; i < comments.length; i++) {
+      commentsContainer.appendChild(
+        createCommentElement(comments[i])
+      );
+    }
+  });
+}
+
+/**
+ * Creates comment element.
+ */
+
+function createCommentElement(text) {
+  // split csv into arr of substrings
+  var commentData = text.split(",");
+  var id = commentData[0];
+  var name = commentData[1];
+  var comment = commentData[2];
+  var email = commentData[3];
+  var date = commentData[4];
+  var username = email.substring(0, email.indexOf("@"));
+
+  const commentElement = document.createElement('div');
+  commentElement.className = 'comment';
+
+  const box = document.createElement('div');
+  box.className = 'box';
+  commentElement.appendChild(box);
+
+  const headerElement = document.createElement('h3');
+  headerElement.innerText = name + "\xa0";
+  box.appendChild(headerElement);
+
+  const usernameElement = document.createElement('a');
+  usernameElement.href = "mailto:" + email;
+  usernameElement.innerText = "@" + username;
+  headerElement.appendChild(usernameElement);
+
+  const dateElement = document.createElement('p');
+  dateElement.innerText = date;
+  box.appendChild(dateElement);
+
+  const innerBox = document.createElement('div');
+  innerBox.className = 'inner-box';
+  box.appendChild(innerBox);
+
+  const commentContentElement = document.createElement('p');
+  commentContentElement.innerText = comment;
+  innerBox.appendChild(commentContentElement);
+
+  const viewReplies = document.createElement('a');
+  viewReplies.href = "javascript:void(0)";
+  viewReplies.className = "collapsible";
+  viewReplies.onclick = collapseMenu;
+  viewReplies.innerHTML = "<i class='fas fa-chevron-right'></i> \xa0 VIEW REPLIES";
+  commentElement.appendChild(viewReplies);
+
+  const repliesElement = document.createElement('div');
+  repliesElement.className = "replies";
+  commentElement.appendChild(repliesElement);
+
+  const repliesBox = document.createElement('div');
+  repliesBox.className = 'reply-box';
+  repliesElement.appendChild(repliesBox);
+
+  const replyHeading = document.createElement('h3');
+  replyHeading.innerText = 'caro + \xa0';
+  repliesBox.appendChild(replyHeading);
+
+  const replyUsernameLink = document.createElement('a');
+  replyUsernameLink.href = "http://google.com";
+  replyUsernameLink.innerText = '@username';
+  replyHeading.appendChild(replyUsernameLink);
+
+  const replyParagraph = document.createElement('p');
+  replyParagraph.innerText = 'This is a sample reply';
+  repliesBox.appendChild(replyParagraph);
+  
+  const replyToggle = document.createElement('a');
+  replyToggle.id = 'reply-toggle';
+  replyToggle.href = "javascript:void(0)";
+  replyToggle.className = "collapsible";
+  replyToggle.onclick = collapseMenu;
+  replyToggle.innerHTML = "<br /><i class='fas fa-reply'></i> \xa0 REPLY TO THREAD <br />";
+  repliesElement.appendChild(replyToggle);
+
+  const replyForm = document.createElement('div');
+  replyForm.className = 'reply-form';
+  replyForm.innerText = 'TODO: unique reply boxes for each comment';
+  repliesElement.appendChild(replyForm);
+
+  return commentElement;
+}
+
+/**
+ * Creates reply element. Content is static for now.
+ */
+
+function createReplyElement() {
+
 }

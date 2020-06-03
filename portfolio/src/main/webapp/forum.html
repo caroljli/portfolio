@@ -26,52 +26,27 @@
 
         <div id="forum">
           <div class="segment_text">
-              <h1>FORUM</h1>
-              <h2>Post comments, discussion, or thoughts here!</h2>
+            <h1>FORUM</h1>
+            <h2>Post comments, discussion, or thoughts here!</h2>
 
-              <div class="comment">
-                <div class="box">
-                    <h3>Carol Li &nbsp; <a href="http://google.com">@username</a></h3>
-                    <p>June 2, 2020 @ 1:00PM</p>
-                    <div class="inner-box">
-                      <p>
-                        This is a sample comment.
-                      </p>
-                    </div>
-                </div>
+            <div id="comments-container"></div>
 
-                <br/>
+            <div class="new-comment">
+              <form action="/data" method="POST">
+                <label for="name">Name</label> &nbsp;
+                <input type="text" name="name"><br/><br/>
 
-                <a href="javascript:void(0)" class="collapsible" onClick="collapseMenu()"><i class="fas fa-chevron-right"></i> &nbsp; VIEW REPLIES</a>
-                
-                <div class="replies">
-                  <div class="reply-box">
-                    <h3>caro &nbsp; <a href="http://google.com">@username</a></h3>
-                    <p>
-                      This is a sample reply.
-                    </p>
-                  </div>
-                  <div class="reply-box">
-                    <h3>caro &nbsp; <a href="http://google.com">@username</a></h3>
-                    <p>
-                      This is a sample reply.
-                    </p>
-                  </div>
-                </div>
+                <label for="email">Email</label> &nbsp;
+                <input type="email" name="email"><br/><br/>
 
-              </div>
+                <label for="comment">Comment</label>
+                <input type="textarea" name="comment"><br/><br/>
 
-              <div class="comment">
-                <div class="box">
-                    <h3>Carol Li &nbsp; <a href="http://google.com">@username</a></h3>
-                    <p>June 2, 2020 @ 1:30PM</p>
-                    <div class="inner-box">
-                      <p>
-                        This is another comment.
-                      </p>
-                    </div>
-                </div>
-              </div>
+                <input type="submit" value="POST COMMENT">
+              </form>
+
+            </div>
+
           </div>
         </div>
 
