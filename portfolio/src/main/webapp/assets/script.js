@@ -227,15 +227,11 @@ function createCommentElement(text) {
   commentContentElement.innerText = comment;
   innerBox.appendChild(commentContentElement);
 
-  const moreIcon = document.createElement('i');
-  moreIcon.className = "fas fa-chevron-right";
-
   const viewReplies = document.createElement('a');
   viewReplies.href = "javascript:void(0)";
   viewReplies.className = "collapsible";
-  viewReplies.onClick = "collapseMenu()";
-  viewReplies.appendChild(moreIcon);
-  viewReplies.innerText = "\xa0 VIEW REPLIES";
+  viewReplies.onclick = collapseMenu;
+  viewReplies.innerHTML = "<i class='fas fa-chevron-right'></i> \xa0 VIEW REPLIES";
   commentElement.appendChild(viewReplies);
 
   const repliesElement = document.createElement('div');
@@ -258,27 +254,27 @@ function createCommentElement(text) {
   const replyParagraph = document.createElement('p');
   replyParagraph.innerText = 'This is a sample reply';
   repliesBox.appendChild(replyParagraph);
-
-  const replyToggleIcon = document.createElement('i');
-  replyToggleIcon.className = "fas fa-reply";
-
-  const breakTag = document.createElement('br');
-  repliesBox.appendChild(breakTag);
-
+  
   const replyToggle = document.createElement('a');
   replyToggle.id = 'reply-toggle';
   replyToggle.href = "javascript:void(0)";
   replyToggle.className = "collapsible";
-  replyToggle.onClick = "collapseMenu()";
-  replyToggle.appendChild(replyToggleIcon);
-  replyToggle.innerText = "\xa0 REPLY TO THREAD";
-  repliesBox.appendChild(replyToggle);
-  repliesBox.appendChild(breakTag);
+  replyToggle.onclick = collapseMenu;
+  replyToggle.innerHTML = "<br /><i class='fas fa-reply'></i> \xa0 REPLY TO THREAD <br />";
+  repliesElement.appendChild(replyToggle);
 
   const replyForm = document.createElement('div');
-  replyForm.className = 'reply-box';
+  replyForm.className = 'reply-form';
   replyForm.innerText = 'TODO: unique reply boxes for each comment';
-  repliesBox.appendChild(replyForm);
+  repliesElement.appendChild(replyForm);
 
   return commentElement;
+}
+
+/**
+ * Creates reply element. Content is static for now.
+ */
+
+function createReplyElement() {
+
 }

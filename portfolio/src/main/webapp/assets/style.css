@@ -247,6 +247,11 @@ a.arrow_down:hover {
   font-weight: 500;
 }
 
+#forum .reply-form {
+  max-height: 0;
+  overflow: hidden;
+}
+ 
 #forum .reply-box h3 {
   font-size: 18px;
   margin-top: 10px;
