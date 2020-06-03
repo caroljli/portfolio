@@ -26,9 +26,10 @@
 
         <div id="forum">
           <div class="segment_text">
-              <h1>FORUM</h1>
-              <h2>Post comments, discussion, or thoughts here!</h2>
+            <h1>FORUM</h1>
+            <h2>Post comments, discussion, or thoughts here!</h2>
 
+            <div class="comments-container">
               <div class="comment">
                 <div class="box">
                     <h3>Carol Li &nbsp; <a href="http://google.com">@username</a></h3>
@@ -39,7 +40,6 @@
                       </p>
                     </div>
                 </div>
-
                 <a href="javascript:void(0)" class="collapsible" onClick="collapseMenu()"><i class="fas fa-chevron-right"></i> &nbsp; VIEW REPLIES</a>
                 
                 <div class="replies">
@@ -58,22 +58,14 @@
                   
                   <br />
                   <a href="javascript:void(0)" id="reply-toggle" class="collapsible" onClick="collapseMenu()"><i class="fas fa-reply"></i> &nbsp; REPLY TO THREAD</a>
+                  <br />
 
                   <div class="reply-box">
-                    <form action="/data" method="POST">
-                      <label for="name">Name:</label><br>
-                      <input type="text" name="name"><br>
-                      <label for="comment">Comment:</label><br>
-                      <input type="text" name="comment">
-                      <br/><br/>
-
-                      <input type="submit">
-                    </form>
+                    <p>TODO: unique reply boxes for each comment</p>
                   </div>
 
                 </div>
-
-              </div>
+              </div>                
 
               <div class="comment">
                 <div class="box">
@@ -86,6 +78,22 @@
                     </div>
                 </div>
               </div>
+
+              <div class="new-comment">
+                
+                <form action="/data" method="POST">
+                  <label for="name">Name:</label><br>
+                  <input type="text" name="name"><br>
+                  <label for="comment">Comment:</label><br>
+                  <input type="text" name="comment">
+                  <br/><br/>
+                  <input type="submit">
+                </form>
+
+              </div>
+
+            </div>
+
           </div>
         </div>
 
