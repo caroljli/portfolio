@@ -227,7 +227,58 @@ function createCommentElement(text) {
   commentContentElement.innerText = comment;
   innerBox.appendChild(commentContentElement);
 
-  console.log("comment element created");
+  const moreIcon = document.createElement('i');
+  moreIcon.className = "fas fa-chevron-right";
+
+  const viewReplies = document.createElement('a');
+  viewReplies.href = "javascript:void(0)";
+  viewReplies.className = "collapsible";
+  viewReplies.onClick = "collapseMenu()";
+  viewReplies.appendChild(moreIcon);
+  viewReplies.innerText = "\xa0 VIEW REPLIES";
+  commentElement.appendChild(viewReplies);
+
+  const repliesElement = document.createElement('div');
+  repliesElement.className = "replies";
+  commentElement.appendChild(repliesElement);
+
+  const repliesBox = document.createElement('div');
+  repliesBox.className = 'reply-box';
+  repliesElement.appendChild(repliesBox);
+
+  const replyHeading = document.createElement('h3');
+  replyHeading.innerText = 'caro + \xa0';
+  repliesBox.appendChild(replyHeading);
+
+  const replyUsernameLink = document.createElement('a');
+  replyUsernameLink.href = "http://google.com";
+  replyUsernameLink.innerText = '@username';
+  replyHeading.appendChild(replyUsernameLink);
+
+  const replyParagraph = document.createElement('p');
+  replyParagraph.innerText = 'This is a sample reply';
+  repliesBox.appendChild(replyParagraph);
+
+  const replyToggleIcon = document.createElement('i');
+  replyToggleIcon.className = "fas fa-reply";
+
+  const breakTag = document.createElement('br');
+  repliesBox.appendChild(breakTag);
+
+  const replyToggle = document.createElement('a');
+  replyToggle.id = 'reply-toggle';
+  replyToggle.href = "javascript:void(0)";
+  replyToggle.className = "collapsible";
+  replyToggle.onClick = "collapseMenu()";
+  replyToggle.appendChild(replyToggleIcon);
+  replyToggle.innerText = "\xa0 REPLY TO THREAD";
+  repliesBox.appendChild(replyToggle);
+  repliesBox.appendChild(breakTag);
+
+  const replyForm = document.createElement('div');
+  replyForm.className = 'reply-box';
+  replyForm.innerText = 'TODO: unique reply boxes for each comment';
+  repliesBox.appendChild(replyForm);
 
   return commentElement;
 }

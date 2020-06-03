@@ -1,22 +1,22 @@
 @font-face {
-    font-family: 'Cerebri Sans';
-    src: url('./fonts/cerebrisans-regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Cerebri Sans';
+  src: url('./fonts/cerebrisans-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Cerebri Sans';
-    src: url('./fonts/cerebrisans-medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
+  font-family: 'Cerebri Sans';
+  src: url('./fonts/cerebrisans-medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Cerebri Sans';
-    src: url('./fonts/cerebrisans-bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
+  font-family: 'Cerebri Sans';
+  src: url('./fonts/cerebrisans-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
 }
 
 @-webkit-keyframes fade {
@@ -282,6 +282,44 @@ a.arrow_down:hover {
 
 #forum a#reply-toggle {
   float: right;
+}
+
+#forum .new-comment {
+  margin-top: 30px;
+  padding: 3%;
+  background-color: #EEEEEE;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+#forum .new-comment label {
+  font-size: 15px;
+  color: #383838;
+  padding: 20px 0 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-right: 20%;
+}
+
+#forum .new-comment input {
+  border: 1px solid #B3B3B3;
+  border-radius: 4px;
+  padding: 6px;
+  float: right;
+  width: 60%;
+}
+
+#forum .new-comment input:focus {
+  border: 1px solid #7FB5D3;
+}
+
+#forum .new-comment input[type=submit] {
+  width: 100%;
+  background-color: #B3B3B3;
+}
+
+#forum .new-comment input[type=submit]:focus {
+  background-color: #7FB5D3;
 }
 
 #blog {
