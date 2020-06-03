@@ -250,6 +250,19 @@ a.arrow_down:hover {
 #forum .reply-form {
   max-height: 0;
   overflow: hidden;
+  transition: max-height 0.5s ease-out;
+  margin-top: 20px;
+  padding-right: 3%;
+  padding-left: 3%;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+}
+
+#forum .reply-form-box {
+  margin-top: 20px;
+  background-color: #EEEEEE;
+  border-radius: 10px;
+  font-weight: 500;
 }
  
 #forum .reply-box h3 {

@@ -274,13 +274,17 @@ function createReplyElement() {
   replyToggle.href = "javascript:void(0)";
   replyToggle.className = "collapsible";
   replyToggle.onclick = collapseMenu;
-  replyToggle.innerHTML = "<br /><i class='fas fa-reply'></i> \xa0 REPLY TO THREAD <br />";
+  replyToggle.innerHTML = "<br/> <i class='fas fa-reply'></i> \xa0 REPLY TO THREAD <br/>";
   repliesElement.appendChild(replyToggle);
 
   const replyForm = document.createElement('div');
   replyForm.className = 'reply-form';
-  replyForm.innerText = 'TODO: unique reply boxes for each comment';
   repliesElement.appendChild(replyForm);
+
+  const replyFormBox = document.createElement('div');
+  replyFormBox.className = 'reply-form-box';
+  replyFormBox.innerText = 'TODO: unique reply boxes for each comment';
+  replyForm.appendChild(replyFormBox);
 
   return replyWrapper;
 }
