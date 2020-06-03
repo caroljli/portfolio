@@ -144,7 +144,7 @@ function closeModal() {
 }
 
 /**
- * Fetches greetings from server and adds to servlet page.
+ * Fetches comments from server and adds to servlet page.
  */
 
 function getMessages() {
@@ -167,4 +167,68 @@ function createListElement(text) {
   const listElem = document.createElement('li');
   listElem.innerText = text;
   return listElem;
+}
+
+/**
+ * Fetches comments from server and adds to forum page.
+ */
+
+function getComments() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentsContainer = document.getElementById('comments-container');
+    commentsContainer.innerHTML = '';
+    for (var i = 0; i < comments.length; i++) {
+      commentsContainer.appendChild(
+        createCommentElement(comments[i])
+      );
+    }
+  });
+}
+
+/**
+ * Creates comment element.
+ */
+
+function createCommentElement(text) {
+  // split csv into arr of substrings
+  var commentData = text.split(",");
+  var id = commentData[0];
+  var name = commentData[1];
+  var comment = commentData[2];
+  var email = commentData[3];
+  var username = email.substring(0, email.indexOf("@"));
+
+  const commentElement = document.createElement('div');
+  commentElement.className = 'comment';
+
+  const box = document.createElement('div');
+  box.className = 'box';
+  commentElement.appendChild(box);
+
+  const headerElement = document.createElement('h3');
+  headerElement.innerText = name + "\xa0";
+  box.appendChild(headerElement);
+
+  const usernameElement = document.createElement('a');
+  usernameElement.href = "mailto:" + email;
+  usernameElement.innerText = "@" + username;
+  headerElement.appendChild(usernameElement);
+
+  
+  // TODO: convert to datetime
+  const date = document.createElement('p');
+  date.innerText = "June 2, 2020 @ 1:30PM";
+  box.appendChild(date);
+
+  const innerBox = document.createElement('div');
+  innerBox.className = 'inner-box';
+  box.appendChild(innerBox);
+
+  const commentContentElement = document.createElement('p');
+  commentContentElement.innerText = comment;
+  innerBox.appendChild(commentContentElement);
+
+  console.log("comment element created");
+
+  return commentElement;
 }

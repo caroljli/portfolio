@@ -47,8 +47,9 @@ public class DataServlet extends HttpServlet {
       long id = entity.getKey().getId();
       String name = entity.getProperty("name").toString();
       String comment = entity.getProperty("comment").toString();
+      String email = entity.getProperty("email").toString();
 
-      String fullComment = "@" + id + " " + name + ": " + comment;
+      String fullComment = id + "," + name + "," + comment + "," + email;
       comments.add(fullComment);
     }
     
@@ -63,10 +64,12 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String name = request.getParameter("name");
     String comment = request.getParameter("comment");
+    String email = request.getParameter("email");
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("comment", comment);
+    commentEntity.setProperty("email", email);
 
     datastore.put(commentEntity);
 

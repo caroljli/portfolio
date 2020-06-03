@@ -29,7 +29,9 @@
             <h1>FORUM</h1>
             <h2>Post comments, discussion, or thoughts here!</h2>
 
-            <div class="comments-container">
+            <button onClick="getComments()">test get comments function</button>
+
+            <div id="comments-container">
               <div class="comment">
                 <div class="box">
                     <h3>Carol Li &nbsp; <a href="http://google.com">@username</a></h3>
@@ -78,19 +80,21 @@
                     </div>
                 </div>
               </div>
+            </div>
 
-              <div class="new-comment">
-                
-                <form action="/data" method="POST">
-                  <label for="name">Name:</label><br>
-                  <input type="text" name="name"><br>
-                  <label for="comment">Comment:</label><br>
-                  <input type="text" name="comment">
-                  <br/><br/>
-                  <input type="submit">
-                </form>
+            <div class="new-comment">
+              <form action="/data" method="POST">
+                <label for="name">Name:</label><br>
+                <input type="text" name="name"><br>
+                <label for="email">Email:</label><br>
+                <input type="email" name="email"><br>
+                <input type="hidden" name="submission-time">
 
-              </div>
+                <label for="comment">Comment:</label><br>
+                <input type="text" name="comment">
+                <br/><br/>
+                <input type="submit">
+              </form>
 
             </div>
 
