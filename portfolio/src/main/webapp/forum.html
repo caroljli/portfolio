@@ -29,58 +29,7 @@
             <h1>FORUM</h1>
             <h2>Post comments, discussion, or thoughts here!</h2>
 
-            <button onClick="getComments()">test get comments function</button>
-
-            <div id="comments-container">
-              <div class="comment">
-                <div class="box">
-                    <h3>Carol Li &nbsp; <a href="http://google.com">@username</a></h3>
-                    <p>June 2, 2020 @ 1:00PM</p>
-                    <div class="inner-box">
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ullamcorper varius odio, eget eleifend ex ultricies vitae. Duis est ipsum, convallis et quam quis, auctor ornare sapien. Curabitur consequat metus nec consectetur porttitor. Donec auctor commodo augue, eu mollis urna consequat eu. Quisque ut bibendum purus, non molestie nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam mollis sem vitae lorem gravida vulputate. Quisque sem diam, rutrum ac elit sit amet, sodales ultricies nunc. Proin elementum tortor nec odio vulputate, ut ornare sapien congue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur fringilla et est et luctus. Vestibulum lobortis nisi lectus, eu accumsan nisi egestas quis. Ut dignissim, magna vel aliquam faucibus, risus nisl viverra lacus, et ultricies neque quam ut erat. Pellentesque sit amet nunc accumsan, efficitur enim nec, commodo velit. Sed et enim quis enim vestibulum vestibulum a a nisi.
-                      </p>
-                    </div>
-                </div>
-                <a href="javascript:void(0)" class="collapsible" onClick="collapseMenu()"><i class="fas fa-chevron-right"></i> &nbsp; VIEW REPLIES</a>
-                
-                <div class="replies">
-                  <div class="reply-box">
-                    <h3>caro &nbsp; <a href="http://google.com">@username</a></h3>
-                    <p>
-                      This is a sample reply.
-                    </p>
-                  </div>
-                  <div class="reply-box">
-                    <h3>caro &nbsp; <a href="http://google.com">@username</a></h3>
-                    <p>
-                      This is a sample reply.
-                    </p>
-                  </div>
-                  
-                  <br />
-                  <a href="javascript:void(0)" id="reply-toggle" class="collapsible" onClick="collapseMenu()"><i class="fas fa-reply"></i> &nbsp; REPLY TO THREAD</a>
-                  <br />
-
-                  <div class="reply-form">
-                    <p>TODO: unique reply boxes for each comment</p>
-                  </div>
-
-                </div>
-              </div>                
-
-              <div class="comment">
-                <div class="box">
-                    <h3>Carol Li &nbsp; <a href="http://google.com">@username</a></h3>
-                    <p>June 2, 2020 @ 1:30PM</p>
-                    <div class="inner-box">
-                      <p>
-                        This is another comment.
-                      </p>
-                    </div>
-                </div>
-              </div>
-            </div>
+            <div id="comments-container"></div>
 
             <div class="new-comment">
               <form action="/data" method="POST">

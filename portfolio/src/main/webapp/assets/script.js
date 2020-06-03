@@ -98,6 +98,7 @@ function show(n) {
 
 window.onload = function() {
   show(0);
+  getComments();
 }
 
 /**
