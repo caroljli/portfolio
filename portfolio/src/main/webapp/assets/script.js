@@ -196,6 +196,7 @@ function createCommentElement(text) {
   var name = commentData[1];
   var comment = commentData[2];
   var email = commentData[3];
+  var date = commentData[4];
   var username = email.substring(0, email.indexOf("@"));
 
   const commentElement = document.createElement('div');
@@ -214,11 +215,9 @@ function createCommentElement(text) {
   usernameElement.innerText = "@" + username;
   headerElement.appendChild(usernameElement);
 
-  
-  // TODO: convert to datetime
-  const date = document.createElement('p');
-  date.innerText = "June 2, 2020 @ 1:30PM";
-  box.appendChild(date);
+  const dateElement = document.createElement('p');
+  dateElement.innerText = date;
+  box.appendChild(dateElement);
 
   const innerBox = document.createElement('div');
   innerBox.className = 'inner-box';

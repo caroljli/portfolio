@@ -19,8 +19,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.text.*;
 import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -48,8 +48,9 @@ public class DataServlet extends HttpServlet {
       String name = entity.getProperty("name").toString();
       String comment = entity.getProperty("comment").toString();
       String email = entity.getProperty("email").toString();
+      String date = entity.getProperty("date").toString();
 
-      String fullComment = id + "," + name + "," + comment + "," + email;
+      String fullComment = id + "," + name + "," + comment + "," + email + "," + date;
       comments.add(fullComment);
     }
     
@@ -62,17 +63,22 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    SimpleDateFormat ft = new SimpleDateFormat("E MMMM dd yyyy '@' hh:mm a zzz");
+    
     String name = request.getParameter("name");
     String comment = request.getParameter("comment");
     String email = request.getParameter("email");
+    Date dateRaw = new Date();
+    String date = ft.format(dateRaw).toString();
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("email", email);
+    commentEntity.setProperty("date", date);
 
     datastore.put(commentEntity);
 
-    response.sendRedirect("/servlet.html");
+    response.sendRedirect("/forum.html");
   }
 }
