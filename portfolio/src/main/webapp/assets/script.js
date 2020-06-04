@@ -259,6 +259,8 @@ function createReplyElement() {
   replyForm.innerHTML = '<form action="/reply-form" method="POST"><label for="name">Name</label> &nbsp;<input type="text" name="name"><br/><br/><label for="email">Email</label> &nbsp;<input type="email" name="email"><br/><br/><label for="comment">Comment</label><input type="textarea" name="comment"><br/><br/><input type="submit" value="REPLY TO COMMENT"></form>';
   repliesElement.appendChild(replyForm);
 
+  const replyFormContent = document.createElement('form');
+
   const repliesBox = document.createElement('div');
   repliesBox.className = 'reply-box';
   repliesElement.appendChild(repliesBox);

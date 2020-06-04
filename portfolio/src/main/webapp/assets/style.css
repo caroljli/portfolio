@@ -329,6 +329,10 @@ a.arrow_down:hover {
   background-color: #7FB5D3;
 }
 
+#forum #comment-submit {
+  disabled: disabled;
+}
+
 #blog {
   z-index: 0;
   height: auto;
