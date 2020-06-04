@@ -327,10 +327,25 @@ a.arrow_down:hover {
   background-color: #7FB5D3;
 }
 
-#forum .comments-num-box {
+#forum .comments-actions-box {
   position: absolute;
   top: 150px;
   right: 25%;
+}
+
+#forum .comments-actions-box button#delete-all-button {
+  border: 1px solid #FF4C4C;
+  border-radius: 4px;
+  padding: 6px;
+  background-color: #FF4C4C;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#forum .comments-actions-box button#delete-all-button:hover {
+  border: 1px solid #D23F3F;
+  background-color: #D23F3F;
 }
 
 #forum #comments-num {
@@ -340,7 +355,7 @@ a.arrow_down:hover {
   padding: 6px;
 }
 
-#forum .comments-num-box button {
+#forum .comments-actions-box button {
   border: 1px solid #B3B3B3;
   border-radius: 4px;
   padding: 6px;
@@ -350,7 +365,7 @@ a.arrow_down:hover {
   font-weight: 500;
 }
 
-#forum .comments-num-box button:hover {
+#forum .comments-actions-box button:hover {
   border: 1px solid #7FB5D3;
   background-color: #7FB5D3;
 }
