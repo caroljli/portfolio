@@ -202,6 +202,7 @@ function createCommentElement(text) {
 
   const commentElement = document.createElement('div');
   commentElement.className = 'comment';
+  commentElement.id = id;
 
   const box = document.createElement('div');
   box.className = 'box';
@@ -252,6 +253,12 @@ function createReplyElement() {
   repliesElement.className = "replies";
   replyWrapper.appendChild(repliesElement);
 
+  const replyForm = document.createElement('div');
+  replyForm.className = 'reply-box';
+  replyForm.id = 'reply-form'
+  replyForm.innerHTML = '<form action="/reply-form" method="POST"><label for="name">Name</label> &nbsp;<input type="text" name="name"><br/><br/><label for="email">Email</label> &nbsp;<input type="email" name="email"><br/><br/><label for="comment">Comment</label><input type="textarea" name="comment"><br/><br/><input type="submit" value="REPLY TO COMMENT"></form>';
+  repliesElement.appendChild(replyForm);
+
   const repliesBox = document.createElement('div');
   repliesBox.className = 'reply-box';
   repliesElement.appendChild(repliesBox);
@@ -266,25 +273,8 @@ function createReplyElement() {
   replyHeading.appendChild(replyUsernameLink);
 
   const replyParagraph = document.createElement('p');
-  replyParagraph.innerText = 'This is a sample reply';
+  replyParagraph.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mollis nisl velit, ac porta nisi rutrum quis. Etiam pulvinar hendrerit metus vitae sollicitudin. Nullam vitae ligula lectus. Phasellus semper dui sed pharetra vestibulum. Pellentesque maximus convallis neque, vitae consectetur sapien volutpat a. Praesent eleifend tempor aliquet. Sed nunc enim, porttitor vel magna eu, faucibus mattis sem. Quisque molestie sapien ac tincidunt porttitor. Vestibulum sed feugiat enim. Ut ultricies odio libero, at iaculis tortor tincidunt scelerisque. Quisque sollicitudin neque sed sem malesuada, a aliquet est lacinia. Sed venenatis faucibus risus sed ultrices.";
   repliesBox.appendChild(replyParagraph);
-  
-  const replyToggle = document.createElement('a');
-  replyToggle.id = 'reply-toggle';
-  replyToggle.href = "javascript:void(0)";
-  replyToggle.className = "collapsible";
-  replyToggle.onclick = collapseMenu;
-  replyToggle.innerHTML = "<br/> <i class='fas fa-reply'></i> \xa0 REPLY TO THREAD <br/>";
-  repliesElement.appendChild(replyToggle);
-
-  const replyForm = document.createElement('div');
-  replyForm.className = 'reply-form';
-  repliesElement.appendChild(replyForm);
-
-  const replyFormBox = document.createElement('div');
-  replyFormBox.className = 'reply-form-box';
-  replyFormBox.innerText = 'TODO: unique reply boxes for each comment';
-  replyForm.appendChild(replyFormBox);
 
   return replyWrapper;
 }

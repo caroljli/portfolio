@@ -247,24 +247,10 @@ a.arrow_down:hover {
   font-weight: 500;
 }
 
-#forum .reply-form {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out;
-  margin-top: 20px;
-  padding-right: 3%;
-  padding-left: 3%;
-  padding-top: 1.5%;
-  padding-bottom: 1.5%;
+#forum #reply-form {
+  height: 190px;
 }
 
-#forum .reply-form-box {
-  margin-top: 20px;
-  background-color: #EEEEEE;
-  border-radius: 10px;
-  font-weight: 500;
-}
- 
 #forum .reply-box h3 {
   font-size: 18px;
   margin-top: 10px;
@@ -287,7 +273,7 @@ a.arrow_down:hover {
   cursor: pointer;
 }
 
-#forum a.collapsible:hover, a#reply-toggle:hover {
+#forum a.collapsible:hover {
   color: #EE7989;
 }
 
@@ -296,10 +282,6 @@ a.arrow_down:hover {
   overflow: hidden;
   transition: max-height 0.5s ease-out;
   margin-left: 50px;
-}
-
-#forum a#reply-toggle {
-  float: right;
 }
 
 #forum .new-comment {
@@ -311,7 +293,7 @@ a.arrow_down:hover {
   height: 200px;
 }
 
-#forum .new-comment label {
+#forum .new-comment label, #forum .reply-box label {
   font-size: 15px;
   color: #383838;
   padding: 20px 0 20px;
@@ -320,7 +302,7 @@ a.arrow_down:hover {
   margin-right: 20%;
 }
 
-#forum .new-comment input {
+#forum .new-comment input, #forum .reply-box input {
   border: 1px solid #B3B3B3;
   border-radius: 4px;
   padding: 6px;
@@ -328,22 +310,22 @@ a.arrow_down:hover {
   width: 60%;
 }
 
-#forum .new-comment input:focus {
+#forum .new-comment input:focus, #forum .reply-box input:focus {
   border: 1px solid #7FB5D3;
 }
 
-#forum .new-comment input[type=textarea] {
+#forum .new-comment input[type=textarea], #forum .reply-box input[type=textarea] {
   height: 50px;
 }
 
-#forum .new-comment input[type=submit] {
+#forum .new-comment input[type=submit], #forum .reply-box input[type=submit] {
   margin-top: 20px;
   width: 100%;
   background-color: #B3B3B3;
   cursor: pointer;
 }
 
-#forum .new-comment input[type=submit]:focus {
+#forum .new-comment input[type=submit]:focus, #forum .reply-box input[type=submit]:focus {
   background-color: #7FB5D3;
 }
 
