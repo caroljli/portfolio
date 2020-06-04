@@ -19,6 +19,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.sps.data.Comment;
+import com.google.sps.data.Reply;
 import java.util.*;
 import java.text.*;
 import com.google.gson.Gson;
@@ -41,7 +43,7 @@ public class DataServlet extends HttpServlet {
 
     PreparedQuery results = datastore.prepare(query);
 
-    List<String> comments = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
 
     for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
@@ -50,7 +52,7 @@ public class DataServlet extends HttpServlet {
       String email = entity.getProperty("email").toString();
       String date = entity.getProperty("date").toString();
 
-      String fullComment = id + "," + name + "," + comment + "," + email + "," + date;
+      Comment fullComment = new Comment(id, name, comment, email, date);
       comments.add(fullComment);
     }
     

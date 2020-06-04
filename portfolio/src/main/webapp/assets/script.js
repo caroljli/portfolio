@@ -144,31 +144,6 @@ function closeModal() {
   modal.style.display = "none";
 }
 
-/**
- * Fetches comments from server and adds to servlet page.
- */
-
-function getMessages() {
-  fetch('/data').then(response => response.json()).then((messages) => {
-    const messagesContainer = document.getElementById('messages-container');
-    messagesContainer.innerHTML = '';
-    for (var i = 0; i < messages.length; i++) {
-      messagesContainer.appendChild(
-        createListElement(messages[i])
-      );
-    }
-  });
-}
-
-/**
- * Creates a <li> element.
- */
-
-function createListElement(text) {
-  const listElem = document.createElement('li');
-  listElem.innerText = text;
-  return listElem;
-}
 
 /**
  * Fetches comments from server and adds to forum page.
@@ -178,11 +153,12 @@ function getComments() {
   fetch('/data').then(response => response.json()).then((comments) => {
     const commentsContainer = document.getElementById('comments-container');
     commentsContainer.innerHTML = '';
-    for (var i = 0; i < comments.length; i++) {
+
+    comments.forEach((comment) => {
       commentsContainer.appendChild(
-        createCommentElement(comments[i])
+        createCommentElement(comment)
       );
-    }
+    })
   });
 }
 
@@ -190,15 +166,14 @@ function getComments() {
  * Creates comment element.
  */
 
-function createCommentElement(text) {
-  // split csv into arr of substrings
-  var commentData = text.split(",");
-  var id = commentData[0];
-  var name = commentData[1];
-  var comment = commentData[2];
-  var email = commentData[3];
-  var date = commentData[4];
-  var username = email.substring(0, email.indexOf("@"));
+function createCommentElement(comment) {
+  console.log(comment.id + " created!");
+  const id = comment.id;
+  const name = comment.name;
+  const commentContent = comment.comment;
+  const email = comment.email;
+  const date = comment.date;
+  const username = email.substring(0, email.indexOf("@"));
 
   const commentElement = document.createElement('div');
   commentElement.className = 'comment';
@@ -226,7 +201,7 @@ function createCommentElement(text) {
   box.appendChild(innerBox);
 
   const commentContentElement = document.createElement('p');
-  commentContentElement.innerText = comment;
+  commentContentElement.innerText = commentContent;
   innerBox.appendChild(commentContentElement);
 
   commentElement.appendChild(createReplyElement());
