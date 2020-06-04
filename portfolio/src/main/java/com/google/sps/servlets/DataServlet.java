@@ -37,7 +37,8 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("name", SortDirection.ASCENDING);
+    // Query query = new Query("Comment").addSort("date", SortDirection.DESCENDING);
+    Query query = new Query("Comment");
     PreparedQuery results = datastore.prepare(query);
     List<String> comments = new ArrayList<>();
     int commentsNum = Integer.parseInt(request.getParameter("comments-num"));
