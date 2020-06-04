@@ -98,7 +98,7 @@ function show(n) {
 
 window.onload = function() {
   show(0);
-  getComments();
+  // getComments();
 }
 
 /**
@@ -180,7 +180,7 @@ function getComments() {
     querySize = 5;
   }
 
-  var url = '/data?comments-num='.concat(querySize.toString(5));
+  var url = '/data?comments-num='.concat(querySize.toString());
   fetch(url, {method: 'GET'}).then(response => response.json()).then((comments) => {
     const commentsContainer = document.getElementById('comments-container');
     commentsContainer.innerHTML = '';

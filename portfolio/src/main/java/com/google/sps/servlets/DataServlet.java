@@ -34,15 +34,13 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 public class DataServlet extends HttpServlet {
 
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  int commentsNum;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort("name", SortDirection.ASCENDING);
-
     PreparedQuery results = datastore.prepare(query);
-
     List<String> comments = new ArrayList<>();
+    int commentsNum = Integer.parseInt(request.getParameter("comments-num"));
 
     for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
@@ -50,14 +48,14 @@ public class DataServlet extends HttpServlet {
       String comment = entity.getProperty("comment").toString();
       String email = entity.getProperty("email").toString();
       String date = entity.getProperty("date").toString();
-      int commentsNum = (int) entity.getProperty("commentsNum");
 
       String fullComment = id + "," + name + "," + comment + "," + email + "," + date;
 
-      for (int i = 0; i < commentsNum; i++) {
-        comments.add(fullComment);
-      }
-      
+      comments.add(fullComment);
+    }
+
+    if (comments.size() > commentsNum) {
+      comments = comments.subList(0, commentsNum);
     }
     
     Gson gson = new Gson();
@@ -69,12 +67,6 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // get number of comments to show
-    commentsNum = getCommentsNum(request);
-    if (commentsNum == -1) {
-      return;
-    }
-    
     // format date
     SimpleDateFormat ft = new SimpleDateFormat("E MMMM dd yyyy '@' hh:mm a zzz");
 
@@ -90,33 +82,9 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("email", email);
     commentEntity.setProperty("date", date);
-    commentEntity.setProperty("commentsNum", commentsNum);
 
     datastore.put(commentEntity);
 
     response.sendRedirect("/forum.html");
   }
-
-  private int getCommentsNum(HttpServletRequest request) {
-    // get input from form
-    String commentsNumString = request.getParameter("comments-num");
-
-    // convert to int, check for errors
-    int commentsNum;
-
-    try {
-      commentsNum = Integer.parseInt(commentsNumString);
-    } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + commentsNumString);
-      return -1;
-    }
-
-    // Check that the input is between 1 and 3.
-    if (commentsNum < 5) {
-      System.err.println("Input is below 5: " + commentsNumString);
-      return -1;
-    }
-
-    return commentsNum;
-  } 
 }
