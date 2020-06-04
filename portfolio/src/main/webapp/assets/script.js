@@ -98,7 +98,7 @@ function show(n) {
 
 window.onload = function() {
   show(0);
-  // getComments();
+  getComments();
 }
 
 /**
@@ -171,7 +171,8 @@ function createListElement(text) {
 }
 
 /**
- * Fetches comments from server and adds to forum page.
+ * Fetches comments from server and adds to forum page with querySize that is specified
+ * by button. Default is 5 comments showing.
  */
 
 function getComments() {
