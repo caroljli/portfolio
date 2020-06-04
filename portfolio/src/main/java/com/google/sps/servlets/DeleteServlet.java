@@ -32,5 +32,6 @@ public class DeleteServlet extends HttpServlet {
     }
 
     System.out.println("DELETE COMPLETED");
+    response.sendRedirect("/forum.html");
   }
 }

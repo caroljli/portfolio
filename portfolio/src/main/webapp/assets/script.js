@@ -291,8 +291,6 @@ function deleteAllComments() {
   const delRequest = new Request('/delete-data', {method: 'POST'});
 
   fetch(delRequest).then(response => {
-    const commentsContainer = document.getElementById('comments-container');
-    commentsContainer.innerHTML = '';
     getComments();
   });
 
