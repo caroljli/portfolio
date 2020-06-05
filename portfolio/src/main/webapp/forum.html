@@ -73,7 +73,21 @@
               $('#comment-submit').removeAttr('disabled');
           }
         });
-    })
+
+        $('.reply-input').keyup(function() {
+          var emptyReply = false;
+          $('.reply-input').each(function() {
+            if ($(this).val() == '') {
+                emptyReply = true;
+            }
+          });
+          if (emptyReply) {
+              $('#reply-submit').attr('disabled', 'disabled');
+          } else {
+              $('#reply-submit').removeAttr('disabled');
+          }
+        });
+      })
 
     </script>
 

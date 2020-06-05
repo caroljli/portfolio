@@ -191,7 +191,6 @@ function createCommentElement(comment, replies) {
 
   const commentElement = document.createElement('div');
   commentElement.className = 'comment';
-  // commentElement.id = id;
   commentElement.id = 'comment-container';
 
   const box = document.createElement('div');
@@ -228,6 +227,7 @@ function createCommentElement(comment, replies) {
 
   commentElement.appendChild(renderReplyElements(comment, replies));
 
+  // change id to comment id so comments render in individual threads
   commentElement.id = comment.id;
 
   return commentElement;
@@ -237,12 +237,6 @@ function createCommentElement(comment, replies) {
  * Calls to create each reply element.
  */
 function renderReplyElements(comment, replies) {
-  // const replyWrapper = document.createElement('div');
-  // replyWrapper.className = "replies";
-  // replyWrapper.id = 'reply-container' + comment.id;
-  // replyWrapper.innerHTML = '';
-  // console.log("replyWrapper: " + replyWrapper.id);
-
   const repliesElement = document.createElement('div');
   repliesElement.className = "replies";
 
@@ -254,18 +248,19 @@ function renderReplyElements(comment, replies) {
   const replyFormContent = document.createElement('form');
   replyFormContent.action = "/reply-data";
   replyFormContent.method = "POST";
-  replyFormContent.innerHTML = '<label for="name">Name</label> &nbsp;<input type="text" name="name"><br/><br/><label for="email">Email</label> &nbsp;<input type="email" name="email"><br/><br/><label for="comment">Comment</label><input type="textarea" name="comment"><br/><br/>';
+  replyFormContent.innerHTML = '<label for="name">Name</label> &nbsp;<input type="text" class="reply-input" name="name"><br/><br/><label for="email">Email</label> &nbsp;<input type="email" class="reply-input" name="email"><br/><br/><label for="comment">Comment</label><input type="textarea" class="reply-input" name="comment"><br/><br/>';
   replyForm.appendChild(replyFormContent);
 
   const idInput = document.createElement('input');
   idInput.type = "hidden";
   idInput.value = comment.id;
-  idInput.name = "parent-id"
+  idInput.name = "parent-id";
   replyFormContent.appendChild(idInput);
 
   const submitInput = document.createElement('input');
   submitInput.type = 'submit';
   submitInput.value = 'REPLY TO COMMENT';
+  submitInput.id = 'reply-submit';
   replyFormContent.appendChild(submitInput);
 
   replies.forEach((reply) => {
@@ -290,17 +285,10 @@ function createReplyElement(comment, reply) {
   const date = reply.date;
   const username = email.substring(0, email.indexOf("@"));
 
-  // const replyWrapper = document.getElementById('reply-container' + comment.id);
-  // console.log("comment id: " + comment.id);
-
   const replyWrapper = document.createElement('div');
   replyWrapper.id = 'reply-container' + comment.id;
   replyWrapper.innerHTML = '';
   console.log("replyWrapper: " + replyWrapper.id);
-
-  // const repliesElement = document.createElement('div');
-  // repliesElement.className = "replies";
-  // replyWrapper.appendChild(repliesElement);
 
   const repliesBox = document.createElement('div');
   repliesBox.className = 'reply-box';
