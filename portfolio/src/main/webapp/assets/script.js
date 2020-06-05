@@ -150,23 +150,37 @@ function closeModal() {
  */
 
 function getComments() {
-  fetch('/data').then(response => response.json()).then((comments) => {
+  Promise.all([
+    fetch('/data').then(response => response.json()),
+    fetch('/reply-data').then(response => response.json())
+  ]).then(([comments, replies]) => {
     const commentsContainer = document.getElementById('comments-container');
     commentsContainer.innerHTML = '';
 
     comments.forEach((comment) => {
+      var commentReplies = [];
+      replies.forEach((reply) => {
+        if (reply.parentId == comment.id) {
+          console.log("parent id: " + reply.parentId + "comment: " + comment.id + (reply.parentId == comment.id));
+          commentReplies.push(reply);
+        }
+      })
+
       commentsContainer.appendChild(
-        createCommentElement(comment)
+        createCommentElement(comment, commentReplies)
       );
     })
+  }).catch((err) => {
+      console.log(err);
   });
+
 }
 
 /**
  * Creates comment element.
  */
 
-function createCommentElement(comment) {
+function createCommentElement(comment, replies) {
   console.log(comment.id + " created!");
   const id = comment.id;
   const name = comment.name;
@@ -177,7 +191,8 @@ function createCommentElement(comment) {
 
   const commentElement = document.createElement('div');
   commentElement.className = 'comment';
-  commentElement.id = id;
+  // commentElement.id = id;
+  commentElement.id = 'comment-container';
 
   const box = document.createElement('div');
   box.className = 'box';
@@ -204,56 +219,104 @@ function createCommentElement(comment) {
   commentContentElement.innerText = commentContent;
   innerBox.appendChild(commentContentElement);
 
-  commentElement.appendChild(createReplyElement());
-
-  return commentElement;
-}
-
-/**
- * Creates reply element. Content is static for now.
- */
-
-function createReplyElement() {
-  const replyWrapper = document.createElement('div');
-  replyWrapper.className = 'reply-container';
-
   const viewReplies = document.createElement('a');
   viewReplies.href = "javascript:void(0)";
   viewReplies.className = "collapsible";
   viewReplies.onclick = collapseMenu;
   viewReplies.innerHTML = "<i class='fas fa-chevron-right'></i> \xa0 VIEW REPLIES";
-  replyWrapper.appendChild(viewReplies);
+  commentElement.appendChild(viewReplies);
+
+  commentElement.appendChild(renderReplyElements(comment, replies));
+
+  commentElement.id = comment.id;
+
+  return commentElement;
+}
+
+/**
+ * Calls to create each reply element.
+ */
+function renderReplyElements(comment, replies) {
+  // const replyWrapper = document.createElement('div');
+  // replyWrapper.className = "replies";
+  // replyWrapper.id = 'reply-container' + comment.id;
+  // replyWrapper.innerHTML = '';
+  // console.log("replyWrapper: " + replyWrapper.id);
 
   const repliesElement = document.createElement('div');
   repliesElement.className = "replies";
-  replyWrapper.appendChild(repliesElement);
 
   const replyForm = document.createElement('div');
   replyForm.className = 'reply-box';
   replyForm.id = 'reply-form'
-  replyForm.innerHTML = '<form action="/reply-form" method="POST"><label for="name">Name</label> &nbsp;<input type="text" name="name"><br/><br/><label for="email">Email</label> &nbsp;<input type="email" name="email"><br/><br/><label for="comment">Comment</label><input type="textarea" name="comment"><br/><br/><input type="submit" value="REPLY TO COMMENT"></form>';
   repliesElement.appendChild(replyForm);
 
   const replyFormContent = document.createElement('form');
-  replyFormContent.action = "/reply-form";
+  replyFormContent.action = "/reply-data";
   replyFormContent.method = "POST";
+  replyFormContent.innerHTML = '<label for="name">Name</label> &nbsp;<input type="text" name="name"><br/><br/><label for="email">Email</label> &nbsp;<input type="email" name="email"><br/><br/><label for="comment">Comment</label><input type="textarea" name="comment"><br/><br/>';
   replyForm.appendChild(replyFormContent);
+
+  const idInput = document.createElement('input');
+  idInput.type = "hidden";
+  idInput.value = comment.id;
+  idInput.name = "parent-id"
+  replyFormContent.appendChild(idInput);
+
+  const submitInput = document.createElement('input');
+  submitInput.type = 'submit';
+  submitInput.value = 'REPLY TO COMMENT';
+  replyFormContent.appendChild(submitInput);
+
+  replies.forEach((reply) => {
+    repliesElement.appendChild(
+      createReplyElement(comment, reply)
+    );
+  })
+
+  return repliesElement;
+}
+
+/**
+ * Creates reply element.
+ */
+
+function createReplyElement(comment, reply) {
+  console.log("reply " + reply.id + " created!");
+  const id = reply.id;
+  const name = reply.name;
+  const commentContent = reply.comment;
+  const email = reply.email;
+  const date = reply.date;
+  const username = email.substring(0, email.indexOf("@"));
+
+  // const replyWrapper = document.getElementById('reply-container' + comment.id);
+  // console.log("comment id: " + comment.id);
+
+  const replyWrapper = document.createElement('div');
+  replyWrapper.id = 'reply-container' + comment.id;
+  replyWrapper.innerHTML = '';
+  console.log("replyWrapper: " + replyWrapper.id);
+
+  // const repliesElement = document.createElement('div');
+  // repliesElement.className = "replies";
+  // replyWrapper.appendChild(repliesElement);
 
   const repliesBox = document.createElement('div');
   repliesBox.className = 'reply-box';
-  repliesElement.appendChild(repliesBox);
+  replyWrapper.appendChild(repliesBox);
 
   const replyHeading = document.createElement('h3');
-  replyHeading.innerText = 'caro \xa0';
+  replyHeading.innerText = name + '\xa0';
   repliesBox.appendChild(replyHeading);
 
   const replyUsernameLink = document.createElement('a');
-  replyUsernameLink.href = "http://google.com";
-  replyUsernameLink.innerText = '@username';
+  replyUsernameLink.href = "mailto:" + email;
+  replyUsernameLink.innerText = '@' + username;
   replyHeading.appendChild(replyUsernameLink);
 
   const replyParagraph = document.createElement('p');
-  replyParagraph.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mollis nisl velit, ac porta nisi rutrum quis. Etiam pulvinar hendrerit metus vitae sollicitudin. Nullam vitae ligula lectus. Phasellus semper dui sed pharetra vestibulum. Pellentesque maximus convallis neque, vitae consectetur sapien volutpat a. Praesent eleifend tempor aliquet. Sed nunc enim, porttitor vel magna eu, faucibus mattis sem. Quisque molestie sapien ac tincidunt porttitor. Vestibulum sed feugiat enim. Ut ultricies odio libero, at iaculis tortor tincidunt scelerisque. Quisque sollicitudin neque sed sem malesuada, a aliquet est lacinia. Sed venenatis faucibus risus sed ultrices.";
+  replyParagraph.innerText = commentContent;
   repliesBox.appendChild(replyParagraph);
 
   return replyWrapper;
