@@ -235,6 +235,9 @@ function createReplyElement() {
   repliesElement.appendChild(replyForm);
 
   const replyFormContent = document.createElement('form');
+  replyFormContent.action = "/reply-form";
+  replyFormContent.method = "POST";
+  replyForm.appendChild(replyFormContent);
 
   const repliesBox = document.createElement('div');
   repliesBox.className = 'reply-box';
