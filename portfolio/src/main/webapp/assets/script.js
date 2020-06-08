@@ -261,7 +261,6 @@ function renderReplyElements(comment, replies) {
   submitInput.type = 'submit';
   submitInput.value = 'REPLY TO COMMENT';
   submitInput.id = 'reply-submit';
-  submitInput.disabled = "disabled";
   replyFormContent.appendChild(submitInput);
 
   replies.forEach((reply) => {
