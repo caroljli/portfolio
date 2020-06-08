@@ -327,6 +327,65 @@ a.arrow_down:hover {
   background-color: #7FB5D3;
 }
 
+#forum .comments-actions-box {
+  position: absolute;
+  top: 150px;
+  right: 25%;
+}
+
+#forum .comments-actions-box button#delete-all-button {
+  border: 1px solid #FF4C4C;
+  border-radius: 4px;
+  padding: 6px;
+  background-color: #FF4C4C;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#forum .comments-actions-box button#delete-all-button:hover {
+  border: 1px solid #D23F3F;
+  background-color: #D23F3F;
+}
+
+#forum #comments-num {
+  width: 30px;
+  border: 1px solid #B3B3B3;
+  border-radius: 4px;
+  padding: 6px;
+}
+
+#forum .comments-actions-box button {
+  border: 1px solid #B3B3B3;
+  border-radius: 4px;
+  padding: 6px;
+  background-color: #B3B3B3;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#forum .comments-actions-box button:hover {
+  border: 1px solid #7FB5D3;
+  background-color: #7FB5D3;
+}
+
+#forum .comments-actions-box a.new-comment-anchor {
+  border: 1px solid #7FB5D3;
+  border-radius: 4px;
+  padding: 6px;
+  background-color: #7FB5D3;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+#forum .comments-actions-box a.new-comment-anchor:hover {
+  border: 1px solid #3E688F;
+  background-color: #3E688F;
+}
+
 #blog {
   z-index: 0;
   height: auto;

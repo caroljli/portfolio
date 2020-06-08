@@ -37,11 +37,11 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("name", SortDirection.ASCENDING);
-
+    // Query query = new Query("Comment").addSort("date", SortDirection.DESCENDING);
+    Query query = new Query("Comment");
     PreparedQuery results = datastore.prepare(query);
-
     List<String> comments = new ArrayList<>();
+    int commentsNum = Integer.parseInt(request.getParameter("comments-num"));
 
     for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
@@ -51,7 +51,12 @@ public class DataServlet extends HttpServlet {
       String date = entity.getProperty("date").toString();
 
       String fullComment = id + "," + name + "," + comment + "," + email + "," + date;
+
       comments.add(fullComment);
+    }
+
+    if (comments.size() > commentsNum) {
+      comments = comments.subList(0, commentsNum);
     }
     
     Gson gson = new Gson();
@@ -63,8 +68,10 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Format date.
     SimpleDateFormat ft = new SimpleDateFormat("E MMMM dd yyyy '@' hh:mm a zzz");
-    
+
+    // Get input data.
     String name = request.getParameter("name");
     String comment = request.getParameter("comment");
     String email = request.getParameter("email");

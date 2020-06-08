@@ -171,11 +171,19 @@ function createListElement(text) {
 }
 
 /**
- * Fetches comments from server and adds to forum page.
+ * Fetches comments from server and adds to forum page with querySize that is specified
+ * by button. Default is 5 comments showing.
  */
 
 function getComments() {
-  fetch('/data').then(response => response.json()).then((comments) => {
+  const defaultNumComments = 5;
+  var querySize = document.getElementById("comments-num").value;
+  if (querySize == undefined) {
+    querySize = defaultNumComments;
+  }
+
+  var url = '/data?comments-num='.concat(querySize.toString());
+  fetch(url, {method: 'GET'}).then(response => response.json()).then((comments) => {
     const commentsContainer = document.getElementById('comments-container');
     commentsContainer.innerHTML = '';
     for (var i = 0; i < comments.length; i++) {
@@ -277,5 +285,14 @@ function createCommentElement(text) {
  */
 
 function createReplyElement() {
+
+}
+
+function deleteAllComments() {
+  const delRequest = new Request('/delete-data', {method: 'POST'});
+
+  fetch(delRequest).then(response => {
+    getComments();
+  });
 
 }
