@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.text.*;
 import com.google.sps.data.Comment;
-import com.google.sps.data.Reply;
 import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -30,7 +29,7 @@ public class ReplyServlet extends HttpServlet {
     PreparedQuery commentResults = datastore.prepare(commentQuery);
     PreparedQuery replyResults = datastore.prepare(replyQuery);
 
-    List<Reply> replies = new ArrayList<>();
+    List<Comment> replies = new ArrayList<>();
 
     for (Entity entity : replyResults.asIterable()) {
       long id = entity.getKey().getId();
@@ -40,9 +39,9 @@ public class ReplyServlet extends HttpServlet {
       String date = entity.getProperty("date").toString();
       long parentId = Long.parseLong(entity.getProperty("parentId").toString());
 
-      Reply fullComment = new Reply(id, name, comment, email, date, parentId);
+      Comment fullReplyComment = new Comment(id, name, comment, email, date, parentId);
 
-      replies.add(fullComment);
+      replies.add(fullReplyComment);
     }
     
     Gson gson = new Gson();

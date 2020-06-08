@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.sps.data.Comment;
-import com.google.sps.data.Reply;
 import java.util.*;
 import java.text.*;
 import com.google.gson.Gson;
@@ -52,7 +51,7 @@ public class DataServlet extends HttpServlet {
       String email = entity.getProperty("email").toString();
       String date = entity.getProperty("date").toString();
 
-      Comment fullComment = new Comment(id, name, comment, email, date);
+      Comment fullComment = new Comment(id, name, comment, email, date, -1);
       comments.add(fullComment);
     }
     
