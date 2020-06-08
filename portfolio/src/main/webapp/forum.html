@@ -32,7 +32,7 @@
 
             <div id="comments-container"></div>
 
-            <div class="new-comment">
+            <div class="new-comment" id="new-comment">
               <form action="/data" method="POST">
                 <label for="name">Name</label> &nbsp;
                 <input class="comment-input" type="text" name="name"><br/><br/>
@@ -45,6 +45,13 @@
 
                 <input type="submit" id="comment-submit" value="POST COMMENT" disabled="disabled">
               </form>
+            </div>
+
+            <div class="comments-actions-box">
+              <input type="number" id="comments-num" min="5" value="5">
+              <button onClick="getComments()">SHOW COMMENTS</button>
+              <button id="delete-all-button" onClick="deleteAllComments()">DELETE ALL COMMENTS</button>
+              <a href="#new-comment" class="new-comment-anchor">NEW COMMENT</a>
             </div>
 
           </div>

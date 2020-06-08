@@ -146,12 +146,20 @@ function closeModal() {
 
 
 /**
- * Fetches comments from server and adds to forum page.
+ * Fetches comments from server and adds to forum page with querySize that is specified
+ * by button. Default is 5 comments showing.
  */
 
 function getComments() {
+  const defaultNumComments = 5;
+  var querySize = document.getElementById("comments-num").value;
+  if (querySize == undefined) {
+    querySize = defaultNumComments;
+  }
+  var url = '/data?comments-num='.concat(querySize.toString());
+  
   Promise.all([
-    fetch('/data').then(response => response.json()),
+    fetch(url, {method: 'GET'}).then(response => response.json()),
     fetch('/reply-data').then(response => response.json())
   ]).then(([comments, replies]) => {
     const commentsContainer = document.getElementById('comments-container');
@@ -306,6 +314,13 @@ function createReplyElement(comment, reply) {
   const replyParagraph = document.createElement('p');
   replyParagraph.innerText = commentContent;
   repliesBox.appendChild(replyParagraph);
-
   return replyWrapper;
+}
+
+function deleteAllComments() {
+  const delRequest = new Request('/delete-data', {method: 'POST'});
+
+  fetch(delRequest).then(response => {
+    getComments();
+  });
 }
