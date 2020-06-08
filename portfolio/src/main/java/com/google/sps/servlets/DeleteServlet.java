@@ -23,10 +23,19 @@ public class DeleteServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment");
-    PreparedQuery results = datastore.prepare(query);
+    Query commentsQuery = new Query("Comment");
+    Query replyQuery = new Query("Reply");
+    PreparedQuery commentsResults = datastore.prepare(commentsQuery);
+    PreparedQuery replyResults = datastore.prepare(replyQuery);
+    
+    // Deletes all comments.
+    for (Entity entity : commentsResults.asIterable()) {
+      datastore.delete(entity.getKey());
+      System.out.println("deleted" + entity.getKey());
+    }
 
-    for (Entity entity : results.asIterable()) {
+    // Deletes all replies.
+    for (Entity entity : replyResults.asIterable()) {
       datastore.delete(entity.getKey());
       System.out.println("deleted" + entity.getKey());
     }
