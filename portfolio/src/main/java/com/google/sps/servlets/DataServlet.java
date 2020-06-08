@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.sps.data.Comment;
 import java.util.*;
 import java.text.*;
 import com.google.gson.Gson;
@@ -29,7 +30,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns comment data. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -40,7 +41,7 @@ public class DataServlet extends HttpServlet {
     // Query query = new Query("Comment").addSort("date", SortDirection.DESCENDING);
     Query query = new Query("Comment");
     PreparedQuery results = datastore.prepare(query);
-    List<String> comments = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
     int commentsNum = Integer.parseInt(request.getParameter("comments-num"));
 
     for (Entity entity : results.asIterable()) {
@@ -50,8 +51,7 @@ public class DataServlet extends HttpServlet {
       String email = entity.getProperty("email").toString();
       String date = entity.getProperty("date").toString();
 
-      String fullComment = id + "," + name + "," + comment + "," + email + "," + date;
-
+      Comment fullComment = new Comment(id, name, comment, email, date, -1);
       comments.add(fullComment);
     }
 

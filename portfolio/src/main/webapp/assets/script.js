@@ -144,31 +144,6 @@ function closeModal() {
   modal.style.display = "none";
 }
 
-/**
- * Fetches comments from server and adds to servlet page.
- */
-
-function getMessages() {
-  fetch('/data').then(response => response.json()).then((messages) => {
-    const messagesContainer = document.getElementById('messages-container');
-    messagesContainer.innerHTML = '';
-    for (var i = 0; i < messages.length; i++) {
-      messagesContainer.appendChild(
-        createListElement(messages[i])
-      );
-    }
-  });
-}
-
-/**
- * Creates a <li> element.
- */
-
-function createListElement(text) {
-  const listElem = document.createElement('li');
-  listElem.innerText = text;
-  return listElem;
-}
 
 /**
  * Fetches comments from server and adds to forum page with querySize that is specified
@@ -181,35 +156,50 @@ function getComments() {
   if (querySize == undefined) {
     querySize = defaultNumComments;
   }
-
   var url = '/data?comments-num='.concat(querySize.toString());
-  fetch(url, {method: 'GET'}).then(response => response.json()).then((comments) => {
+  
+  Promise.all([
+    fetch(url, {method: 'GET'}).then(response => response.json()),
+    fetch('/reply-data').then(response => response.json())
+  ]).then(([comments, replies]) => {
     const commentsContainer = document.getElementById('comments-container');
     commentsContainer.innerHTML = '';
-    for (var i = 0; i < comments.length; i++) {
+
+    comments.forEach((comment) => {
+      var commentReplies = [];
+      replies.forEach((reply) => {
+        if (reply.parentId == comment.id) {
+          console.log("parent id: " + reply.parentId + "comment: " + comment.id + (reply.parentId == comment.id));
+          commentReplies.push(reply);
+        }
+      })
+
       commentsContainer.appendChild(
-        createCommentElement(comments[i])
+        createCommentElement(comment, commentReplies)
       );
-    }
+    })
+  }).catch((err) => {
+      console.log(err);
   });
+
 }
 
 /**
  * Creates comment element.
  */
 
-function createCommentElement(text) {
-  // split csv into arr of substrings
-  var commentData = text.split(",");
-  var id = commentData[0];
-  var name = commentData[1];
-  var comment = commentData[2];
-  var email = commentData[3];
-  var date = commentData[4];
-  var username = email.substring(0, email.indexOf("@"));
+function createCommentElement(comment, replies) {
+  console.log(comment.id + " created!");
+  const id = comment.id;
+  const name = comment.name;
+  const commentContent = comment.comment;
+  const email = comment.email;
+  const date = comment.date;
+  const username = email.substring(0, email.indexOf("@"));
 
   const commentElement = document.createElement('div');
   commentElement.className = 'comment';
+  commentElement.id = 'comment-container';
 
   const box = document.createElement('div');
   box.className = 'box';
@@ -233,7 +223,7 @@ function createCommentElement(text) {
   box.appendChild(innerBox);
 
   const commentContentElement = document.createElement('p');
-  commentContentElement.innerText = comment;
+  commentContentElement.innerText = commentContent;
   innerBox.appendChild(commentContentElement);
 
   const viewReplies = document.createElement('a');
@@ -243,49 +233,88 @@ function createCommentElement(text) {
   viewReplies.innerHTML = "<i class='fas fa-chevron-right'></i> \xa0 VIEW REPLIES";
   commentElement.appendChild(viewReplies);
 
-  const repliesElement = document.createElement('div');
-  repliesElement.className = "replies";
-  commentElement.appendChild(repliesElement);
+  commentElement.appendChild(renderReplyElements(comment, replies));
 
-  const repliesBox = document.createElement('div');
-  repliesBox.className = 'reply-box';
-  repliesElement.appendChild(repliesBox);
-
-  const replyHeading = document.createElement('h3');
-  replyHeading.innerText = 'caro + \xa0';
-  repliesBox.appendChild(replyHeading);
-
-  const replyUsernameLink = document.createElement('a');
-  replyUsernameLink.href = "http://google.com";
-  replyUsernameLink.innerText = '@username';
-  replyHeading.appendChild(replyUsernameLink);
-
-  const replyParagraph = document.createElement('p');
-  replyParagraph.innerText = 'This is a sample reply';
-  repliesBox.appendChild(replyParagraph);
-  
-  const replyToggle = document.createElement('a');
-  replyToggle.id = 'reply-toggle';
-  replyToggle.href = "javascript:void(0)";
-  replyToggle.className = "collapsible";
-  replyToggle.onclick = collapseMenu;
-  replyToggle.innerHTML = "<br /><i class='fas fa-reply'></i> \xa0 REPLY TO THREAD <br />";
-  repliesElement.appendChild(replyToggle);
-
-  const replyForm = document.createElement('div');
-  replyForm.className = 'reply-form';
-  replyForm.innerText = 'TODO: unique reply boxes for each comment';
-  repliesElement.appendChild(replyForm);
+  // change id to comment id so comments render in individual threads
+  commentElement.id = comment.id;
 
   return commentElement;
 }
 
 /**
- * Creates reply element. Content is static for now.
+ * Calls to create each reply element.
+ */
+function renderReplyElements(comment, replies) {
+  const repliesElement = document.createElement('div');
+  repliesElement.className = "replies";
+
+  const replyForm = document.createElement('div');
+  replyForm.className = 'reply-box';
+  replyForm.id = 'reply-form'
+  repliesElement.appendChild(replyForm);
+
+  const replyFormContent = document.createElement('form');
+  replyFormContent.action = "/reply-data";
+  replyFormContent.method = "POST";
+  replyFormContent.innerHTML = '<label for="name">Name</label> &nbsp;<input class="reply-input" type="text" name="name"><br/><br/><label for="email">Email</label> &nbsp;<input class="reply-input" type="email" name="email"><br/><br/><label for="comment">Comment</label><input class="reply-input" type="textarea" name="comment"><br/><br/>';
+  replyForm.appendChild(replyFormContent);
+
+  const idInput = document.createElement('input');
+  idInput.type = "hidden";
+  idInput.value = comment.id;
+  idInput.name = "parent-id";
+  replyFormContent.appendChild(idInput);
+
+  const submitInput = document.createElement('input');
+  submitInput.type = 'submit';
+  submitInput.value = 'REPLY TO COMMENT';
+  submitInput.id = 'reply-submit';
+  replyFormContent.appendChild(submitInput);
+
+  replies.forEach((reply) => {
+    repliesElement.appendChild(
+      createReplyElement(comment, reply)
+    );
+  })
+
+  return repliesElement;
+}
+
+/**
+ * Creates reply element.
  */
 
-function createReplyElement() {
+function createReplyElement(comment, reply) {
+  console.log("reply " + reply.id + " created!");
+  const id = reply.id;
+  const name = reply.name;
+  const commentContent = reply.comment;
+  const email = reply.email;
+  const date = reply.date;
+  const username = email.substring(0, email.indexOf("@"));
 
+  const replyWrapper = document.createElement('div');
+  replyWrapper.id = 'reply-container' + comment.id;
+  replyWrapper.innerHTML = '';
+  console.log("replyWrapper: " + replyWrapper.id);
+
+  const repliesBox = document.createElement('div');
+  repliesBox.className = 'reply-box';
+  replyWrapper.appendChild(repliesBox);
+
+  const replyHeading = document.createElement('h3');
+  replyHeading.innerText = name + '\xa0';
+  repliesBox.appendChild(replyHeading);
+
+  const replyUsernameLink = document.createElement('a');
+  replyUsernameLink.href = "mailto:" + email;
+  replyUsernameLink.innerText = '@' + username;
+  replyHeading.appendChild(replyUsernameLink);
+
+  const replyParagraph = document.createElement('p');
+  replyParagraph.innerText = commentContent;
+  repliesBox.appendChild(replyParagraph);
+  return replyWrapper;
 }
 
 function deleteAllComments() {
@@ -294,5 +323,4 @@ function deleteAllComments() {
   fetch(delRequest).then(response => {
     getComments();
   });
-
 }
