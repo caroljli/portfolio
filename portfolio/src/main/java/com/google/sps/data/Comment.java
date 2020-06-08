@@ -1,7 +1,6 @@
 package com.google.sps.data;
 
 import java.util.*;
-import com.google.sps.data.Reply;
 
 /** A comment on the forum page. */
 public final class Comment {
