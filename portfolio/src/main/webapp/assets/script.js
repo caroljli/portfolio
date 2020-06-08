@@ -248,7 +248,7 @@ function renderReplyElements(comment, replies) {
   const replyFormContent = document.createElement('form');
   replyFormContent.action = "/reply-data";
   replyFormContent.method = "POST";
-  replyFormContent.innerHTML = '<label for="name">Name</label> &nbsp;<input type="text" class="reply-input" name="name"><br/><br/><label for="email">Email</label> &nbsp;<input type="email" class="reply-input" name="email"><br/><br/><label for="comment">Comment</label><input type="textarea" class="reply-input" name="comment"><br/><br/>';
+  replyFormContent.innerHTML = '<label for="name">Name</label> &nbsp;<input class="reply-input" type="text" name="name"><br/><br/><label for="email">Email</label> &nbsp;<input class="reply-input" type="email" name="email"><br/><br/><label for="comment">Comment</label><input class="reply-input" type="textarea" name="comment"><br/><br/>';
   replyForm.appendChild(replyFormContent);
 
   const idInput = document.createElement('input');
@@ -261,6 +261,7 @@ function renderReplyElements(comment, replies) {
   submitInput.type = 'submit';
   submitInput.value = 'REPLY TO COMMENT';
   submitInput.id = 'reply-submit';
+  submitInput.disabled = "disabled";
   replyFormContent.appendChild(submitInput);
 
   replies.forEach((reply) => {

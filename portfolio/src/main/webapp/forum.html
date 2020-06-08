@@ -57,37 +57,45 @@
 
     <!-- jQuery functions -->
     <script type="text/javascript">
+      // Disables reply submit if form is empty.
+      // Delegates handler for dynamically rendered elements first.
+      $(document).on('click', '.replies', function() {
+        $('.reply-input').keyup(function() {
+          var emptyReply = false;
+          console.log($('.reply-input').val());
+          $('.reply-input').each(function() {
+            if ($(this).val() == '') {
+              emptyReply = true;
+              console.log($(this).val());
+            }
+          });
+          if (emptyReply) {
+            console.log("emptyReply is true");
+            $('#reply-submit').attr('disabled', 'disabled');
+          } else {
+            console.log("emptyReply is false");
+            $('#reply-submit').removeAttr('disabled');
+          }
+        });
+      });
 
-      // Disable submit if form is empty.   
+      // Disable submits for comments if form is empty.
       $(document).ready(function() {
         $('.comment-input').keyup(function() {
           var empty = false;
           $('.comment-input').each(function() {
             if ($(this).val() == '') {
-                empty = true;
+              empty = true;
+              console.log("comment" + empty);
             }
           });
           if (empty) {
-              $('#comment-submit').attr('disabled', 'disabled');
+            $('#comment-submit').attr('disabled', 'disabled');
           } else {
-              $('#comment-submit').removeAttr('disabled');
+            $('#comment-submit').removeAttr('disabled');
           }
         });
-
-        $('.reply-input').keyup(function() {
-          var emptyReply = false;
-          $('.reply-input').each(function() {
-            if ($(this).val() == '') {
-                emptyReply = true;
-            }
-          });
-          if (emptyReply) {
-              $('#reply-submit').attr('disabled', 'disabled');
-          } else {
-              $('#reply-submit').removeAttr('disabled');
-          }
-        });
-      })
+      });
 
     </script>
 
