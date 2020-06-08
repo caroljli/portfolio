@@ -176,9 +176,10 @@ function createListElement(text) {
  */
 
 function getComments() {
+  const defaultNumComments = 5;
   var querySize = document.getElementById("comments-num").value;
   if (querySize == undefined) {
-    querySize = 5;
+    querySize = defaultNumComments;
   }
 
   var url = '/data?comments-num='.concat(querySize.toString());

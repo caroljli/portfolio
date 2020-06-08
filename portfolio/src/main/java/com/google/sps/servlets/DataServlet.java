@@ -68,10 +68,10 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // format date
+    // Format date.
     SimpleDateFormat ft = new SimpleDateFormat("E MMMM dd yyyy '@' hh:mm a zzz");
 
-    // get input data
+    // Get input data.
     String name = request.getParameter("name");
     String comment = request.getParameter("comment");
     String email = request.getParameter("email");
