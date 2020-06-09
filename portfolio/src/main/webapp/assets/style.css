@@ -174,7 +174,7 @@ a.arrow_down:hover {
   margin-bottom: 10%;
 }
 
-#forum {
+#forum, #check-in {
   z-index: 0;
   height: auto;
   min-height: 100%;
@@ -196,7 +196,7 @@ a.arrow_down:hover {
   padding: 20px 20px 0;
 }
 
-#forum .segment_text {
+#forum .segment_text, #check-in .segment_text {
   padding-top: 130px;
   margin-left: 25%;
   margin-right: 25%;
@@ -209,13 +209,13 @@ a.arrow_down:hover {
   font-weight: 500;
 }
 
-#forum .segment_text h1 {
+#forum .segment_text h1, #check-in .segment_text h1 {
   font-size: 28px;
   font-weight: 600;
   color: #3E688F;
 }
 
-#forum .segment_text h2 {
+#forum .segment_text h2, #check-in .segment_text h2 {
   font-size: 18px;
   font-weight: 500;
   margin-top: 2px;
@@ -408,6 +408,10 @@ a.arrow_down:hover {
   border-radius: 4px;
   padding: 4px;
   margin-right: 5px;
+}
+
+#check-in #map {
+  height: 500px;
 }
 
 #blog {
