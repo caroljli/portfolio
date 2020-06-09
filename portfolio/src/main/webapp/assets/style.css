@@ -393,12 +393,21 @@ a.arrow_down:hover {
 }
 
 #forum .mood-tags {
-  padding: 0 20px 20px;
-  text-align: right;
+  padding: 0 20px 40px;
 }
 
 #forum a.mood, #forum a.mood:hover {
   color: #7FB5D3;
+  float: right;
+}
+
+#forum a.tags, #forum a.tags:hover {
+  color:#FFFFFF;
+  background-color: #7FB5D3;
+  border: 1px solid #7FB5D3;
+  border-radius: 4px;
+  padding: 4px;
+  margin-right: 5px;
 }
 
 #blog {
