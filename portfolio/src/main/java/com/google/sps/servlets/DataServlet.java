@@ -89,15 +89,15 @@ public class DataServlet extends HttpServlet {
 
     datastore.put(commentEntity);
 
-    // Create new Document to analyze sentiment of user comment.
-    Document document = Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
-    LanguageServiceClient languageService = LanguageServiceClient.create();
-    Sentiment sentiment = languageService.analyzeSentiment(document).getDocumentSentiment();
-    float score = sentiment.getScore();
-    languageService.close();
+    // // Create new Document to analyze sentiment of user comment.
+    // Document document = Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
+    // LanguageServiceClient languageService = LanguageServiceClient.create();
+    // Sentiment sentiment = languageService.analyzeSentiment(document).getDocumentSentiment();
+    // float score = sentiment.getScore();
+    // languageService.close();
 
-    // Writes sentiment score to console.
-    System.out.println("sentiment score is " + score);
+    // // Writes sentiment score to console.
+    // System.out.println("sentiment score is " + score);
 
     response.sendRedirect("/forum.html");
   }
