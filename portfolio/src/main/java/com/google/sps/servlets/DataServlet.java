@@ -87,8 +87,6 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("email", email);
     commentEntity.setProperty("date", date);
 
-    datastore.put(commentEntity);
-
     // // Create new Document to analyze sentiment of user comment.
     // Document document = Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
     // LanguageServiceClient languageService = LanguageServiceClient.create();
@@ -98,6 +96,11 @@ public class DataServlet extends HttpServlet {
 
     // // Writes sentiment score to console.
     // System.out.println("sentiment score is " + score);
+
+    // // Store sentiment store in Entity.
+    // commentEntity.setProperty("sentiment", score);
+
+    datastore.put(commentEntity);
 
     response.sendRedirect("/forum.html");
   }

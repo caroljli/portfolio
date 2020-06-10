@@ -345,3 +345,232 @@ function deleteAllComments() {
     getComments();
   });
 }
+
+let map;
+let markerTemp;
+
+/**
+ * Creates a Google Map that allows user to add markers and adds it to the page.
+ */
+function createMap() {
+  map = new google.maps.Map(
+    document.getElementById('map'),
+    {
+      center: {lat: 49.2827, lng: -123.1207}, 
+      zoom: 8,
+      styles: [
+        {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+        {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+        {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+        {
+          featureType: 'administrative.locality',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#d59563'}]
+        },
+        {
+          featureType: 'poi',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#d59563'}]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'geometry',
+          stylers: [{color: '#263c3f'}]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#6b9a76'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [{color: '#38414e'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry.stroke',
+          stylers: [{color: '#212a37'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#9ca5b3'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry',
+          stylers: [{color: '#746855'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry.stroke',
+          stylers: [{color: '#1f2835'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#f3d19c'}]
+        },
+        {
+          featureType: 'transit',
+          elementType: 'geometry',
+          stylers: [{color: '#2f3948'}]
+        },
+        {
+          featureType: 'transit.station',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#d59563'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'geometry',
+          stylers: [{color: '#17263c'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#515c6d'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.stroke',
+          stylers: [{color: '#17263c'}]
+        }
+      ]
+    }
+  );
+  console.log("created map");
+
+  map.addListener('click', (event) => {
+    createEditableMarker(event.latLng.lat(), event.latLng.lng());
+  });
+
+  fetchMarkers();
+}
+
+/**
+ * Creates a marker that shows read-only information and 
+ * creates a text output shown at bottom of map.
+ */
+function createMarker(lat, lng, content) {
+  const marker = new google.maps.Marker({position: {lat: lat, lng: lng}, map: map});
+
+  const contentWindow = new google.maps.InfoWindow({content: content});
+  marker.addListener('click', () => {
+    contentWindow.open(map, marker);
+  });
+
+  // Calls renderLocation for input coordinates and comment.
+  const markerContainer = document.getElementById('marker-container');
+  markerContainer.appendChild(renderLocation(lat, lng, content));
+}
+
+/**
+ * Creates marker that shows a textbook for input.
+ */
+function createEditableMarker(lat, lng) {
+  // If an editable marker is already showing, remove it.
+  if (markerTemp) {
+    markerTemp.setMap(null);
+  }
+
+  markerTemp = new google.maps.Marker({position: {lat: lat, lng: lng}, map: map});
+
+  const contentWindow = new google.maps.InfoWindow({
+    content: buildInput(lat, lng)
+  });
+
+  // When the user closes the editable info window, remove the marker.
+  google.maps.event.addListener(contentWindow, 'closeclick', () => {
+    markerTemp.setMap(null);
+  });
+
+  contentWindow.open(map, markerTemp);
+}
+
+/**
+ * Sends a marker to the backend for saving.
+ */
+function postMarker(lat, lng, content) {
+  const params = new URLSearchParams();
+  params.append('lat', lat);
+  params.append('lng', lng);
+  params.append('content', content);
+
+  fetch('/get-markers', {method: 'POST', body: params});
+}
+
+/**
+ * Fetches all markers and adds to map.
+ */
+function fetchMarkers() {
+  fetch('/get-markers').then(response => response.json()).then((markers) => {
+    markers.forEach(
+      (marker) => {
+        createMarker(marker.lat, marker.lng, marker.content)
+      }
+    );
+  });
+}
+
+/**
+ * Builds editable textbox elements with submit button.
+ */
+function buildInput(lat, lng, content) {
+  const textBox = document.createElement('textarea');
+  const button = document.createElement('button');
+  button.className = "map-button";
+  button.appendChild(document.createTextNode('Submit'));
+
+  button.onclick = () => {
+    postMarker(lat, lng, textBox.value);
+    createMarker(lat, lng, textBox.value);
+    markerTemp.setMap(null);
+  };
+
+  const containerDiv = document.createElement('div');
+  containerDiv.appendChild(textBox);
+  containerDiv.appendChild(document.createElement('br'));
+  containerDiv.appendChild(button);
+
+  return containerDiv;
+}
+
+/**
+ * Converts lat long location to address using Geocoder and outputs to page.
+ */
+function renderLocation(lat, lng, content) {
+  var geocoder = new google.maps.Geocoder();
+  var latLng = new google.maps.LatLng(lat, lng);
+  var result;
+
+  const output = document.createElement('div');
+
+  console.log("entered function");
+  
+  // Reverse geocodes latLng to address.
+  geocoder.geocode({
+    'latLng': latLng
+  }, function (results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[0]) {
+        result = results[0].formatted_address;
+        console.log("geocoded address" + result.toString());
+        const resultOutput = document.createElement('p');
+        const resultText = document.createElement('a');
+        resultText.className = 'content-indicator';
+        resultText.innerText = content;
+        resultOutput.append(resultText);
+        resultOutput.append(result.toString());
+        output.appendChild(resultOutput);
+      } else {
+        alert('no results found');
+      }
+    } else {
+      alert('geocoder failed due to: ' + status);
+    }
+  });
+
+  return output;
+}
