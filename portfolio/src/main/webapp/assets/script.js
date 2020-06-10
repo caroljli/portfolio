@@ -356,7 +356,7 @@ function createMap() {
   map = new google.maps.Map(
     document.getElementById('map'),
     {
-      center: {lat: 37.422, lng: -122.084}, 
+      center: {lat: 49.2827, lng: -123.1207}, 
       zoom: 8,
       styles: [
         {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
@@ -518,7 +518,7 @@ function buildInput(lat, lng, content) {
   button.onclick = () => {
     postMarker(lat, lng, textBox.value);
     createMarker(lat, lng, textBox.value);
-    editMarker.setMap(null);
+    markerTemp.setMap(null);
   };
 
   const containerDiv = document.createElement('div');
