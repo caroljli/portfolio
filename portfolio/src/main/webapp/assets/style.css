@@ -423,6 +423,15 @@ a.arrow_down:hover {
   cursor: pointer;
 }
 
+#check-in .content-indicator, #check-in .content-indicator:hover {
+  color:#FFFFFF;
+  background-color: #7FB5D3;
+  border: 1px solid #7FB5D3;
+  border-radius: 4px;
+  padding: 4px;
+  margin-right: 5px;
+}
+
 #blog {
   z-index: 0;
   height: auto;

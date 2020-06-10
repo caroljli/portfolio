@@ -552,7 +552,11 @@ function renderLocation(lat, lng, content) {
         result = results[0].formatted_address;
         console.log("geocoded address" + result.toString());
         const resultOutput = document.createElement('p');
-        resultOutput.innerText = content + ": " + result.toString();
+        const resultText = document.createElement('a');
+        resultText.className = 'content-indicator';
+        resultText.innerText = content;
+        resultOutput.append(resultText);
+        resultOutput.append(result.toString());
         markerContainer.appendChild(resultOutput);
       } else {
         alert('no results found');
