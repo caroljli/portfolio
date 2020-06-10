@@ -8,7 +8,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwnh0S2ZlL1j82SMVyT9FqWlhQnL4YtiE"></script>
     </head>
-    <body>
+    <body onload="createMapForum(); getComments();">
+    <!-- <body> -->
         <div id="nav-main"> 
             <a class="open" onClick="openNav()"><i class="fas fa-plus fa-2x"></i></a>
         </div>
@@ -32,6 +33,8 @@
             <h1>FORUM</h1>
             <h2>Post comments, discussion, or thoughts here!</h2>
 
+            <div id='map-forum'></div>
+
             <div id="comments-container"></div>
 
             <div class="new-comment" id="new-comment">
@@ -40,10 +43,10 @@
                 <input class="comment-input" type="text" name="name"><br/><br/>
 
                 <label for="email">Email</label> &nbsp;
-                <input class="comment-input" type="email" name="email"><br/><br/>
+                <input class="comment-input" type="email" name="email" id='comment-email'><br/><br/>
 
-                <label for="comment">Location</label>
-                <input class="comment-input" type="text" name="location"><br/><br/>
+                <label for="location">Location</label>
+                <input class="comment-input" type="text" name="location" id="comment-location"><br/><br/>
 
                 <label for="comment">Comment</label>
                 <input class="comment-input" type="textarea" name="comment"><br/><br/>

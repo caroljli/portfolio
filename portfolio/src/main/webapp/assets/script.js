@@ -296,7 +296,6 @@ function renderReplyElements(comment, replies) {
   const submitInput = document.createElement('input');
   submitInput.type = 'submit';
   submitInput.value = 'REPLY TO COMMENT';
-  submitInput.id = 'reply-submit';
   replyFormContent.appendChild(submitInput);
 
   replies.forEach((reply) => {
@@ -355,6 +354,7 @@ function deleteAllComments() {
 
 let map;
 let markerTemp;
+let forumMap;
 
 /**
  * Creates a Google Map that allows user to add markers and adds it to the page.
@@ -374,6 +374,22 @@ function createMap() {
   });
 
   fetchMarkers();
+}
+
+function createMapForum() {
+  forumMap = new google.maps.Map(
+    document.getElementById('map-forum'),
+    {
+      center: {lat: 49.2827, lng: -123.1207}, 
+      zoom: 8,
+    }
+  );
+
+  console.log("created forum map");
+
+  document.getElementById('comment-submit').addEventListener('click', function() {
+    createCommentMarker();
+  });
 }
 
 /**
@@ -397,9 +413,15 @@ function createMarker(lat, lng, content) {
  * Creates marker on check-in map in different color based on location input
  * from forum page.
  */
-function createCommentMarker(location) {
+function createCommentMarker() {
+  var location = document.getElementById("comment-location").value;
+  console.log("LOCATION: " + location);
+  var email = document.getElementById("comment-email").value;
+  const username = email.substring(0, email.indexOf("@"));
   var geocoder = new google.maps.Geocoder();
   var result;
+  var resultLat;
+  var resultLng;
 
   console.log("entered comment marker");
   
@@ -408,21 +430,25 @@ function createCommentMarker(location) {
     'address': location
   }, function (results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
+      forumMap.setCenter(results[0].geometry.location);
+      // Sets result, lat, and lng variables
       result = results[0];
+      resultLat = results[0].geometry.location.lat();
+      resultLng = results[0].geometry.location.lng();
       var marker = new google.maps.Marker({
-        map: map,
+        map: forumMap,
         position: results[0].geometry.location,
-        icon: {
-          // Creates a new marker in blue
-          url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-        }
       });
+      console.log(resultLat + " " + resultLng);
+
+      // Creates new marker with resultLat, resultLng, and username of poster.
+      postMarker(resultLat, resultLng, "@" + username);
+      console.log("created comment marker at " + resultLat + "," + resultLng);
     } else {
       alert('geocoder failed due to: ' + status);
+      console.log('geocoder failed due to: ' + status);
     }
   });
-
-  console.log("created comment marker at " + result);
 }
 
 /**
