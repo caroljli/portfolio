@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+    <head>
+      <meta charset="UTF-8">
+      <title>Carol Li | Check In</title>
+      <link rel="stylesheet" href="/assets/style.css">
+      <script src="/assets/script.js"></script>
+      <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwnh0S2ZlL1j82SMVyT9FqWlhQnL4YtiE"></script>
+    </head>
+    <body onload="createMap();">
+        <div id="nav-main"> 
+            <a class="open" onClick="openNav()"><i class="fas fa-plus fa-2x"></i></a>
+        </div>
+
+        <div id="nav" class="sidebar">
+            <a href="javascript:void(0)" class="close" onClick="closeNav()"><i class="fas fa-minus fa-2x"></i></a>
+            <a href="index.html">HOME</a>
+            <a href="about.html">ABOUT</a>
+            <a href="about.html#proj_segment">PROJECTS</a>
+            <a href="posts.html">POSTS</a>
+            <a href="forum.html">FORUM</a>
+            <a href="checkin.html">CHECK IN</a>
+        </div>
+
+        <a href="javascript:void(0)" id="top-button" onClick="scrollUp()"><i class="far fa-arrow-alt-circle-up fa-2x"></i></a>
+        <a href="javascript:void(0)" id="back-button" onClick="back()"><i class="fas fa-long-arrow-alt-left fa-2x"></i></a>
+
+        <div id="check-in">
+          <div class="segment_text">
+            <h1>CHECK IN</h1>
+            <h2>Check in from where you are (*≧□≦) !!</h2>
+
+            <div id="map"></div>
+
+            <div id="marker-container"></div>
+            
+        </div>
+
+        <div id="footer">
+            <p>Made with 🍳 by Carol Li</p>
+        </div>
+    </body>
+
+
+    
