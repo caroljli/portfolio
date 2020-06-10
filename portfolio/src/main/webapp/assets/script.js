@@ -538,7 +538,8 @@ function buildInput(lat, lng, content) {
 }
 
 /**
- * Converts lat long location to address using Geocoder and outputs to page.
+ * Converts lat long location to address using Geocoder 
+ * (reverse geocoding) and outputs to page.
  */
 function renderLocation(lat, lng, content) {
   var geocoder = new google.maps.Geocoder();
