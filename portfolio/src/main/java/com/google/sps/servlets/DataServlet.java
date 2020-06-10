@@ -14,6 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -85,6 +88,16 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("date", date);
 
     datastore.put(commentEntity);
+
+    // // Create new Document to analyze sentiment of user comment.
+    // Document document = Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
+    // LanguageServiceClient languageService = LanguageServiceClient.create();
+    // Sentiment sentiment = languageService.analyzeSentiment(document).getDocumentSentiment();
+    // float score = sentiment.getScore();
+    // languageService.close();
+
+    // // Writes sentiment score to console.
+    // System.out.println("sentiment score is " + score);
 
     response.sendRedirect("/forum.html");
   }

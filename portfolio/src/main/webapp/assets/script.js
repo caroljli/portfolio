@@ -226,11 +226,32 @@ function createCommentElement(comment, replies) {
   commentContentElement.innerText = commentContent;
   innerBox.appendChild(commentContentElement);
 
+  const bottomCommentContent = document.createElement('div');
+  bottomCommentContent.className = "mood-tags";
+  innerBox.appendChild(bottomCommentContent);
+
+  // Tags are for text classification, when implemented. Would loop and append as array.
+  const tagsLink = document.createElement('a');
+  tagsLink.className = 'tags';
+  tagsLink.innerHTML = 'food';
+  bottomCommentContent.appendChild(tagsLink);
+
+  // Will delete this when text classification is implemented.
+  const tagsLink2 = document.createElement('a');
+  tagsLink2.className = 'tags';
+  tagsLink2.innerHTML = 'food';
+  bottomCommentContent.appendChild(tagsLink2);
+
+  const moodLink = document.createElement('a');
+  moodLink.className = 'mood';
+  moodLink.innerHTML = '<i class="fas fa-smile fa-2x"></i>';
+  bottomCommentContent.appendChild(moodLink);
+
   const viewReplies = document.createElement('a');
   viewReplies.href = "javascript:void(0)";
   viewReplies.className = "collapsible";
   viewReplies.onclick = collapseMenu;
-  viewReplies.innerHTML = "<i class='fas fa-chevron-right'></i> \xa0 VIEW REPLIES";
+  viewReplies.innerHTML = "<br /><i class='fas fa-chevron-right'></i> \xa0 VIEW REPLIES";
   commentElement.appendChild(viewReplies);
 
   commentElement.appendChild(renderReplyElements(comment, replies));
