@@ -450,7 +450,8 @@ function createMap() {
 }
 
 /**
- * Creates a marker that shows read-only information.
+ * Creates a marker that shows read-only information and 
+ * creates a text output shown at bottom of map.
  */
 function createMarker(lat, lng, content) {
   const marker = new google.maps.Marker({position: {lat: lat, lng: lng}, map: map});
@@ -459,6 +460,10 @@ function createMarker(lat, lng, content) {
   marker.addListener('click', () => {
     contentWindow.open(map, marker);
   });
+
+  // Calls renderLocation for input coordinates and comment.
+  const markerContainer = document.getElementById('marker-container');
+  markerContainer.appendChild(renderLocation(lat, lng, content));
 }
 
 /**
@@ -472,7 +477,9 @@ function createEditableMarker(lat, lng) {
 
   markerTemp = new google.maps.Marker({position: {lat: lat, lng: lng}, map: map});
 
-  const contentWindow = new google.maps.InfoWindow({content: buildInput(lat, lng)});
+  const contentWindow = new google.maps.InfoWindow({
+    content: buildInput(lat, lng)
+  });
 
   // When the user closes the editable info window, remove the marker.
   google.maps.event.addListener(contentWindow, 'closeclick', () => {
@@ -519,7 +526,6 @@ function buildInput(lat, lng, content) {
   button.onclick = () => {
     postMarker(lat, lng, textBox.value);
     createMarker(lat, lng, textBox.value);
-    renderLocation(lat, lng, textBox.value);
     markerTemp.setMap(null);
   };
 
@@ -539,16 +545,16 @@ function renderLocation(lat, lng, content) {
   var latLng = new google.maps.LatLng(lat, lng);
   var result;
 
-  console.log("entered function");
+  const output = document.createElement('div');
 
-  const markerContainer = document.getElementById('marker-container');
+  console.log("entered function");
   
   // Reverse geocodes latLng to address.
   geocoder.geocode({
     'latLng': latLng
   }, function (results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      if (results[1]) {
+      if (results[0]) {
         result = results[0].formatted_address;
         console.log("geocoded address" + result.toString());
         const resultOutput = document.createElement('p');
@@ -557,7 +563,7 @@ function renderLocation(lat, lng, content) {
         resultText.innerText = content;
         resultOutput.append(resultText);
         resultOutput.append(result.toString());
-        markerContainer.appendChild(resultOutput);
+        output.appendChild(resultOutput);
       } else {
         alert('no results found');
       }
@@ -565,4 +571,6 @@ function renderLocation(lat, lng, content) {
       alert('geocoder failed due to: ' + status);
     }
   });
+
+  return output;
 }
