@@ -504,9 +504,6 @@ function fetchMarkers() {
         createMarker(marker.lat, marker.lng, marker.content)
       }
     );
-
-    // Calls getLocations to render all locations without fetching again.
-    getLocations(markers);
   });
 }
 
@@ -522,6 +519,7 @@ function buildInput(lat, lng, content) {
   button.onclick = () => {
     postMarker(lat, lng, textBox.value);
     createMarker(lat, lng, textBox.value);
+    renderLocation(lat, lng, textBox.value);
     markerTemp.setMap(null);
   };
 
@@ -534,19 +532,6 @@ function buildInput(lat, lng, content) {
 }
 
 /**
- * Renders all locations. 
- */
-function getLocations(markers) {
-  const markerContainer = document.getElementById('marker-container');
-  markerContainer.innerHTML = '';
-  markers.forEach((marker) => {
-    markerContainer.appendChild(
-      renderLocation(marker.lat, marker.lng, marker.content)
-    );
-  });
-}
-
-/**
  * Converts lat long location to address using Geocoder and outputs to page.
  */
 function renderLocation(lat, lng, content) {
@@ -554,8 +539,9 @@ function renderLocation(lat, lng, content) {
   var latLng = new google.maps.LatLng(lat, lng);
   var result;
 
-  const resultContainer = document.createElement('div');
-  resultContainer.className = 'location-container';
+  console.log("entered function");
+
+  const markerContainer = document.getElementById('marker-container');
   
   // Reverse geocodes latLng to address.
   geocoder.geocode({
@@ -566,8 +552,8 @@ function renderLocation(lat, lng, content) {
         result = results[0].formatted_address;
         console.log("geocoded address" + result.toString());
         const resultOutput = document.createElement('p');
-        resultOutput.innerText = result.toString();
-        resultContainer.appendChild(resultOutput);
+        resultOutput.innerText = content + ": " + result.toString();
+        markerContainer.appendChild(resultOutput);
       } else {
         alert('no results found');
       }
@@ -575,6 +561,4 @@ function renderLocation(lat, lng, content) {
       alert('geocoder failed due to: ' + status);
     }
   });
-
-  return resultContainer;
 }
