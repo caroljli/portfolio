@@ -414,6 +414,15 @@ a.arrow_down:hover {
   height: 500px;
 }
 
+#check-in .map-button {
+  border: 1px solid #3E688F;
+  background-color: #3E688F;
+  border-radius: 4px;
+  color: white;
+  float: right;
+  cursor: pointer;
+}
+
 #blog {
   z-index: 0;
   height: auto;

@@ -504,6 +504,9 @@ function fetchMarkers() {
         createMarker(marker.lat, marker.lng, marker.content)
       }
     );
+
+    // Calls getLocations to render all locations without fetching again.
+    getLocations(markers);
   });
 }
 
@@ -513,6 +516,7 @@ function fetchMarkers() {
 function buildInput(lat, lng, content) {
   const textBox = document.createElement('textarea');
   const button = document.createElement('button');
+  button.className = "map-button";
   button.appendChild(document.createTextNode('Submit'));
 
   button.onclick = () => {
@@ -527,4 +531,50 @@ function buildInput(lat, lng, content) {
   containerDiv.appendChild(button);
 
   return containerDiv;
+}
+
+/**
+ * Renders all locations. 
+ */
+function getLocations(markers) {
+  const markerContainer = document.getElementById('marker-container');
+  markerContainer.innerHTML = '';
+  markers.forEach((marker) => {
+    markerContainer.appendChild(
+      renderLocation(marker.lat, marker.lng, marker.content)
+    );
+  });
+}
+
+/**
+ * Converts lat long location to address using Geocoder and outputs to page.
+ */
+function renderLocation(lat, lng, content) {
+  var geocoder = new google.maps.Geocoder();
+  var latLng = new google.maps.LatLng(lat, lng);
+  var result;
+
+  const resultContainer = document.createElement('div');
+  resultContainer.className = 'location-container';
+  
+  // Reverse geocodes latLng to address.
+  geocoder.geocode({
+    'latLng': latLng
+  }, function (results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[1]) {
+        result = results[0].formatted_address;
+        console.log("geocoded address" + result.toString());
+        const resultOutput = document.createElement('p');
+        resultOutput.innerText = result.toString();
+        resultContainer.appendChild(resultOutput);
+      } else {
+        alert('no results found');
+      }
+    } else {
+      alert('geocoder failed due to: ' + status);
+    }
+  });
+
+  return resultContainer;
 }
