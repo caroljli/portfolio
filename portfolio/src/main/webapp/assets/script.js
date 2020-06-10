@@ -517,7 +517,7 @@ function buildInput(lat, lng, content) {
 
   button.onclick = () => {
     postMarker(lat, lng, textBox.value);
-    createMarkerForDisplay(lat, lng, textBox.value);
+    createMarker(lat, lng, textBox.value);
     editMarker.setMap(null);
   };
 
