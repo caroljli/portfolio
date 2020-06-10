@@ -155,6 +155,7 @@ function getComments() {
   var querySize = document.getElementById("comments-num").value;
   if (querySize == undefined) {
     querySize = defaultNumComments;
+    document.getElementById("comments-num").attr("value", querySize);
   }
   var url = '/data?comments-num='.concat(querySize.toString());
   
@@ -196,6 +197,7 @@ function createCommentElement(comment, replies) {
   const email = comment.email;
   const date = comment.date;
   const username = email.substring(0, email.indexOf("@"));
+  const location = comment.location;
 
   const commentElement = document.createElement('div');
   commentElement.className = 'comment';
@@ -215,7 +217,12 @@ function createCommentElement(comment, replies) {
   headerElement.appendChild(usernameElement);
 
   const dateElement = document.createElement('p');
-  dateElement.innerText = date;
+  dateElement.innerText = date + "\xa0" + "\xa0";
+
+  const locationElement = document.createElement('a');
+  locationElement.innerHTML = '<i class="fas fa-map-marker-alt"></i> &nbsp;';
+  locationElement.append(location);
+  dateElement.append(locationElement);
   box.appendChild(dateElement);
 
   const innerBox = document.createElement('div');
@@ -358,86 +365,6 @@ function createMap() {
     {
       center: {lat: 49.2827, lng: -123.1207}, 
       zoom: 8,
-      styles: [
-        {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-        {
-          featureType: 'administrative.locality',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'poi',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'geometry',
-          stylers: [{color: '#263c3f'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#6b9a76'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry',
-          stylers: [{color: '#38414e'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#212a37'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#9ca5b3'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry',
-          stylers: [{color: '#746855'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#1f2835'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#f3d19c'}]
-        },
-        {
-          featureType: 'transit',
-          elementType: 'geometry',
-          stylers: [{color: '#2f3948'}]
-        },
-        {
-          featureType: 'transit.station',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'geometry',
-          stylers: [{color: '#17263c'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#515c6d'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.stroke',
-          stylers: [{color: '#17263c'}]
-        }
-      ]
     }
   );
   console.log("created map");
@@ -464,6 +391,38 @@ function createMarker(lat, lng, content) {
   // Calls renderLocation for input coordinates and comment.
   const markerContainer = document.getElementById('marker-container');
   markerContainer.appendChild(renderLocation(lat, lng, content));
+}
+
+/**
+ * Creates marker on check-in map in different color based on location input
+ * from forum page.
+ */
+function createCommentMarker(location) {
+  var geocoder = new google.maps.Geocoder();
+  var result;
+
+  console.log("entered comment marker");
+  
+  // Geocodes location to latLng
+  geocoder.geocode({
+    'address': location
+  }, function (results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      result = results[0];
+      var marker = new google.maps.Marker({
+        map: map,
+        position: results[0].geometry.location,
+        icon: {
+          // Creates a new marker in blue
+          url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        }
+      });
+    } else {
+      alert('geocoder failed due to: ' + status);
+    }
+  });
+
+  console.log("created comment marker at " + result);
 }
 
 /**
@@ -547,8 +506,6 @@ function renderLocation(lat, lng, content) {
   var result;
 
   const output = document.createElement('div');
-
-  console.log("entered function");
   
   // Reverse geocodes latLng to address.
   geocoder.geocode({

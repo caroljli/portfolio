@@ -39,7 +39,8 @@ public class ReplyServlet extends HttpServlet {
       String date = entity.getProperty("date").toString();
       long parentId = Long.parseLong(entity.getProperty("parentId").toString());
 
-      Comment fullReplyComment = new Comment(id, name, comment, email, date, parentId);
+      // Creates new reply, with an empty String value for location.
+      Comment fullReplyComment = new Comment(id, name, comment, email, date, "", parentId);
 
       replies.add(fullReplyComment);
     }

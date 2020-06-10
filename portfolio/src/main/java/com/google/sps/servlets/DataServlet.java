@@ -53,8 +53,10 @@ public class DataServlet extends HttpServlet {
       String comment = entity.getProperty("comment").toString();
       String email = entity.getProperty("email").toString();
       String date = entity.getProperty("date").toString();
+      String location = entity.getProperty("location").toString();
 
-      Comment fullComment = new Comment(id, name, comment, email, date, -1);
+      // Creates new comment object with -1 for parentId field.
+      Comment fullComment = new Comment(id, name, comment, email, date, location, -1);
       comments.add(fullComment);
     }
 
@@ -80,12 +82,14 @@ public class DataServlet extends HttpServlet {
     String email = request.getParameter("email");
     Date dateRaw = new Date();
     String date = ft.format(dateRaw).toString();
+    String location = request.getParameter("location");
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("email", email);
     commentEntity.setProperty("date", date);
+    commentEntity.setProperty("location", location);
 
     // // Create new Document to analyze sentiment of user comment.
     // Document document = Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
