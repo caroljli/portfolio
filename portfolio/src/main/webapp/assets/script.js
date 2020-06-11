@@ -99,6 +99,7 @@ function show(n) {
 window.onload = function() {
   show(0);
   getComments();
+  createMap();
 }
 
 /**
@@ -184,9 +185,9 @@ function getComments() {
       console.log(err);
   });
 
-  document.getElementById('comment-submit').addEventListener('click', function() {
+  document.getElementById('comment-submit').onclick = () => {
     createCommentMarker();
-  });
+  };
 
 }
 
@@ -227,6 +228,8 @@ function createCommentElement(comment, replies) {
   const locationElement = document.createElement('a');
   locationElement.innerHTML = '<i class="fas fa-map-marker-alt"></i> &nbsp;';
   locationElement.append(location);
+  locationElement.onclick = setCenter(location);
+  locationElement.href = "#map";
   dateElement.append(locationElement);
   box.appendChild(dateElement);
 
@@ -429,6 +432,8 @@ function postMarker(lat, lng, content) {
   params.append('lng', lng);
   params.append('content', content);
 
+  console.log("created comment marker at " + lat + ", " + lng);
+
   fetch('/get-markers', {method: 'POST', body: params});
 }
 
@@ -527,13 +532,13 @@ function createCommentMarker() {
   }, function (results, status) {
     if (status == 'OK') {
       if (results[0]) {
-        // Sets result, lat, and lng variables
+        // Sets lat and lng variables
         resultLat = results[0].geometry.location.lat();
         resultLng = results[0].geometry.location.lng();
         console.log(resultLat + ", " + resultLng);
+
         // Creates new marker with resultLat, resultLng, and username of poster.
         postMarker(resultLat, resultLng, username);
-        console.log("created comment marker at " + resultLat + "," + resultLng);
       } else {
         console.log("geocode location does not exist");
       }
@@ -544,4 +549,28 @@ function createCommentMarker() {
   });
 
   console.log("end of comment marker");
+}
+
+/**
+ * Sets location to center of map on click using geocoding.
+ */
+function setCenter(center) {
+  var geocoder = new google.maps.Geocoder();
+  console.log(center);
+
+  geocoder.geocode({
+    'address': center
+  }, function (results, status) {
+    if (status == 'OK') {
+      if (results[0]) {
+        map.setCenter(results[0])
+        console.log("new center: " + results[0].location.lat() + ", " + results[0].location.lng());
+      } else {
+        console.log("geocode location does not exist");
+      }
+    } else {
+      alert('geocoder failed due to: ' + status);
+      console.log('geocoder failed due to: ' + status);
+    }
+  });
 }

@@ -8,7 +8,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwnh0S2ZlL1j82SMVyT9FqWlhQnL4YtiE"></script>
     </head>
-    <body onload="getComments();">
+    <body onload="getComments(); createMap();">
         <div id="nav-main"> 
             <a class="open" onClick="openNav()"><i class="fas fa-plus fa-2x"></i></a>
         </div>
@@ -61,6 +61,16 @@
               <a href="#new-comment" class="new-comment-anchor">NEW COMMENT</a>
             </div>
 
+          </div>
+        </div>
+
+        <div id="check-in">
+          <div class="segment_text">
+            <h2>Check in from where you are (*≧□≦) !!</h2>
+
+            <div id="map"></div>
+
+            <div id="marker-container"></div>
           </div>
         </div>
 
