@@ -410,7 +410,7 @@ a.arrow_down:hover {
   margin-right: 5px;
 }
 
-#check-in #map, #forum #map-forum {
+#check-in #map {
   height: 500px;
   margin-top: 20px;
 }
