@@ -354,7 +354,6 @@ function deleteAllComments() {
 
 let map;
 let markerTemp;
-let forumMap;
 
 document.getElementById('comment-submit').addEventListener('click', function() {
   createCommentMarker();
@@ -525,15 +524,10 @@ function createCommentMarker() {
     'address': location
   }, function (results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      forumMap.setCenter(results[0].geometry.location);
       // Sets result, lat, and lng variables
       result = results[0];
       resultLat = results[0].geometry.location.lat();
       resultLng = results[0].geometry.location.lng();
-      var marker = new google.maps.Marker({
-        map: forumMap,
-        position: results[0].geometry.location,
-      });
       console.log(resultLat + ", " + resultLng);
 
       // Creates new marker with resultLat, resultLng, and username of poster.
