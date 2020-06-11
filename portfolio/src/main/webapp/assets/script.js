@@ -155,7 +155,7 @@ function getComments() {
   var querySize = document.getElementById("comments-num").value;
   if (querySize == undefined) {
     querySize = defaultNumComments;
-    document.getElementById("comments-num").attr("value", querySize);
+    document.getElementById("comments-num").value = querySize;
   }
   var url = '/data?comments-num='.concat(querySize.toString());
   
@@ -178,10 +178,16 @@ function getComments() {
       commentsContainer.appendChild(
         createCommentElement(comment, commentReplies)
       );
+      
+      createCommentMarker(comment.location, comment.email);
     })
   }).catch((err) => {
       console.log(err);
   });
+
+  // document.getElementById('comment-submit').addEventListener('click', function() {
+  //   createCommentMarker();
+  // });
 
 }
 
@@ -355,10 +361,6 @@ function deleteAllComments() {
 let map;
 let markerTemp;
 
-document.getElementById('comment-submit').addEventListener('click', function() {
-  createCommentMarker();
-});
-
 /**
  * Creates a Google Map that allows user to add markers and adds it to the page.
  */
@@ -508,34 +510,41 @@ function renderLocation(lat, lng, content) {
  * Creates marker on check-in map in different color based on location input
  * from forum page.
  */
-function createCommentMarker() {
-  var location = document.getElementById("comment-location").value;
-  var email = document.getElementById("comment-email").value;
-  const username = email.substring(0, email.indexOf("@"));
-  var geocoder = new google.maps.Geocoder();
-  var result;
+function createCommentMarker(location, email) {
+  var forumGeocoder = new google.maps.Geocoder();
+  // var location = document.getElementById("comment-location").value;
+  // document.getElementById("comment-location").removeAttribute("value");
+  // var email = document.getElementById("comment-email").value;
+  // document.getElementById("comment-email").removeAttribute("value");
+  const username = "@" + email.substring(0, email.indexOf("@"));
+  console.log(username);
+
   var resultLat;
   var resultLng;
 
   console.log("entered comment marker");
   
   // Geocodes location to latLng
-  geocoder.geocode({
+  forumGeocoder.geocode({
     'address': location
   }, function (results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      // Sets result, lat, and lng variables
-      result = results[0];
-      resultLat = results[0].geometry.location.lat();
-      resultLng = results[0].geometry.location.lng();
-      console.log(resultLat + ", " + resultLng);
-
-      // Creates new marker with resultLat, resultLng, and username of poster.
-      postMarker(resultLat, resultLng, "@" + username);
-      console.log("created comment marker at " + resultLat + "," + resultLng);
+    if (status == 'OK') {
+      if (results[0]) {
+        // Sets result, lat, and lng variables
+        resultLat = results[0].geometry.location.lat();
+        resultLng = results[0].geometry.location.lng();
+        console.log(resultLat + ", " + resultLng);
+        // Creates new marker with resultLat, resultLng, and username of poster.
+        postMarker(resultLat, resultLng, username);
+        console.log("created comment marker at " + resultLat + "," + resultLng);
+      } else {
+        console.log("geocode location does not exist");
+      }
     } else {
       alert('geocoder failed due to: ' + status);
       console.log('geocoder failed due to: ' + status);
     }
   });
+
+  console.log("end of comment marker");
 }
