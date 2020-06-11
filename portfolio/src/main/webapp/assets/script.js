@@ -179,15 +179,14 @@ function getComments() {
         createCommentElement(comment, commentReplies)
       );
       
-      createCommentMarker(comment.location, comment.email);
     })
   }).catch((err) => {
       console.log(err);
   });
 
-  // document.getElementById('comment-submit').addEventListener('click', function() {
-  //   createCommentMarker();
-  // });
+  document.getElementById('comment-submit').addEventListener('click', function() {
+    createCommentMarker();
+  });
 
 }
 
@@ -507,15 +506,13 @@ function renderLocation(lat, lng, content) {
 }
 
 /**
- * Creates marker on check-in map in different color based on location input
- * from forum page.
+ * Creates marker for location on check-in page.
  */
-function createCommentMarker(location, email) {
+// function createCommentMarker(location, email) {
+function createCommentMarker() {
   var forumGeocoder = new google.maps.Geocoder();
-  // var location = document.getElementById("comment-location").value;
-  // document.getElementById("comment-location").removeAttribute("value");
-  // var email = document.getElementById("comment-email").value;
-  // document.getElementById("comment-email").removeAttribute("value");
+  var location = document.getElementById("comment-location").value;
+  var email = document.getElementById("comment-email").value;
   const username = "@" + email.substring(0, email.indexOf("@"));
   console.log(username);
 
