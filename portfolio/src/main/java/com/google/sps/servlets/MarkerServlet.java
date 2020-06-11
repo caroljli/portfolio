@@ -40,6 +40,8 @@ public class MarkerServlet extends HttpServlet {
     double lng = Double.parseDouble(request.getParameter("lng"));
     String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
 
+    System.out.println("PARAM MAP: " + request.getParameterMap());
+
     Marker marker = new Marker(lat, lng, content);
     storeMarker(marker);
   }
