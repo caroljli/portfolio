@@ -174,7 +174,7 @@ a.arrow_down:hover {
   margin-bottom: 10%;
 }
 
-#forum, #check-in {
+#forum {
   z-index: 0;
   height: auto;
   min-height: 100%;
@@ -196,10 +196,11 @@ a.arrow_down:hover {
   padding: 20px 20px 0;
 }
 
-#forum .segment_text, #check-in .segment_text {
+#forum .segment_text {
   padding-top: 130px;
   margin-left: 25%;
   margin-right: 25%;
+  padding-bottom: 130px;
 }
 
 #forum .segment_text .box {
@@ -209,13 +210,13 @@ a.arrow_down:hover {
   font-weight: 500;
 }
 
-#forum .segment_text h1, #check-in .segment_text h1 {
+#forum .segment_text h1 {
   font-size: 28px;
   font-weight: 600;
   color: #3E688F;
 }
 
-#forum .segment_text h2, #check-in .segment_text h2 {
+#forum .segment_text h2 {
   font-size: 18px;
   font-weight: 500;
   margin-top: 2px;
@@ -410,12 +411,25 @@ a.arrow_down:hover {
   margin-right: 5px;
 }
 
-#check-in #map {
-  height: 500px;
-  margin-top: 20px;
+#forum .location-button {
+  background: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: #7FB5D3;
+  border: none;
+  cursor: pointer;
 }
 
-#check-in .map-button {
+#map {
+  height: 500px;
+  margin-bottom: 10px;
+}
+
+#marker-container {
+  margin-bottom: 30px;
+}
+
+.map-button {
   border: 1px solid #3E688F;
   background-color: #3E688F;
   border-radius: 4px;
@@ -424,7 +438,7 @@ a.arrow_down:hover {
   cursor: pointer;
 }
 
-#check-in .content-indicator, #check-in .content-indicator:hover {
+.content-indicator, .content-indicator:hover {
   color:#FFFFFF;
   background-color: #7FB5D3;
   border: 1px solid #7FB5D3;

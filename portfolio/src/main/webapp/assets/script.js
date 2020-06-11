@@ -203,7 +203,8 @@ function createCommentElement(comment, replies) {
   const email = comment.email;
   const date = comment.date;
   const username = email.substring(0, email.indexOf("@"));
-  const location = comment.location;
+  const location = "'" + comment.location + "'";
+  const rawLocation = comment.location;
 
   const commentElement = document.createElement('div');
   commentElement.className = 'comment';
@@ -225,11 +226,11 @@ function createCommentElement(comment, replies) {
   const dateElement = document.createElement('p');
   dateElement.innerText = date + "\xa0" + "\xa0";
 
-  const locationElement = document.createElement('a');
+  const locationElement = document.createElement('button');
+  locationElement.className = "location-button";
   locationElement.innerHTML = '<i class="fas fa-map-marker-alt"></i> &nbsp;';
-  locationElement.append(location);
-  locationElement.onclick = setCenter(location);
-  locationElement.href = "#map";
+  locationElement.append(rawLocation);
+  locationElement.setAttribute('onclick', 'redirectCenter('+location+')');
   dateElement.append(locationElement);
   box.appendChild(dateElement);
 
@@ -554,7 +555,7 @@ function createCommentMarker() {
 /**
  * Sets location to center of map on click using geocoding.
  */
-function setCenter(center) {
+function redirectCenter(center) {
   var geocoder = new google.maps.Geocoder();
   console.log(center);
 
@@ -563,8 +564,8 @@ function setCenter(center) {
   }, function (results, status) {
     if (status == 'OK') {
       if (results[0]) {
-        map.setCenter(results[0])
-        console.log("new center: " + results[0].location.lat() + ", " + results[0].location.lng());
+        console.log("new center: " + results[0].geometry.location.lat() + ", " + results[0].geometry.location.lng());
+        map.setCenter({lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()});
       } else {
         console.log("geocode location does not exist");
       }
@@ -573,4 +574,6 @@ function setCenter(center) {
       console.log('geocoder failed due to: ' + status);
     }
   });
+
+  location.href = '#map';
 }
