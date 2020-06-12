@@ -464,47 +464,11 @@ function buildInput(lat, lng) {
   const button = document.createElement('button');
   button.id = "map-button";
   button.appendChild(document.createTextNode('Submit'));
-
-  // var result;
-  // var country;
-  // var geocoder = new google.maps.Geocoder();
-  // var latLng = new google.maps.LatLng(lat, lng);
-
-  // // Reverse geocodes latLng to address.
-  // geocoder.geocode({
-  //   'latLng': latLng
-  // }, function (results, status) {
-  //   if (status == google.maps.GeocoderStatus.OK) {
-  //     if (results[0]) {
-  //       result = results[0].formatted_address;
-  //       console.log("geocoded address" + result.toString());
-  //       var address = result.split(",");
-  //       var country = address[address.length - 1];
-  //       console.log(country);
-  //     } else {
-  //       alert('no results found');
-  //     }
-  //   } else {
-  //     alert('geocoder failed due to: ' + status);
-  //   }
-  // });
-
-  // // const button = document.getElementById('map-button');
-
-  // console.log(country);
   
   button.onclick = () => {
-    // postMarker(lat, lng, textBox.value);
-    // createMarker(lat, lng, textBox.value);
     reverseGeocode(lat, lng, textBox.value);
     markerTemp.setMap(null);
   };
-
-  // button.onclick = () => {
-  //   postMarker(lat, lng, content, country);
-  //   createMarker(lat, lng, content, result);
-  //   markerTemp.setMap(null);
-  // };
 
   const containerDiv = document.createElement('div');
   containerDiv.appendChild(textBox);
@@ -657,9 +621,6 @@ function redirectCenter(center) {
 
   location.href = '#map';
 }
-
-// google.charts.load('current', {'packages':['geochart']});
-// google.charts.setOnLoadCallback(drawChart);
 
 /**
  * Fetches country data and uses it to create a chart. 
