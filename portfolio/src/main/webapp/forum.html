@@ -3,11 +3,11 @@
         <meta charset="UTF-8">
         <title>Carol Li | Forum</title>
         <link rel="stylesheet" href="/assets/style.css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="/assets/script.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwnh0S2ZlL1j82SMVyT9FqWlhQnL4YtiE"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </head>
     <body onload="getComments(); createMap();">
         <div id="nav-main"> 
@@ -66,11 +66,13 @@
             <div id="map"></div>
             <div id="marker-container"></div>
 
+            <br/><br/>
+            <h2>See where other people have been!</h2>
+            <div id="geochart-container"></div>
+
           </div>
           
         </div>
-
-        <div id="geochart-container"></div>
 
         <div id="footer">
             <p>Made with 🍳 by Carol Li</p>

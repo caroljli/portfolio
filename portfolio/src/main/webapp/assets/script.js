@@ -667,3 +667,35 @@ function redirectCenter(center) {
 
   location.href = '#map';
 }
+
+// google.charts.load('current', {'packages':['geochart']});
+// google.charts.setOnLoadCallback(drawChart);
+
+/**
+ * Fetches country data and uses it to create a chart. 
+ */
+
+google.charts.load('current', {'packages':['geochart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  fetch('/marker-data').then(response => response.json()).then((countryCount) => {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Country');
+    data.addColumn('number', 'Popularity');
+    Object.keys(countryCount).forEach((country) => {
+      data.addRow([country, countryCount[country]]);
+    });
+
+    const options = {};
+
+    const chart = new google.visualization.GeoChart(
+      document.getElementById('geochart-container')
+    );
+
+    chart.draw(data, options);
+
+    console.log("drawn map");
+
+  });
+}
