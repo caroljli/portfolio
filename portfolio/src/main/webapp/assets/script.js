@@ -423,40 +423,38 @@ function createEditableMarker(lat, lng) {
   contentWindow.open(map, markerTemp);
 }
 
-// /**
-//  * Evokes geocoder for building the input of the marker.
-//  */
-// function reverseGeocode(lat, lng) {
-//   const textBox = document.createElement('textarea');
-//   const button = document.createElement('button');
-//   button.id = "map-button";
-//   button.appendChild(document.createTextNode('Submit'));
+/**
+ * Evokes geocoder for building the input of the marker.
+ */
+function reverseGeocode(lat, lng, content) {
+  var result;
+  var country;
+  var geocoder = new google.maps.Geocoder();
+  var latLng = new google.maps.LatLng(lat, lng);
 
-//   var result;
-//   var country;
-//   var geocoder = new google.maps.Geocoder();
-//   var latLng = new google.maps.LatLng(lat, lng);
+  // Reverse geocodes latLng to address.
+  geocoder.geocode({
+    'latLng': latLng
+  }, function (results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[0]) {
+        result = results[0].formatted_address;
+        console.log("geocoded address" + result.toString());
+        var address = result.split(",");
+        country = address[address.length - 1];
+        console.log(country);
 
-//   // Reverse geocodes latLng to address.
-//   geocoder.geocode({
-//     'latLng': latLng
-//   }, function (results, status) {
-//     if (status == google.maps.GeocoderStatus.OK) {
-//       if (results[0]) {
-//         result = results[0].formatted_address;
-//         console.log("geocoded address" + result.toString());
-//         var address = result.split(",");
-//         country = address[address.length - 1];
-//         console.log(country);
-//         buildInput(lat, lng, textBox.value, country, result);
-//       } else {
-//         alert('no results found');
-//       }
-//     } else {
-//       alert('geocoder failed due to: ' + status);
-//     }
-//   });
-// }
+        // Make new Marker and add it to map.
+        postMarker(lat, lng, content, country);
+        createMarker(lat, lng, content, country);
+      } else {
+        alert('no results found');
+      }
+    } else {
+      alert('geocoder failed due to: ' + status);
+    }
+  });
+}
 
 /**
  * Builds editable textbox elements with submit button.
@@ -496,8 +494,9 @@ function buildInput(lat, lng) {
   // console.log(country);
   
   button.onclick = () => {
-    postMarker(lat, lng, textBox.value);
-    createMarker(lat, lng, textBox.value);
+    // postMarker(lat, lng, textBox.value);
+    // createMarker(lat, lng, textBox.value);
+    reverseGeocode(lat, lng, textBox.value);
     markerTemp.setMap(null);
   };
 
@@ -582,15 +581,6 @@ function renderLocation(lat, lng, content) {
       alert('geocoder failed due to: ' + status);
     }
   });
-
-  // // Create output on bottom.
-  // const resultOutput = document.createElement('p');
-  // const resultText = document.createElement('a');
-  // resultText.className = 'content-indicator';
-  // resultText.innerText = content;
-  // resultOutput.append(resultText);
-  // resultOutput.append(location.toString());
-  // output.appendChild(resultOutput);
 
   return output;
 }
@@ -687,7 +677,9 @@ function drawChart() {
       data.addRow([country, countryCount[country]]);
     });
 
-    const options = {};
+    const options = {
+      height: 500
+    };
 
     const chart = new google.visualization.GeoChart(
       document.getElementById('geochart-container')

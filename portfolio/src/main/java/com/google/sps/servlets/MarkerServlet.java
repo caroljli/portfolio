@@ -47,6 +47,18 @@ public class MarkerServlet extends HttpServlet {
     storeMarker(marker);
   }
 
+  private void newServlet(HttpServletRequest request, HttpServletResponse response) {
+    double lat = Double.parseDouble(request.getParameter("lat"));
+    double lng = Double.parseDouble(request.getParameter("lng"));
+    String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
+    String country = Jsoup.clean(request.getParameter("country"), Whitelist.none());
+
+    System.out.println("PARAM MAP: " + request.getParameterMap());
+
+    Marker marker = new Marker(lat, lng, content, country);
+    storeMarker(marker);
+  }
+
   // Fetches Marker from Datastore.
   private Collection<Marker> getMarkers() {
     Collection<Marker> markers = new ArrayList<>();
