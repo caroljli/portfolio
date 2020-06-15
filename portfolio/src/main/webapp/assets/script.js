@@ -202,8 +202,8 @@ function createCommentElement(comment, replies) {
   const email = comment.email;
   const date = comment.date;
   const username = email.substring(0, email.indexOf("@"));
-  const location = "'" + comment.location + "'";
   const rawLocation = comment.location;
+  const location = "'" + rawLocation + "'";
 
   const commentElement = document.createElement('div');
   commentElement.className = 'comment';
@@ -240,27 +240,6 @@ function createCommentElement(comment, replies) {
   const commentContentElement = document.createElement('p');
   commentContentElement.innerText = commentContent;
   innerBox.appendChild(commentContentElement);
-
-  // const bottomCommentContent = document.createElement('div');
-  // bottomCommentContent.className = "mood-tags";
-  // innerBox.appendChild(bottomCommentContent);
-
-  // // Tags are for text classification, when implemented. Would loop and append as array.
-  // const tagsLink = document.createElement('a');
-  // tagsLink.className = 'tags';
-  // tagsLink.innerHTML = 'food';
-  // bottomCommentContent.appendChild(tagsLink);
-
-  // // Will delete this when text classification is implemented.
-  // const tagsLink2 = document.createElement('a');
-  // tagsLink2.className = 'tags';
-  // tagsLink2.innerHTML = 'food';
-  // bottomCommentContent.appendChild(tagsLink2);
-
-  // const moodLink = document.createElement('a');
-  // moodLink.className = 'mood';
-  // moodLink.innerHTML = '<i class="fas fa-smile fa-2x"></i>';
-  // bottomCommentContent.appendChild(moodLink);
 
   const viewReplies = document.createElement('a');
   viewReplies.href = "javascript:void(0)";
@@ -424,13 +403,69 @@ function createEditableMarker(lat, lng) {
 }
 
 /**
+ * Evokes geocoder for building the input of the marker.
+ */
+function reverseGeocode(lat, lng, content) {
+  var result;
+  var country;
+  var geocoder = new google.maps.Geocoder();
+  var latLng = new google.maps.LatLng(lat, lng);
+
+  // Reverse geocodes latLng to address.
+  geocoder.geocode({
+    'latLng': latLng
+  }, function (results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[0]) {
+        result = results[0].formatted_address;
+        console.log("geocoded address" + result.toString());
+        var address = result.split(",");
+        country = address[address.length - 1];
+        console.log(country);
+
+        // Make new Marker and add it to map.
+        postMarker(lat, lng, content, country);
+        createMarker(lat, lng, content, country);
+      } else {
+        alert('no results found');
+      }
+    } else {
+      alert('geocoder failed due to: ' + status);
+    }
+  });
+}
+
+/**
+ * Builds editable textbox elements with submit button.
+ */
+function buildInput(lat, lng) {
+  const textBox = document.createElement('textarea');
+  const button = document.createElement('button');
+  button.id = "map-button";
+  button.appendChild(document.createTextNode('Submit'));
+  
+  button.onclick = () => {
+    reverseGeocode(lat, lng, textBox.value);
+    markerTemp.setMap(null);
+  };
+
+  const containerDiv = document.createElement('div');
+  containerDiv.appendChild(textBox);
+  containerDiv.appendChild(document.createElement('br'));
+  containerDiv.appendChild(button);
+
+  return containerDiv;
+}
+
+/**
  * Sends a marker to the backend for saving.
  */
-function postMarker(lat, lng, content) {
+function postMarker(lat, lng, content, country) {
   const params = new URLSearchParams();
   params.append('lat', lat);
   params.append('lng', lng);
   params.append('content', content);
+  params.append('country', country);
 
   console.log("created comment marker at " + lat + ", " + lng);
 
@@ -451,36 +486,12 @@ function fetchMarkers() {
 }
 
 /**
- * Builds editable textbox elements with submit button.
- */
-function buildInput(lat, lng, content) {
-  const textBox = document.createElement('textarea');
-  const button = document.createElement('button');
-  button.className = "map-button";
-  button.appendChild(document.createTextNode('Submit'));
-
-  button.onclick = () => {
-    postMarker(lat, lng, textBox.value);
-    createMarker(lat, lng, textBox.value);
-    markerTemp.setMap(null);
-  };
-
-  const containerDiv = document.createElement('div');
-  containerDiv.appendChild(textBox);
-  containerDiv.appendChild(document.createElement('br'));
-  containerDiv.appendChild(button);
-
-  return containerDiv;
-}
-
-/**
  * Converts lat long location to address using Geocoder 
  * (reverse geocoding) and outputs to page.
  */
 function renderLocation(lat, lng, content) {
   var geocoder = new google.maps.Geocoder();
   var latLng = new google.maps.LatLng(lat, lng);
-  var result;
 
   const output = document.createElement('div');
   
@@ -492,6 +503,13 @@ function renderLocation(lat, lng, content) {
       if (results[0]) {
         result = results[0].formatted_address;
         console.log("geocoded address" + result.toString());
+
+        // Get country.
+        var address = result.split(",");
+        country = address[address.length - 1];
+        console.log(country);
+
+        // Create output on bottom.
         const resultOutput = document.createElement('p');
         const resultText = document.createElement('a');
         resultText.className = 'content-indicator';
@@ -513,9 +531,8 @@ function renderLocation(lat, lng, content) {
 /**
  * Creates marker for location on check-in page.
  */
-// function createCommentMarker(location, email) {
 function createCommentMarker() {
-  var forumGeocoder = new google.maps.Geocoder();
+  var geocoder = new google.maps.Geocoder();
   var location = document.getElementById("comment-location").value;
   var email = document.getElementById("comment-email").value;
   const username = "@" + email.substring(0, email.indexOf("@"));
@@ -523,11 +540,12 @@ function createCommentMarker() {
 
   var resultLat;
   var resultLng;
+  var country;
 
   console.log("entered comment marker");
   
   // Geocodes location to latLng
-  forumGeocoder.geocode({
+  geocoder.geocode({
     'address': location
   }, function (results, status) {
     if (status == 'OK') {
@@ -535,10 +553,16 @@ function createCommentMarker() {
         // Sets lat and lng variables
         resultLat = results[0].geometry.location.lat();
         resultLng = results[0].geometry.location.lng();
-        console.log(resultLat + ", " + resultLng);
 
-        // Creates new marker with resultLat, resultLng, and username of poster.
-        postMarker(resultLat, resultLng, username);
+        // Get country.
+        var address = location.split(",");
+        country = address[address.length - 1].trim();
+        console.log(country);
+
+        console.log(resultLat + ", " + resultLng + " in " + country);
+
+        // Creates new marker with resultLat, resultLng, username, and country of poster.
+        postMarker(resultLat, resultLng, username, country);
       } else {
         console.log("geocode location does not exist");
       }
@@ -575,4 +599,35 @@ function redirectCenter(center) {
   });
 
   location.href = '#map';
+}
+
+/**
+ * Fetches country data and uses it to create a chart. 
+ */
+
+google.charts.load('current', {'packages':['geochart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  fetch('/marker-data').then(response => response.json()).then((countryCount) => {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Country');
+    data.addColumn('number', 'Popularity');
+    Object.keys(countryCount).forEach((country) => {
+      data.addRow([country, countryCount[country]]);
+    });
+
+    const options = {
+      height: 500
+    };
+
+    const chart = new google.visualization.GeoChart(
+      document.getElementById('geochart-container')
+    );
+
+    chart.draw(data, options);
+
+    console.log("drawn map");
+
+  });
 }

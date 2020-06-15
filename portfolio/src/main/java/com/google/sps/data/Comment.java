@@ -14,7 +14,7 @@ public final class Comment {
   private final long parentId;
 
   // Date must be in format of E MMMM dd yyyy '@' hh:mm a zzz
-  // Location must be a valid geolocation
+  // Location must be a valid geolocation, as per this guide: https://developers.google.com/maps/documentation/geocoding/best-practices
   public Comment(long id, String name, String comment, String email, String date, String location, long parentId) {
     this.id = id;
     this.name = name;

@@ -39,10 +39,23 @@ public class MarkerServlet extends HttpServlet {
     double lat = Double.parseDouble(request.getParameter("lat"));
     double lng = Double.parseDouble(request.getParameter("lng"));
     String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
+    String country = Jsoup.clean(request.getParameter("country"), Whitelist.none());
 
     System.out.println("PARAM MAP: " + request.getParameterMap());
 
-    Marker marker = new Marker(lat, lng, content);
+    Marker marker = new Marker(lat, lng, content, country);
+    storeMarker(marker);
+  }
+
+  private void newServlet(HttpServletRequest request, HttpServletResponse response) {
+    double lat = Double.parseDouble(request.getParameter("lat"));
+    double lng = Double.parseDouble(request.getParameter("lng"));
+    String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
+    String country = Jsoup.clean(request.getParameter("country"), Whitelist.none());
+
+    System.out.println("PARAM MAP: " + request.getParameterMap());
+
+    Marker marker = new Marker(lat, lng, content, country);
     storeMarker(marker);
   }
 
@@ -58,8 +71,9 @@ public class MarkerServlet extends HttpServlet {
       double lat = (double) entity.getProperty("lat");
       double lng = (double) entity.getProperty("lng");
       String content = (String) entity.getProperty("content");
+      String country = (String) entity.getProperty("country");
 
-      Marker marker = new Marker(lat, lng, content);
+      Marker marker = new Marker(lat, lng, content, country);
       markers.add(marker);
     }
     return markers;
@@ -71,6 +85,7 @@ public class MarkerServlet extends HttpServlet {
     markerEntity.setProperty("lat", marker.getLat());
     markerEntity.setProperty("lng", marker.getLng());
     markerEntity.setProperty("content", marker.getContent());
+    markerEntity.setProperty("country", marker.getCountry());
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(markerEntity);
