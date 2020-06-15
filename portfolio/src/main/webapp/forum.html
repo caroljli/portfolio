@@ -6,8 +6,9 @@
         <script src="/assets/script.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwnh0S2ZlL1j82SMVyT9FqWlhQnL4YtiE"></script>
     </head>
-    <body>
+    <body onload="getComments(); createMap();">
         <div id="nav-main"> 
             <a class="open" onClick="openNav()"><i class="fas fa-plus fa-2x"></i></a>
         </div>
@@ -19,7 +20,6 @@
             <a href="about.html#proj_segment">PROJECTS</a>
             <a href="posts.html">POSTS</a>
             <a href="forum.html">FORUM</a>
-            <a href="checkin.html">CHECK IN</a>
         </div>
 
         <a href="javascript:void(0)" id="top-button" onClick="scrollUp()"><i class="far fa-arrow-alt-circle-up fa-2x"></i></a>
@@ -31,6 +31,8 @@
             <h1>FORUM</h1>
             <h2>Post comments, discussion, or thoughts here!</h2>
 
+            <div id='map-forum'></div>
+
             <div id="comments-container"></div>
 
             <div class="new-comment" id="new-comment">
@@ -39,7 +41,10 @@
                 <input class="comment-input" type="text" name="name"><br/><br/>
 
                 <label for="email">Email</label> &nbsp;
-                <input class="comment-input" type="email" name="email"><br/><br/>
+                <input class="comment-input" type="email" name="email" id='comment-email'><br/><br/>
+
+                <label for="location">Location</label>
+                <input class="comment-input" type="text" name="location" id="comment-location"><br/><br/>
 
                 <label for="comment">Comment</label>
                 <input class="comment-input" type="textarea" name="comment"><br/><br/>
@@ -55,7 +60,13 @@
               <a href="#new-comment" class="new-comment-anchor">NEW COMMENT</a>
             </div>
 
+            <br/><br/>
+            <h2>Check in from where you are (*≧□≦) !!</h2>
+            <div id="map"></div>
+            <div id="marker-container"></div>
+
           </div>
+          
         </div>
 
         <div id="footer">

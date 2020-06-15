@@ -99,6 +99,7 @@ function show(n) {
 window.onload = function() {
   show(0);
   getComments();
+  createMap();
 }
 
 /**
@@ -177,10 +178,15 @@ function getComments() {
       commentsContainer.appendChild(
         createCommentElement(comment, commentReplies)
       );
+      
     })
   }).catch((err) => {
       console.log(err);
   });
+
+  document.getElementById('comment-submit').onclick = () => {
+    createCommentMarker();
+  };
 
 }
 
@@ -196,6 +202,8 @@ function createCommentElement(comment, replies) {
   const email = comment.email;
   const date = comment.date;
   const username = email.substring(0, email.indexOf("@"));
+  const location = "'" + comment.location + "'";
+  const rawLocation = comment.location;
 
   const commentElement = document.createElement('div');
   commentElement.className = 'comment';
@@ -215,7 +223,14 @@ function createCommentElement(comment, replies) {
   headerElement.appendChild(usernameElement);
 
   const dateElement = document.createElement('p');
-  dateElement.innerText = date;
+  dateElement.innerText = date + "\xa0" + "\xa0";
+
+  const locationElement = document.createElement('button');
+  locationElement.className = "location-button";
+  locationElement.innerHTML = '<i class="fas fa-map-marker-alt"></i> &nbsp;';
+  locationElement.append(rawLocation);
+  locationElement.setAttribute('onclick', 'redirectCenter('+location+')');
+  dateElement.append(locationElement);
   box.appendChild(dateElement);
 
   const innerBox = document.createElement('div');
@@ -226,26 +241,26 @@ function createCommentElement(comment, replies) {
   commentContentElement.innerText = commentContent;
   innerBox.appendChild(commentContentElement);
 
-  const bottomCommentContent = document.createElement('div');
-  bottomCommentContent.className = "mood-tags";
-  innerBox.appendChild(bottomCommentContent);
+  // const bottomCommentContent = document.createElement('div');
+  // bottomCommentContent.className = "mood-tags";
+  // innerBox.appendChild(bottomCommentContent);
 
-  // Tags are for text classification, when implemented. Would loop and append as array.
-  const tagsLink = document.createElement('a');
-  tagsLink.className = 'tags';
-  tagsLink.innerHTML = 'food';
-  bottomCommentContent.appendChild(tagsLink);
+  // // Tags are for text classification, when implemented. Would loop and append as array.
+  // const tagsLink = document.createElement('a');
+  // tagsLink.className = 'tags';
+  // tagsLink.innerHTML = 'food';
+  // bottomCommentContent.appendChild(tagsLink);
 
-  // Will delete this when text classification is implemented.
-  const tagsLink2 = document.createElement('a');
-  tagsLink2.className = 'tags';
-  tagsLink2.innerHTML = 'food';
-  bottomCommentContent.appendChild(tagsLink2);
+  // // Will delete this when text classification is implemented.
+  // const tagsLink2 = document.createElement('a');
+  // tagsLink2.className = 'tags';
+  // tagsLink2.innerHTML = 'food';
+  // bottomCommentContent.appendChild(tagsLink2);
 
-  const moodLink = document.createElement('a');
-  moodLink.className = 'mood';
-  moodLink.innerHTML = '<i class="fas fa-smile fa-2x"></i>';
-  bottomCommentContent.appendChild(moodLink);
+  // const moodLink = document.createElement('a');
+  // moodLink.className = 'mood';
+  // moodLink.innerHTML = '<i class="fas fa-smile fa-2x"></i>';
+  // bottomCommentContent.appendChild(moodLink);
 
   const viewReplies = document.createElement('a');
   viewReplies.href = "javascript:void(0)";
@@ -289,7 +304,6 @@ function renderReplyElements(comment, replies) {
   const submitInput = document.createElement('input');
   submitInput.type = 'submit';
   submitInput.value = 'REPLY TO COMMENT';
-  submitInput.id = 'reply-submit';
   replyFormContent.appendChild(submitInput);
 
   replies.forEach((reply) => {
@@ -358,86 +372,6 @@ function createMap() {
     {
       center: {lat: 49.2827, lng: -123.1207}, 
       zoom: 8,
-      styles: [
-        {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-        {
-          featureType: 'administrative.locality',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'poi',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'geometry',
-          stylers: [{color: '#263c3f'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#6b9a76'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry',
-          stylers: [{color: '#38414e'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#212a37'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#9ca5b3'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry',
-          stylers: [{color: '#746855'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#1f2835'}]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#f3d19c'}]
-        },
-        {
-          featureType: 'transit',
-          elementType: 'geometry',
-          stylers: [{color: '#2f3948'}]
-        },
-        {
-          featureType: 'transit.station',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'geometry',
-          stylers: [{color: '#17263c'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#515c6d'}]
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.stroke',
-          stylers: [{color: '#17263c'}]
-        }
-      ]
     }
   );
   console.log("created map");
@@ -498,6 +432,8 @@ function postMarker(lat, lng, content) {
   params.append('lng', lng);
   params.append('content', content);
 
+  console.log("created comment marker at " + lat + ", " + lng);
+
   fetch('/get-markers', {method: 'POST', body: params});
 }
 
@@ -538,7 +474,8 @@ function buildInput(lat, lng, content) {
 }
 
 /**
- * Converts lat long location to address using Geocoder and outputs to page.
+ * Converts lat long location to address using Geocoder 
+ * (reverse geocoding) and outputs to page.
  */
 function renderLocation(lat, lng, content) {
   var geocoder = new google.maps.Geocoder();
@@ -546,8 +483,6 @@ function renderLocation(lat, lng, content) {
   var result;
 
   const output = document.createElement('div');
-
-  console.log("entered function");
   
   // Reverse geocodes latLng to address.
   geocoder.geocode({
@@ -573,4 +508,71 @@ function renderLocation(lat, lng, content) {
   });
 
   return output;
+}
+
+/**
+ * Creates marker for location on check-in page.
+ */
+// function createCommentMarker(location, email) {
+function createCommentMarker() {
+  var forumGeocoder = new google.maps.Geocoder();
+  var location = document.getElementById("comment-location").value;
+  var email = document.getElementById("comment-email").value;
+  const username = "@" + email.substring(0, email.indexOf("@"));
+  console.log(username);
+
+  var resultLat;
+  var resultLng;
+
+  console.log("entered comment marker");
+  
+  // Geocodes location to latLng
+  forumGeocoder.geocode({
+    'address': location
+  }, function (results, status) {
+    if (status == 'OK') {
+      if (results[0]) {
+        // Sets lat and lng variables
+        resultLat = results[0].geometry.location.lat();
+        resultLng = results[0].geometry.location.lng();
+        console.log(resultLat + ", " + resultLng);
+
+        // Creates new marker with resultLat, resultLng, and username of poster.
+        postMarker(resultLat, resultLng, username);
+      } else {
+        console.log("geocode location does not exist");
+      }
+    } else {
+      alert('geocoder failed due to: ' + status);
+      console.log('geocoder failed due to: ' + status);
+    }
+  });
+
+  console.log("end of comment marker");
+}
+
+/**
+ * Sets location to center of map on click using geocoding.
+ */
+function redirectCenter(center) {
+  var geocoder = new google.maps.Geocoder();
+  console.log(center);
+
+  geocoder.geocode({
+    'address': center
+  }, function (results, status) {
+    if (status == 'OK') {
+      if (results[0]) {
+        console.log("new center: " + results[0].geometry.location.lat() + ", " + results[0].geometry.location.lng());
+        map.setCenter({lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()});
+      } else {
+        console.log("geocode location does not exist");
+      }
+    } else {
+      alert('geocoder failed due to: ' + status);
+      console.log('geocoder failed due to: ' + status);
+    }
+  });
+
+  location.href = '#map';
 }
