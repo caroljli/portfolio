@@ -39,17 +39,27 @@ public final class FindMeetingQuery {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
 
+    // Get unavailable times for mandatory attendees.
+    List<TimeRange> unavailableTimes = getUnavailableTimes(events, requestAttendees);
+    Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
+
+    // Get unavailable times for optional attendees.
+    List<TimeRange> unavailableTimesOptional = getUnavailableTimes(events, requestAttendeesOptional);
+    Collections.sort(unavailableTimesOptional, TimeRange.ORDER_BY_START);
+
+    return getAvailableTimes(request.getDuration(), unavailableTimes, unavailableTimesOptional);
+
   }
 
   /**
    * Get all unavailable times in which meeting request attendees are busy.
    * 
-   * @param all events to get unavailabilities from
-   * @param request attendees to find overlap for
-   * @return a set of time ranges that are already occupied
+   * @param events to get unavailabilities from
+   * @param requestAttendees to find overlap for
+   * @return list of time ranges that are already occupied
    */
-  public Set<TimeRange> getUnavailableTimes(Collection<Event> events, Collection<String> requestAttendees) {
-    Set<TimeRange> output = new HashSet<>();
+  public List<TimeRange> getUnavailableTimes(Collection<Event> events, Collection<String> requestAttendees) {
+    List<TimeRange> output = new HashSet<>();
 
     for (Event e : events) {
       Set<String> eventAttendees = e.getAttendees();
@@ -65,5 +75,53 @@ public final class FindMeetingQuery {
     }
     
     return output;
+  }
+
+  /**
+   * Gets all available times for the meeting request attendees that contain the most available attendees.
+   *
+   * @param duration of meeting request
+   * @param unavailableTimes of mandatory attendees
+   * @param unavailableTimesOptional of optional attendees
+   */
+  public List<TimeRange> getAvailableTimes(long duration, List<TimeRange> unavailableTimes, List<TimeRange> unavailableTimesOptional) {
+    // Finds all timeslots in which mandatory attendees can attend
+    List<TimeRange> attendeeTimes = getNonOverlappingTimes(duration, unavailableTimes);
+
+    // Find all timeslots within those timeslots that optional attendees can attend
+    // TODO: this returns all avail times
+    List<TimeRange> attendeeTimesOptional = getNonOverlappingTimes(duration, unavailableTimesOptional);
+    
+    // If none exist, return original timeslots
+    // Sort by start time
+
+    // TODO: implement :")
+  }
+
+  /**
+   * Finds all non-overlapping times in a day given overlapping time ranges.
+   *
+   * @param duration of meeting request
+   * @param unavailableTimes listed in ascending order by start time
+   * @return all available time frames from start to end of day that fit with duration
+   */
+  public List<TimeRange> getNonOverlappingTimes(long duration, List<TimeRange> unavailableTimes) {
+    List<TimeRange> availableTimes = new ArrayList<>();
+    int start = TimeRange.START_OF_DAY;
+
+    for (TimeRange t : unavailableTimes) {
+      TimeRange temp = TimeRange.fromStartDuration(start, t.start(), false);
+      start = t.end();
+      if (temp.duration() >= duration) {
+        availableTimes.add(temp);
+      }
+    }
+
+    TimeRange endOfDayTemp = TimeRange.fromStartDuration(start, TimeRange.END_OF_DAY, true);
+    if (endOfDayTemp.duration() >= duration) {
+      availableTimes.add(endOfDayTemp);
+    }
+
+    return availableTimes;
   }
 }
