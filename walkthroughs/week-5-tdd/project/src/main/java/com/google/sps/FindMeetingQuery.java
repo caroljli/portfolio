@@ -65,7 +65,7 @@ public final class FindMeetingQuery {
    * @return list of time ranges that are already occupied
    */
   public List<TimeRange> getUnavailableTimes(Collection<Event> events, Collection<String> requestAttendees) {
-    List<TimeRange> output = new HashSet<>();
+    List<TimeRange> output = new ArrayList<>();
 
     for (Event e : events) {
       Set<String> eventAttendees = e.getAttendees();
@@ -108,11 +108,12 @@ public final class FindMeetingQuery {
 
     // Find overlapping times between mandatory and optional times
     List<TimeRange> allAvailableTimes = new ArrayList<>();
-    allAvailableTimes.addAll(attendeeTimes).addAll(attendeeTimesOptional);
+    allAvailableTimes.addAll(attendeeTimes);
+    allAvailableTimes.addAll(attendeeTimesOptional);
     List<TimeRange> allAvailableTimesMerged = mergeOverlappingTimes(allAvailableTimes);
     
     // If none exist, return original timeslots
-    if (allAvailableTimesMerge.isEmpty()) {
+    if (allAvailableTimesMerged.isEmpty()) {
       Collections.sort(attendeeTimes, TimeRange.ORDER_BY_START);
       return attendeeTimes;
     } else {
@@ -172,8 +173,8 @@ public final class FindMeetingQuery {
         int tempEnd = Math.max(last.end(), time.end());
 
         TimeRange merged = TimeRange.fromStartEnd(tempStart, tempEnd, false);
-        mergedList.remove(last);
-        mergedList.add(merged);
+        output.remove(last);
+        output.add(merged);
       }
     }
 
