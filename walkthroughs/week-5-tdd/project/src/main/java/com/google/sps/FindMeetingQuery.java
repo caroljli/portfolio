@@ -47,6 +47,12 @@ public final class FindMeetingQuery {
     List<TimeRange> unavailableTimesOptional = getUnavailableTimes(events, requestAttendeesOptional);
     Collections.sort(unavailableTimesOptional, TimeRange.ORDER_BY_START);
 
+    // If there are no mandatory attendees, optional attendees are now mandatory and unavailableTimesOptional becomes empty
+    if (requestAttendees.isEmpty()) {
+      unavailableTimes = unavailableTimesOptional;
+      unavailableTimesOptional = new ArrayList<>();
+    }
+
     return getAvailableTimes(request.getDuration(), unavailableTimes, unavailableTimesOptional);
 
   }
@@ -83,45 +89,95 @@ public final class FindMeetingQuery {
    * @param duration of meeting request
    * @param unavailableTimes of mandatory attendees
    * @param unavailableTimesOptional of optional attendees
+   * @return list of available time ranges sorted by start time
    */
-  public List<TimeRange> getAvailableTimes(long duration, List<TimeRange> unavailableTimes, List<TimeRange> unavailableTimesOptional) {
+  private List<TimeRange> getAvailableTimes(long duration, List<TimeRange> unavailableTimes, List<TimeRange> unavailableTimesOptional) {
+    List<TimeRange> output = new ArrayList<>();
+
     // Finds all timeslots in which mandatory attendees can attend
     List<TimeRange> attendeeTimes = getNonOverlappingTimes(duration, unavailableTimes);
 
-    // Find all timeslots within those timeslots that optional attendees can attend
-    // TODO: this returns all avail times
+    // If there are no mandatory attendees or if there are no optional attendees, return attendeeTimes
+    if (unavailableTimesOptional.isEmpty()) {
+      Collections.sort(attendeeTimes, TimeRange.ORDER_BY_START);
+      return attendeeTimes;
+    }
+
+    // Find all timeslots in which optional attendees can attend
     List<TimeRange> attendeeTimesOptional = getNonOverlappingTimes(duration, unavailableTimesOptional);
+
+    // Find overlapping times between mandatory and optional times
+    List<TimeRange> allAvailableTimes = new ArrayList<>();
+    allAvailableTimes.addAll(attendeeTimes).addAll(attendeeTimesOptional);
+    List<TimeRange> allAvailableTimesMerged = mergeOverlappingTimes(allAvailableTimes);
     
     // If none exist, return original timeslots
-    // Sort by start time
+    if (allAvailableTimesMerge.isEmpty()) {
+      Collections.sort(attendeeTimes, TimeRange.ORDER_BY_START);
+      return attendeeTimes;
+    } else {
+      output = allAvailableTimesMerged;
+      Collections.sort(allAvailableTimesMerged, TimeRange.ORDER_BY_START);
+    }
 
-    // TODO: implement :")
+    return output;
+
   }
 
   /**
-   * Finds all non-overlapping times in a day given overlapping time ranges.
+   * Finds all available non-overlapping times in a day given unavailable time ranges.
    *
    * @param duration of meeting request
    * @param unavailableTimes listed in ascending order by start time
    * @return all available time frames from start to end of day that fit with duration
    */
-  public List<TimeRange> getNonOverlappingTimes(long duration, List<TimeRange> unavailableTimes) {
+  private List<TimeRange> getNonOverlappingTimes(long duration, List<TimeRange> unavailableTimes) {
     List<TimeRange> availableTimes = new ArrayList<>();
     int start = TimeRange.START_OF_DAY;
 
     for (TimeRange t : unavailableTimes) {
-      TimeRange temp = TimeRange.fromStartDuration(start, t.start(), false);
+      TimeRange temp = TimeRange.fromStartEnd(start, t.start(), false);
       start = t.end();
       if (temp.duration() >= duration) {
         availableTimes.add(temp);
       }
     }
 
-    TimeRange endOfDayTemp = TimeRange.fromStartDuration(start, TimeRange.END_OF_DAY, true);
+    TimeRange endOfDayTemp = TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true);
     if (endOfDayTemp.duration() >= duration) {
       availableTimes.add(endOfDayTemp);
     }
 
     return availableTimes;
   }
+
+  /**
+   * Merges overlapping time ranges in a list of time ranges.
+   * 
+   * @param times of unmerged time ranges
+   * @return list of merged time ranges
+   */
+
+  private List<TimeRange> mergeOverlappingTimes(List<TimeRange> times) {
+    List<TimeRange> output = new ArrayList<>();
+
+    for (TimeRange time : times) {
+
+      // Add if output is empty or if there is no overlap
+      if (output.isEmpty() || !time.overlaps(output.get(output.size() - 1))) {
+        output.add(time);
+      } else {
+        TimeRange last = output.get(output.size() - 1);
+        int tempStart = Math.min(last.start(), time.start());
+        int tempEnd = Math.max(last.end(), time.end());
+
+        TimeRange merged = TimeRange.fromStartEnd(tempStart, tempEnd, false);
+        mergedList.remove(last);
+        mergedList.add(merged);
+      }
+    }
+
+    return output;
+  }
+
 }
