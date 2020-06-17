@@ -75,6 +75,8 @@ public final class FindMeetingQuery {
         // Checks to see if event has overlap with the attendees of the request
         if (requestAttendees.contains(eventAttendee)) {
           output.add(e.getWhen());
+          System.out.println("EVENT TIME: " + e.getWhen());
+
           break; // Only one attendee is required for the event time to be unavailable. 
         }
       }
@@ -95,7 +97,9 @@ public final class FindMeetingQuery {
     List<TimeRange> output = new ArrayList<>();
 
     // Finds all timeslots in which mandatory attendees can attend
-    List<TimeRange> attendeeTimes = getNonOverlappingTimes(duration, unavailableTimes);
+    List<TimeRange> attendeeTimes = getNonOverlappingTimes(duration, mergeOverlappingTimes(unavailableTimes));
+    System.out.println("ATTENDEE TIMES: ");
+    System.out.println(attendeeTimes);
 
     // If there are no mandatory attendees or if there are no optional attendees, return attendeeTimes
     if (unavailableTimesOptional.isEmpty()) {
@@ -104,13 +108,17 @@ public final class FindMeetingQuery {
     }
 
     // Find all timeslots in which optional attendees can attend
-    List<TimeRange> attendeeTimesOptional = getNonOverlappingTimes(duration, unavailableTimesOptional);
+    List<TimeRange> attendeeTimesOptional = getNonOverlappingTimes(duration, mergeOverlappingTimes(unavailableTimesOptional));
+    System.out.println("ATTENDEE TIMES OPTIONAL: ");
+    System.out.println(attendeeTimesOptional);
 
     // Find overlapping times between mandatory and optional times
     List<TimeRange> allAvailableTimes = new ArrayList<>();
     allAvailableTimes.addAll(attendeeTimes);
     allAvailableTimes.addAll(attendeeTimesOptional);
     List<TimeRange> allAvailableTimesMerged = mergeOverlappingTimes(allAvailableTimes);
+    System.out.println("ALL AVAILABLE TIMES: ");
+    System.out.println(allAvailableTimesMerged);
     
     // If none exist, return original timeslots
     if (allAvailableTimesMerged.isEmpty()) {
@@ -139,6 +147,7 @@ public final class FindMeetingQuery {
     for (TimeRange t : unavailableTimes) {
       TimeRange temp = TimeRange.fromStartEnd(start, t.start(), false);
       start = t.end();
+      System.out.println("START TIME: " + start);
       if (temp.duration() >= duration) {
         availableTimes.add(temp);
       }
