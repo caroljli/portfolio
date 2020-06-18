@@ -112,21 +112,31 @@ public final class FindMeetingQuery {
     System.out.println("ATTENDEE TIMES OPTIONAL: ");
     System.out.println(attendeeTimesOptional);
 
-    // Find overlapping times between mandatory and optional times
-    List<TimeRange> allAvailableTimes = new ArrayList<>();
-    allAvailableTimes.addAll(attendeeTimes);
-    allAvailableTimes.addAll(attendeeTimesOptional);
-    List<TimeRange> allAvailableTimesMerged = mergeOverlappingTimes(allAvailableTimes);
-    System.out.println("ALL AVAILABLE TIMES: ");
-    System.out.println(allAvailableTimesMerged);
-    
-    // If none exist, return original timeslots
-    if (allAvailableTimesMerged.isEmpty()) {
-      Collections.sort(attendeeTimes, TimeRange.ORDER_BY_START);
+    if (attendeeTimesOptional.isEmpty()) {
       return attendeeTimes;
     } else {
-      output = allAvailableTimesMerged;
-      Collections.sort(allAvailableTimesMerged, TimeRange.ORDER_BY_START);
+      // Find overlapping times between mandatory and optional times
+      List<TimeRange> allUnavailableTimes = new ArrayList<>();
+      allUnavailableTimes.addAll(unavailableTimes);
+      allUnavailableTimes.addAll(unavailableTimesOptional);
+      Collections.sort(allUnavailableTimes, TimeRange.ORDER_BY_START);
+
+      System.out.println("ALL UNAVAILABLE TIMES: ");
+      System.out.println(allUnavailableTimes);
+      System.out.println(mergeOverlappingTimes(allUnavailableTimes));
+      
+      List<TimeRange> allAvailableTimesMerged = getNonOverlappingTimes(duration, mergeOverlappingTimes(allUnavailableTimes));
+      System.out.println("ALL AVAILABLE TIMES: ");
+      System.out.println(allAvailableTimesMerged);
+      
+      // If none exist, return mandatory attendee times.
+      if (allAvailableTimesMerged.isEmpty()) {
+        Collections.sort(attendeeTimes, TimeRange.ORDER_BY_START);
+        return attendeeTimes;
+      } else {
+        output = allAvailableTimesMerged;
+        Collections.sort(allAvailableTimesMerged, TimeRange.ORDER_BY_START);
+      }
     }
 
     return output;
@@ -147,7 +157,6 @@ public final class FindMeetingQuery {
     for (TimeRange t : unavailableTimes) {
       TimeRange temp = TimeRange.fromStartEnd(start, t.start(), false);
       start = t.end();
-      System.out.println("START TIME: " + start);
       if (temp.duration() >= duration) {
         availableTimes.add(temp);
       }
@@ -172,17 +181,17 @@ public final class FindMeetingQuery {
     List<TimeRange> output = new ArrayList<>();
 
     for (TimeRange time : times) {
+      int outputSize = output.size();
 
       // Add if output is empty or if there is no overlap
-      if (output.isEmpty() || !time.overlaps(output.get(output.size() - 1))) {
+      if (output.isEmpty() || !time.overlaps(output.get(outputSize - 1))) {
         output.add(time);
       } else {
-        TimeRange last = output.get(output.size() - 1);
+        TimeRange last = output.get(outputSize - 1);
         int tempStart = Math.min(last.start(), time.start());
         int tempEnd = Math.max(last.end(), time.end());
-
         TimeRange merged = TimeRange.fromStartEnd(tempStart, tempEnd, false);
-        output.remove(last);
+        output.remove(outputSize - 1);
         output.add(merged);
       }
     }
