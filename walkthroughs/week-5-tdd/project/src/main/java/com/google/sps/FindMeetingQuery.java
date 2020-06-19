@@ -109,24 +109,24 @@ public final class FindMeetingQuery {
 
     if (attendeeTimesOptional.isEmpty()) {
       return attendeeTimes;
-    } else {
-      // Find overlapping times between mandatory and optional times
-      List<TimeRange> allUnavailableTimes = new ArrayList<>();
-      allUnavailableTimes.addAll(unavailableTimes);
-      allUnavailableTimes.addAll(unavailableTimesOptional);
-      Collections.sort(allUnavailableTimes, TimeRange.ORDER_BY_START);
-      
-      List<TimeRange> allAvailableTimesMerged = getNonOverlappingTimes(duration, mergeOverlappingTimes(allUnavailableTimes));
-      
-      // If none exist, return mandatory attendee times.
-      if (allAvailableTimesMerged.isEmpty()) {
-        Collections.sort(attendeeTimes, TimeRange.ORDER_BY_START);
-        return attendeeTimes;
-      } else {
-        output = allAvailableTimesMerged;
-        Collections.sort(allAvailableTimesMerged, TimeRange.ORDER_BY_START);
-      }
+    } 
+
+    // Find overlapping times between mandatory and optional times
+    List<TimeRange> allUnavailableTimes = new ArrayList<>();
+    allUnavailableTimes.addAll(unavailableTimes);
+    allUnavailableTimes.addAll(unavailableTimesOptional);
+    Collections.sort(allUnavailableTimes, TimeRange.ORDER_BY_START);
+    
+    List<TimeRange> allAvailableTimesMerged = getNonOverlappingTimes(duration, mergeOverlappingTimes(allUnavailableTimes));
+    
+    // If none exist, return mandatory attendee times.
+    if (allAvailableTimesMerged.isEmpty()) {
+      Collections.sort(attendeeTimes, TimeRange.ORDER_BY_START);
+      return attendeeTimes;
     }
+
+    output = allAvailableTimesMerged;
+    Collections.sort(allAvailableTimesMerged, TimeRange.ORDER_BY_START);
 
     return output;
 
